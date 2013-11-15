@@ -12,7 +12,11 @@
  *= require_tree .
  */
 
-html, body { height:100%;}
+html, body 
+{ 
+  height:100%;
+  font-size:22pt;
+}
 #wrap { min-height:100%;}
 
 #main 
@@ -46,4 +50,26 @@ html, body { height:100%;}
     margin-left: -20px;
     margin-right: -20px;
   }
+}
+
+.headingBlock
+{
+  font-size:1.8em;
+  font-weight:bold;
+  padding-bottom:1.2em;
+}
+
+.contentBlock
+{
+  font-size:1.4em;
+}
+
+.no-back-hover:hover
+{
+  background-color:Transparent;
+  color:inherit;
+}
+a.no-click-change:visted
+{
+  color:inherit;
 }

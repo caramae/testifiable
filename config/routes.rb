@@ -1,4 +1,6 @@
 Samplesite1::Application.routes.draw do
+  resources :experiments
+
   resources :users
 
   get "static_pages/home"

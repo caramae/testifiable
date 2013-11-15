@@ -1,4 +1,4 @@
-.navbar.navbar-fixed-top
+.navbar.navbar-inverse.navbar-fixed-top
   .navbar-inner
     .container-fluid
       %a.btn.btn-navbar{"data-toggle"=>'collapse', 'data-target'=>'.nav-collapse'}
@@ -6,11 +6,11 @@
         %span.icon-bar
         %span.icon-bar
 
-      =link_to 'Sample site with users', root_path, :class=>'brand'
+      =link_to 'Testifiable', root_path, :class=>'brand'
       .nav-collapse
         %ul.nav.pull-right
+          %li=link_to "All Experiments", experiments_path
           %li=link_to "About", static_pages_about_path
-          %li=link_to "Home", root_path
           -if current_user
             %li=link_to "Logout", session_path(:current), method: :delete
             %li=link_to 'Welcome, ' + current_user.name + '!', current_user

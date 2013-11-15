@@ -1,0 +1,24 @@
+= form_for @experiment, :html => {} do |f|
+
+  .contentBlock='What is the impact of'
+  %br
+  =f.text_field :action, :class => 'text_field span6', :placeholder => 'Action (eg. "Performing 20 mins of exercise")', :id=>'expAction'
+  %br
+  %br
+  .input-prepend
+    %span.add-on="vs."
+    = f.text_field :control, :class => 'text_field span6', :placeholder => 'Control (eg. "Not performing 20 mins of exercise")', :id=>'expControl'
+  %br
+  %br
+  .contentBlock='On'
+  %br
+  = f.text_field :outcome, :class => 'text_field span6', :placeholder => 'Outcome (eg. "Weight")'
+  %br
+  %br
+  .contentBlock='As measured by'
+  %br
+  = f.text_field :unit, :class => 'text_field span6', :placeholder => 'Units (eg. "lb.")'
+
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), experiments_path, :class => 'btn'
