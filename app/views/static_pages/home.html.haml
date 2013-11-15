@@ -1,0 +1,28 @@
+.hero-unit
+  %h2
+    Testifiable
+    %small
+      Randomized trials for everything
+      
+  %hr
+  .row
+    .span2
+    .span2
+      %h5='Step 1: Signup'
+      =link_to image_tag('step1_signup.png'), login_path, :class=>'no-back-hover'
+      %h5
+        %small='Signup with a username and password.'
+    .span1
+    .span2
+      %h5='Step 2: Testify'
+      =link_to image_tag('step2_enroll.png'), experiments_path, :class=>'no-back-hover'
+      %h5
+        %small='Gather data by creating and enrolling in questions.'
+    .span1
+    .span2
+      %h5='Step 3: Decide'
+      =link_to image_tag('step3_analyze.png'), experiments_path, :class=>'no-back-hover'
+      %h5
+        %small='Analyze the data and inform your decisions.'
+    .span2
+  %hr
