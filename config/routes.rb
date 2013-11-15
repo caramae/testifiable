@@ -1,5 +1,6 @@
 Samplesite1::Application.routes.draw do
   resources :experiments
+  post "experiments/enroll", :as => :enroll
 
   resources :users
 

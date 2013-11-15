@@ -3,21 +3,18 @@
   %h1=t '.title', :default => model_class.model_name.human.titleize
 
 %p
-  %strong= model_class.human_attribute_name(:action) + ':'
+  %strong= 'Question:'
   %br
-  = @experiment.action
-%p
-  %strong= model_class.human_attribute_name(:control) + ':'
   %br
-  = @experiment.control
-%p
-  %strong= model_class.human_attribute_name(:outcome) + ':'
-  %br
-  = @experiment.outcome
-%p
-  %strong= model_class.human_attribute_name(:unit) + ':'
-  %br
-  = @experiment.unit
+  = "What is the impact of " + @experiment.action
+  = " vs. " + @experiment.control
+  = " on " + @experiment.outcome
+  = " as measured in " + @experiment.unit + '?'
+
+%br
+%br
+%br
+%br
 
 .form-actions
   = link_to t('.back', :default => t("helpers.links.back")), experiments_path, :class => 'btn'

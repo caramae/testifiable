@@ -1,11 +1,31 @@
 class ExperimentsController < ApplicationController
-  before_action :set_experiment, only: [:show, :edit, :update, :destroy]
+  before_action :set_experiment, only: [:show, :edit, :update, :destroy, :enroll]
+  before_filter :signed_in?, except: [:index, :show]
 
   # GET /experiments
   # GET /experiments.json
   def index
+    if !session[:user_id].blank?
+      @current_user = User.find(session[:user_id].to_i)
+    end
     @experiments = Experiment.all
   end
+
+  def enroll
+    if session[:user_id]
+      Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i)
+      respond_to do |format|
+        format.html { redirect_to experiments_path, notice: 'Successfully Enrolled in experiment!' }
+        format.json { render action: 'index', status: :created, location: experiments_path }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to experiments_path, notice: 'Please login to enroll.' }
+        format.json { render action: 'index', status: :created, location: experiments_path }
+      end
+    end    
+  end
+
 
   # GET /experiments/1
   # GET /experiments/1.json
@@ -25,6 +45,11 @@ class ExperimentsController < ApplicationController
   # POST /experiments.json
   def create
     @experiment = Experiment.new(experiment_params)
+    @experiment.author = session[:user_id]
+    @experiment.action = @experiment.action.downcase
+    @experiment.outcome = @experiment.outcome.downcase
+    @experiment.control = @experiment.control.downcase
+    @experiment.unit = @experiment.unit.downcase
 
     respond_to do |format|
       if @experiment.save

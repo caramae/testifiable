@@ -12,6 +12,9 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
+
+    @enrolled_experiments = @user.enrolled_experiments
+    @recommended_experiments = Experiment.where('id not in (?)', @enrolled_experiments.select('id'))
   end
 
   # GET /users/new
