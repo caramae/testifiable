@@ -7,14 +7,17 @@
     .container
       =form_tag sessions_path do
         .field
-          =label_tag :name
-          =text_field_tag :name, params[:name], class: 'text_field'
+          =label_tag :email
+          =text_field_tag :email, params[:email], class: 'text_field'
         .field
           =label_tag :password
           =password_field_tag :password, '', class: 'text_field'
-        .actions
-          =submit_tag 'Log in', class: 'submitbutton'
-        %br
-        %p
+        .form-actions
+          =submit_tag 'Log in', class: 'submitbutton btn btn-primary whiteText'
+          %br
+          %br
+          %br
           Not a member yet?
-          =link_to 'Sign up!', new_user_path
+          %br
+          =link_to 'Sign up!', new_user_path, class: 'btn btn-info whiteText'
+

@@ -2,6 +2,7 @@ class ExperimentsController < ApplicationController
   before_action :set_experiment, only: [:show, :edit, :update, :destroy, :enroll]
   before_filter :signed_in?, except: [:index, :show]
 
+  
   # GET /experiments
   # GET /experiments.json
   def index
@@ -23,13 +24,15 @@ class ExperimentsController < ApplicationController
         format.html { redirect_to experiments_path, notice: 'Please login to enroll.' }
         format.json { render action: 'index', status: :created, location: experiments_path }
       end
-    end    
+    end
   end
-
 
   # GET /experiments/1
   # GET /experiments/1.json
   def show
+    if !session[:user_id].blank?
+      @current_user = User.find(session[:user_id].to_i)
+    end
   end
 
   # GET /experiments/new

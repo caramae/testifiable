@@ -73,3 +73,8 @@ a.no-click-change:visted
 {
   color:inherit;
 }
+
+.whiteText
+{
+  color:#ffffff !important;
+}

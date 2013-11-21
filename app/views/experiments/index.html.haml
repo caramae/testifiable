@@ -6,13 +6,11 @@
   %thead
     %tr
       %th= 'Experiment'
-      %th= 'Units'
       %th= 'Action'
   %tbody
     - @experiments.each do |experiment|
       %tr
-        %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome+'?', experiment_path(experiment), :class=>'no-back-hover no-click-change'
-        %td= "Measured in " + experiment.unit
+        %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome+'? (Measured in ' + experiment.unit + ')', experiment_path(experiment), :class=>'no-back-hover no-click-change'
         %td
           -if @current_user
             -if experiment.is_enrolled(@current_user.id)
@@ -23,4 +21,4 @@
             =link_to "Testify", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
             .muted="Login to testify!"
 
-= link_to t('.new', :default => t("helpers.links.new")), new_experiment_path, :class => 'btn btn-primary'
+= link_to t('.new', :default => t("helpers.links.new")), new_experiment_path, :class => 'btn btn-primary whiteText'

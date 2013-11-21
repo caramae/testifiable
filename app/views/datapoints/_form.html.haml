@@ -1,0 +1,24 @@
+= form_for @datapoint, :html => { :class => 'form-vertical' } do |f|
+  ='What is the impact of ' + @experiment.action + ' on ' + @experiment.outcome+'? (Measured in ' + @experiment.unit + ')'
+  %br
+  %br
+  .control-group
+    %strong
+      Did you perform the following action?
+    %br
+    =@experiment.action
+    .controls{:style=>'padding-left:10px;'}
+      = radio_button_tag 'action', 'Yes'
+      Yes
+      %br
+      = radio_button_tag 'action', 'No'
+      No
+  %br
+  .control-group
+    %strong
+      = 'Record in ' + @experiment.unit + ': '
+    .controls
+      = f.text_field :value, :class => 'text_field', :placeholder=>'Update data here in ' + @experiment.unit.downcase
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), datapoints_path, :class => 'btn'

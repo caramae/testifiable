@@ -6,9 +6,19 @@
 function ExperimentEvents()
 {
   $('#expAction').blur(function(){
-    actionText = $(this).val();
-    $('#expControl').val('Not ' + actionText);
-  })
+    var actionText = $(this).val();
+    var reg = /[0-9]*/;
+    var respText = actionText;
+    if(reg.test(actionText))
+    {
+      respText = actionText.replace(/[1-9]*/, '0');
+    }
+    else
+    {
+      respText = 'Not ' + actionText;
+    }
+    $('#expControl').val(respText);
+  });
 }
 
 $(document).ready(function(){ ExperimentEvents(); });
