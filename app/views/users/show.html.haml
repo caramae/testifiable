@@ -1,6 +1,6 @@
 - model_class = User
 .page-header
-  %h1="User Profile"
+  %h1= @user.name + "'s Profile"
 
 .row
   .span6.pull-left
@@ -17,7 +17,7 @@
           %tr
             %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
             %td
-              =link_to "Testify", {:controller=>'datapoints',:action=>'new', :experiment_id=>experiment.id}, :class=>"btn btn-mini"
+              =link_to "Record", {:controller=>'datapoints',:action=>'new', :experiment_id=>experiment.id}, :class=>"btn btn-mini"
 
   .span6.pull-right
     .headingBlock
@@ -42,13 +42,13 @@
                 =link_to "Testify", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
                 .muted="Login to testify!"
 
-
-
 .form-actions
   -if @current_user && @current_user.is_admin
     = link_to t('.edit', :default => t("helpers.links.edit")), edit_user_path(@user), :class => 'btn'
     = link_to t('.back', :default => t("helpers.links.back")), users_path, :class => 'btn'
+    =link_to 'Create New Experiment', new_experiment_path, :class => 'btn'
   -else
     .btn= link_to 'Home', root_path
   -if @current_user && @current_user.id == @user.id && !@current_user.is_admin
     = link_to 'Edit my Profile', edit_user_path(@user), :class => 'btn'
+    = link_to 'Create New Experiment', new_experiment_path, :class => 'btn'

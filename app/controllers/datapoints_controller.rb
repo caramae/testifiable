@@ -35,10 +35,10 @@ class DatapointsController < ApplicationController
   # POST /datapoints.json
   def create
     @datapoint = Datapoint.new(datapoint_params)
-
+    @experiment = Experiment.find(@datapoint.experiment_id)
     respond_to do |format|
       if @datapoint.save
-        format.html { redirect_to @datapoint, notice: 'Datapoint was successfully created.' }
+        format.html { redirect_to @experiment, notice: 'Datapoint was successfully created.' }
         format.json { render action: 'show', status: :created, location: @datapoint }
       else
         format.html { render action: 'new' }
@@ -50,9 +50,10 @@ class DatapointsController < ApplicationController
   # PATCH/PUT /datapoints/1
   # PATCH/PUT /datapoints/1.json
   def update
+    @experiment = Experiment.find(@datapoint.experiment_id)
     respond_to do |format|
       if @datapoint.update(datapoint_params)
-        format.html { redirect_to @datapoint, notice: 'Datapoint was successfully updated.' }
+        format.html { redirect_to @experiment, notice: 'Datapoint was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

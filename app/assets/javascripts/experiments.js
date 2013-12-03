@@ -11,7 +11,7 @@ function ExperimentEvents()
     var respText = actionText;
     if(reg.test(actionText))
     {
-      respText = actionText.replace(/[1-9]*/, '0');
+      respText = actionText.replace(/[0-9]\S/, '0');
     }
     else
     {
