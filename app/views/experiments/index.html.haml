@@ -14,7 +14,7 @@
         %td
           -if @current_user
             -if experiment.is_enrolled(@current_user.id)
-              =link_to "Enrolled", root_path, :class=>"btn btn-mini", :disabled=>'disabled'
+              =link_to "Enrolled", datapoints_path, :class=>"btn btn-mini", :disabled=>'disabled'
             -else
               =link_to "Testify", {:action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
           -else
