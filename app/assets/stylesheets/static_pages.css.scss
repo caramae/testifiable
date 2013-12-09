@@ -1,22 +1,19 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@font-face {
-	font-family: BentonSansCondBold;
-	src: url('BentonSansCond-Bold.otf');
-}
-@font-face {
+/*@font-face {
 	font-family: BentonSansCondReg;
-	src: url('BentonSansCond-Regular.otf');
+	src: url('../fonts/BentonSansCond-Regular.eot') format('eot'),
+		url('../fonts/BentonSansCond-Regular.otf') format('truetype');
 }
 @font-face {
 	font-family: BentonSansBold;
-	src: url('BentonSans-Bold.otf');
+	src: url('../fonts/BentonSans-Bold.otf');
 }
 @font-face {
 	font-family: BentonSansReg;
-	src: url('BentonSans-Regular.otf');
-}
+	src: url('../fonts/BentonSans-Regular.otf');
+}*/
 
 .hero-unit {
 	border-left: 1px solid #ddd;
@@ -45,13 +42,14 @@
 	h1 {
 		color: black;
 		font-size: 55px;
-		font-family: BentonSansReg;
+		font-family: 'Source Sans Pro', sans-serif;
 		margin: 30px;
 		margin-bottom: 0;
 	}
 	h2 {
 		font-size: 26px;
-		font-family: BentonSansReg;
+		font-family: 'Source Sans Pro', sans-serif;
+		font-weight: 400;
 		color: #555;
 		margin: 30px;
 		margin-top: 10px;
@@ -63,7 +61,8 @@
 
 	h5 {
 		font-size: 24px;
-		font-family: BentonSansBold;
+		font-family: 'Source Sans Pro', sans-serif;
+		font-weight: 700;
 		&:hover {
 			color:black;
 			text-decoration:underline;
@@ -71,7 +70,7 @@
 		}
 
 		small {
-			font-family: BentonSansCondReg;
+			font-family: 'Source Sans Pro', sans-serif;
 			color: black;
 		}
 	}
@@ -83,9 +82,10 @@
 			margin-bottom:10px;
 		}
 		p {
-			font-size: 15px;
-			font-family: BentonSansReg;
+			font-size: 17px;
+			font-family: 'Source Sans Pro', sans-serif;
 			padding: 0 100px;
+			line-height:1.25em;
 		}
 	}
 
