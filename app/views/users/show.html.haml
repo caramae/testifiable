@@ -1,54 +1,55 @@
 - model_class = User
-.page-header
-  %h1= @user.name + "'s Dashboard"
+.container
+  .page-header
+    %h3= "Dashboard"
 
-.row
-  .span6.pull-left
-    .headingBlock
-      Enrolled Experiments
-    %table.table.table-striped
+  .row
+    .span6.pull-left
+      .headingBlock
+        Enrolled Experiments
+      %table.table.table-striped
 
-      %thead
-        %tr
-          %th= 'Experiment'
-          %th= 'Action'
-      %tbody
-        - @enrolled_experiments.each do |experiment|
+        %thead
           %tr
-            %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
-            %td
-              =link_to "Record", {:controller=>'datapoints',:action=>'new', :experiment_id=>experiment.id}, :class=>"btn btn-mini"
+            %th= 'Experiment'
+            %th= 'Action'
+        %tbody
+          - @enrolled_experiments.each do |experiment|
+            %tr
+              %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
+              %td
+                =link_to "Record", {:controller=>'datapoints',:action=>'new', :experiment_id=>experiment.id}, :class=>"btn btn-mini"
 
-  .span6.pull-right
-    .headingBlock
-      Recommended Experiments
-    %table.table.table-striped
+    .span6.pull-right
+      .headingBlock
+        Recommended Experiments
+      %table.table.table-striped
 
-      %thead
-        %tr
-          %th= 'Experiment'
-          %th= 'Action'
-      %tbody
-        - @recommended_experiments.each do |experiment|
+        %thead
           %tr
-            %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
-            %td
-              -if @current_user
-                -if experiment.is_enrolled(@current_user.id)
-                  =link_to "Enrolled", root_path, :class=>"btn btn-mini", :disabled=>'disabled'
+            %th= 'Experiment'
+            %th= 'Action'
+        %tbody
+          - @recommended_experiments.each do |experiment|
+            %tr
+              %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
+              %td
+                -if @current_user
+                  -if experiment.is_enrolled(@current_user.id)
+                    =link_to "Enrolled", root_path, :class=>"btn btn-mini", :disabled=>'disabled'
+                  -else
+                    =link_to "Testify", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
                 -else
-                  =link_to "Testify", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
-              -else
-                =link_to "Testify", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
-                .muted="Login to testify!"
+                  =link_to "Testify", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
+                  .muted="Login to testify!"
 
-.form-actions
-  -if @current_user && @current_user.is_admin
-    = link_to t('.edit', :default => t("helpers.links.edit")), edit_user_path(@user), :class => 'btn'
-    = link_to t('.back', :default => t("helpers.links.back")), users_path, :class => 'btn'
-    =link_to 'Create New Experiment', new_experiment_path, :class => 'btn'
-  -else
-    .btn= link_to 'Home', root_path
-  -if @current_user && @current_user.id == @user.id && !@current_user.is_admin
-    = link_to 'Edit my Profile', edit_user_path(@user), :class => 'btn'
-    = link_to 'Create New Experiment', new_experiment_path, :class => 'btn'
+  .form-actions
+    -if @current_user && @current_user.is_admin
+      = link_to t('.edit', :default => t("helpers.links.edit")), edit_user_path(@user), :class => 'btn'
+      = link_to t('.back', :default => t("helpers.links.back")), users_path, :class => 'btn'
+      =link_to 'Create New Experiment', new_experiment_path, :class => 'btn'
+    -else
+      .btn= link_to 'Home', root_path
+    -if @current_user && @current_user.id == @user.id && !@current_user.is_admin
+      /= link_to 'Edit my Profile', edit_user_path(@user), :class => 'btn'
+      = link_to 'Create New Experiment', new_experiment_path, :class => 'btn'

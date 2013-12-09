@@ -39,7 +39,7 @@ class UsersController < ApplicationController
         @adminUser.is_admin = true
         @adminUser.save();
         session[:user_id] = @user.id
-        format.html { redirect_to root_path, notice: 'User was successfully created.' }
+        format.html { redirect_to user_path(@user), notice: 'Welcome, '+@user.name+'!' }
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }

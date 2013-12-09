@@ -1,40 +1,46 @@
--if current_user
-  %h1='[Insert dashboard here.]'
-  current_user.show
--else
-  .hero-unit
+/-if current_user
+/  .container
+/    .span6.pull-left
+/      .headingBlock
+/        Popular experiments
+/    .span6.pull-right
+/      .headingBlock
+/        Recommended experiments
+/      .headingBlock
+/        My enrolled experiments
+/-else
+.hero-unit
 
-    %h1='Use evidence to guide your life.'
-    %h2='Many people have the same questions. Find the answers together.'
+  %h1='Use evidence to guide your life.'
+  %h2='Many people have the same questions. Find the answers together.'
 
-    /%hr
-    /%h5="Search experiments" [Insert search bar]
-    /%h5=link_to "See all experiments", experiments_path
+  /%hr
+  /%h5="Search experiments" [Insert search bar]
+  /%h5=link_to "See all experiments", experiments_path
 
-    %hr
+  %hr
 
-    .row
-      .span3
-        =link_to content_tag(:h5,'Step 1: Sign up'), login_path, :title => 'Login'
-        =link_to image_tag('step1_signup.png'), login_path, :class=>'no-back-hover'
-        %h5
-          %small='Sign up for free to propose an experiment.'
-      .span1
-      .span3
-        =link_to content_tag(:h5,'Step 2: Testify'), experiments_path, :title => 'Testify'
-        =link_to image_tag('step2_enroll.png'), experiments_path, :class=>'no-back-hover'
-        %h5
-          %small='Enroll in experiments of interest to you.'
-      .span1
-      .span3
-        =link_to content_tag(:h5,'Step 3: Analyze'), experiments_path, :title => 'Analyze'
-        =link_to image_tag('step3_analyze.png'), experiments_path, :class=>'no-back-hover'
-        %h5
-          %small='Use the results to inform your decisions.'
-      .span1
+  .row
+    .span3
+      =link_to content_tag(:h5,'Step 1: Sign up'), login_path, :title => 'Login'
+      =link_to image_tag('step1_signup.png'), login_path, :class=>'no-back-hover'
+      %h5
+        %small='Sign up for free to propose an experiment.'
+    .span1
+    .span3
+      =link_to content_tag(:h5,'Step 2: Testify'), experiments_path, :title => 'Testify'
+      =link_to image_tag('step2_enroll.png'), experiments_path, :class=>'no-back-hover'
+      %h5
+        %small='Enroll in experiments of interest to you.'
+    .span1
+    .span3
+      =link_to content_tag(:h5,'Step 3: Analyze'), experiments_path, :title => 'Analyze'
+      =link_to image_tag('step3_analyze.png'), experiments_path, :class=>'no-back-hover'
+      %h5
+        %small='Use the results to inform your decisions.'
+    .span1
 
-    %hr
-
+  %hr
     .row
       %h2='Bust myths or confirm beliefs.'
       %p='Maybe you’ve heard that drinking tea will make a cough go away faster. You can try it yourself, but you still won’t know how quickly your cough would have gone away if you hadn’t done it! The best way to find out is to conduct a randomized experiment – people with coughs are asked to drink tea or avoid it based on the flip of a coin. But this requires many trials and you only have one cough. We connect you to other people interested in the same question, and now we can compare outcomes for those who drank the tea and those who didn’t.'

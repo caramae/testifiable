@@ -1,6 +1,7 @@
 class Experiment < ActiveRecord::Base
   has_many :enrolls
   has_many :users, through: :enrolls
+  has_many :datapoints, through: :users
 
 
   def is_enrolled(user_id)
