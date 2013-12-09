@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131120061830) do
+ActiveRecord::Schema.define(version: 20131209170122) do
 
   create_table "datapoints", force: true do |t|
     t.integer  "experiment_id"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20131120061830) do
     t.integer  "experiment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "randomize"
   end
 
   create_table "experiments", force: true do |t|

@@ -14,7 +14,7 @@ class ExperimentsController < ApplicationController
 
   def enroll
     if session[:user_id]
-      Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i)
+      Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, randomize:0)
       respond_to do |format|
         format.html { redirect_to experiments_path, notice: 'Successfully Enrolled in experiment!' }
         format.json { render action: 'index', status: :created, location: experiments_path }

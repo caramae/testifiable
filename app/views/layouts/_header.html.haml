@@ -13,7 +13,7 @@
           //%li=link_to "About", static_pages_about_path
           -if current_user
             %li=link_to "Logout", session_path(:current), method: :delete
-            //%li=link_to 'Welcome, ' + current_user.name + '!', current_user
+            %li=link_to 'Welcome, ' + current_user.name + '!', current_user
           -else
             %li=link_to "Log in", login_path
             %li=link_to "Sign up", new_user_path
