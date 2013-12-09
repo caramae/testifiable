@@ -20,6 +20,7 @@ class DatapointsController < ApplicationController
       @datapoint = Datapoint.new
       @datapoint.user_id = @current_user.id
       @datapoint.experiment_id = params[:experiment_id].to_i
+      @user = User.find(session[:user_id].to_i)
 
       @experiment = Experiment.find(@datapoint.experiment_id)
     else
@@ -38,6 +39,9 @@ class DatapointsController < ApplicationController
     @experiment = Experiment.find(@datapoint.experiment_id)
     respond_to do |format|
       if @datapoint.save
+        enroll = Enroll.where('experiment_id=? and user_id=?', @datapoint.experiment_id, @datapoint.user_id)[0]
+        enroll.randomize = 0
+        enroll.save()
         format.html { redirect_to @experiment, notice: 'Datapoint was successfully created.' }
         format.json { render action: 'show', status: :created, location: @datapoint }
       else

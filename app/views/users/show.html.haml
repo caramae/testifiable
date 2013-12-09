@@ -13,12 +13,24 @@
           %tr
             %th= 'Experiment'
             %th= 'Action'
+            %th= 'Testify'
         %tbody
           - @enrolled_experiments.each do |experiment|
             %tr
               %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
+              %td.muted
+                -if experiment.enrolled_status(@user.id) == 1
+                  =experiment.action
+                -elsif experiment.enrolled_status(@user.id) == 2
+                  =experiment.control
+                -else
+                  ='Randomize to action!'
               %td
-                =link_to "Record", {:controller=>'datapoints',:action=>'new', :experiment_id=>experiment.id}, :class=>"btn btn-mini"
+                -if experiment.enrolled_status(@user.id) > 0
+                  =link_to "Record Data", {:controller=>'datapoints',:action=>'new', :experiment_id=>experiment.id}, :class=>"btn btn-mini"
+                -else
+                  =link_to "Randomize Action", randomize_path(:experiment_id => experiment.id), :method=>:post, :class=>"btn btn-mini"
+
 
     .span6.pull-right
       .headingBlock
@@ -39,6 +51,7 @@
                     =link_to "Enrolled", root_path, :class=>"btn btn-mini", :disabled=>'disabled'
                   -else
                     =link_to "Testify", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
+
                 -else
                   =link_to "Testify", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
                   .muted="Login to testify!"
