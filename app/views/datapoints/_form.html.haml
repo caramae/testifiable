@@ -2,6 +2,14 @@
   ='What is the impact of ' + @experiment.action + ' on ' + @experiment.outcome+'? (Measured in ' + @experiment.unit + ')'
   %br
   %br
+  ='Your Recommended Action: '
+  %span.muted
+    -if @experiment.enrolled_status(@user.id) == 1
+      = @experiment.action
+    -elsif @experiment.enrolled_status(@user.id) == 2
+      =@experiment.control
+  %br
+  %br
   .control-group
     %strong
       Did you perform the following action?
@@ -19,6 +27,8 @@
       = 'Record in ' + @experiment.unit + ': '
     .controls
       = f.text_field :value, :class => 'text_field', :placeholder=>'Update data here in ' + @experiment.unit.downcase
+      = f.hidden_field :experiment_id
+      = f.hidden_field :user_id
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), datapoints_path, :class => 'btn'

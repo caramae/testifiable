@@ -3,7 +3,7 @@ Samplesite1::Application.routes.draw do
 
   resources :experiments
   post "experiments/enroll", :as => :enroll
-
+  post "experiments/randomize", :as => :randomize
   resources :users
 
   get "static_pages/home"

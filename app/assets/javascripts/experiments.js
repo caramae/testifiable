@@ -7,13 +7,22 @@ function ExperimentEvents()
 {
   $('#expAction').blur(function(){
     var actionText = $(this).val();
-    var reg = /[0-9]*/;
+    var regNum = /[0-9]*/;
     var respText = actionText;
-    if(reg.test(actionText))
+
+    respText = actionText.replace(' less ',' more ');
+    if(respText == actionText)
+    { respText = actionText.replace(' more ', ' less '); }
+    if(respText == actionText)
+    { respText = actionText.replace(' at least ', ' less than '); }
+    if(respText == actionText)
+    { respText = actionText.replace(' at most ', ' more than '); }
+
+    if((respText == actionText) && (regNum.test(actionText)))
     {
       respText = actionText.replace(/[0-9]\S/, '0');
     }
-    else
+    else if(respText==actionText)
     {
       respText = 'Not ' + actionText;
     }

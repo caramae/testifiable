@@ -1,5 +1,5 @@
 class ExperimentsController < ApplicationController
-  before_action :set_experiment, only: [:show, :edit, :update, :destroy, :enroll]
+  before_action :set_experiment, only: [:show, :edit, :update, :destroy, :enroll], except: [:randomize]
   before_filter :signed_in?, except: [:index, :show]
 
   
@@ -23,6 +23,26 @@ class ExperimentsController < ApplicationController
       respond_to do |format|
         format.html { redirect_to experiments_path, notice: 'Please login to enroll.' }
         format.json { render action: 'index', status: :created, location: experiments_path }
+      end
+    end
+  end
+
+  def randomize
+    if session[:user_id]
+      if !params[:experiment_id].blank?
+        @experiment = Experiment.find(params[:experiment_id].to_i)
+        @user = User.find(session[:user_id].to_i)
+        enrolled = Enroll.where('experiment_id=? and user_id=?', @experiment.id, @user.id)[0]
+        enrolled.randomize = Random.rand(1..2)
+        enrolled.save()
+        respond_to do |format|
+          format.html { redirect_to @user, notice: 'Successfully Randomized to an action!' }
+          format.json { render controller:'users', action: 'show', status: :created, location: @user }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to login_path, notice: 'Please login to enroll.' }
       end
     end
   end
