@@ -45,7 +45,7 @@ html, body
   }
 }
 
-.headingBlock
+/*.headingBlock
 {
   font-size:1.8em;
   font-weight:bold;
@@ -55,7 +55,7 @@ html, body
 .contentBlock
 {
   font-size:1.4em;
-}
+}*/
 
 .no-back-hover:hover
 {

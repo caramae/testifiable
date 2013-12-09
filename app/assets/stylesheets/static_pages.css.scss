@@ -1,3 +1,121 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@font-face {
+	font-family: BentonSansCondBold;
+	src: url('BentonSansCond-Bold.otf');
+}
+@font-face {
+	font-family: BentonSansCondReg;
+	src: url('BentonSansCond-Regular.otf');
+}
+@font-face {
+	font-family: BentonSansBold;
+	src: url('BentonSans-Bold.otf');
+}
+@font-face {
+	font-family: BentonSansReg;
+	src: url('BentonSans-Regular.otf');
+}
+
+.hero-unit {
+	border-left: 1px solid #ddd;
+	padding-left: 30px;
+	margin-left: 60px;
+	margin-right: 60px;
+	border-radius:0;
+	padding-top:0;
+	margin-top:50px;
+	margin-bottom:0;
+
+
+	background-color: white; /* fallback color */
+   /* Safari 4+, Chrome 1-9 */
+   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#eee));
+   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+   background: -webkit-linear-gradient(top, #fff, #eee); 
+   /* Firefox 3.6+ */
+   background: -moz-linear-gradient(top, #fff, #eee);
+   /* IE 10+ */
+   background: -ms-linear-gradient(top, #fff, #eee);
+   /* Opera 11.10+ */
+   background: -o-linear-gradient(top, #fff, #eee);
+
+
+	h1 {
+		color: black;
+		font-size: 55px;
+		font-family: BentonSansReg;
+		margin: 30px;
+		margin-bottom: 0;
+	}
+	h2 {
+		font-size: 26px;
+		font-family: BentonSansReg;
+		color: #555;
+		margin: 30px;
+		margin-top: 10px;
+	}
+
+	img {
+		width:100%;
+	}
+
+	h5 {
+		font-size: 24px;
+		font-family: BentonSansBold;
+		&:hover {
+			color:black;
+			text-decoration:underline;
+			border-bottom-color: black;
+		}
+
+		small {
+			font-family: BentonSansCondReg;
+			color: black;
+		}
+	}
+
+	.row {
+		text-align: center;
+		h2 {
+			color: #628;
+			margin-bottom:10px;
+		}
+		p {
+			font-size: 15px;
+			font-family: BentonSansReg;
+			padding: 0 100px;
+		}
+	}
+
+	/*hr {
+		width:100%;
+		margin-top:0;
+		margin-left:-100px;
+
+		display:block;
+	    border:none;
+	    color:white;
+	    height:2px;
+	    background: #ddd;
+	    background: -webkit-linear-gradient(left, #fff, #ccc 10%, #fefefe);
+	}*/
+}
+
+
+
+.navbar-inverse .brand {
+	margin-left: 50px;
+	width:12%;
+}
+
+ul.nav.pull-right {
+	padding-top:5px;
+	font-size: 16px;
+}
+
+/*.popup {
+	display: none;
+	background: #ddf; opacity: 0.5;
+}*/

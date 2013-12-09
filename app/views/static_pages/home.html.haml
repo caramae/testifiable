@@ -1,28 +1,42 @@
-.hero-unit
-  %h2
-    Testifiable
-    %small
-      Randomized trials for everything
-      
-  %hr
-  .row
-    .span2
-    .span2
-      %h5='Step 1: Signup'
-      =link_to image_tag('step1_signup.png'), login_path, :class=>'no-back-hover'
-      %h5
-        %small='Signup with a username and password.'
-    .span1
-    .span2
-      %h5='Step 2: Testify'
-      =link_to image_tag('step2_enroll.png'), experiments_path, :class=>'no-back-hover'
-      %h5
-        %small='Gather data by creating and enrolling in experiments.'
-    .span1
-    .span2
-      %h5='Step 3: Analyze'
-      =link_to image_tag('step3_analyze.png'), experiments_path, :class=>'no-back-hover'
-      %h5
-        %small='Analyze the data and inform your decisions.'
-    .span2
-  %hr
+-if current_user
+  %h1='[Insert dashboard here.]'
+-else
+  .hero-unit
+
+    %h1='Find evidence to guide your life.'
+    %h2='Many people have the same questions. Discover the answers together.'
+
+    /%hr
+    /%h5="Search experiments" [Insert search bar]
+    /%h5=link_to "See all experiments", experiments_path
+
+    %hr
+
+    .row
+      .span3
+        =link_to content_tag(:h5,'Step 1: Sign up'), login_path, :title => 'Login'
+        =link_to image_tag('step1_signup.png'), login_path, :class=>'no-back-hover'
+        %h5
+          %small='Sign up for free to propose an experiment.'
+      .span1
+      .span3
+        =link_to content_tag(:h5,'Step 2: Testify'), experiments_path, :title => 'Testify'
+        =link_to image_tag('step2_enroll.png'), experiments_path, :class=>'no-back-hover'
+        %h5
+          %small='Enroll in experiments of interest to you.'
+      .span1
+      .span3
+        =link_to content_tag(:h5,'Step 3: Analyze'), experiments_path, :title => 'Analyze'
+        =link_to image_tag('step3_analyze.png'), experiments_path, :class=>'no-back-hover'
+        %h5
+          %small='Use the results to inform your decisions.'
+      .span1
+
+    %hr
+
+    .row
+      %h2='Randomized trials for everything.'
+      %p='We help you figure out what works using the most reliable method known: experiments.  You can participate in experiments proposed by others – it’s as simple as clicking “Enroll”, taking the prescribed action and responding when you receive a text asking what resulted.  You can also propose your own experiments and invite others to enroll.  The more experiments you enroll in, the easier it is to recruit subjects for your own experiments.'
+      %hr
+      %h2='Bust myths or confirm beliefs.'
+      %p='Maybe your mom told you drinking five glasses of water will make your cough go away faster.  You can try it yourself, but you still won’t know how quickly your cough would have gone away if you hadn’t done it!  The best solution is a randomized experiment – if a coin comes up heads you drink the water, if it’s tails you don’t.  But this requires many trials and you only have one cough.  We connect you to other people interested in the same question who each do the same thing – now we can compare outcomes for those who drank the water and those who did not.  We perform all the analysis for you.  All you have to do is pose a question, wait for people to sign up and you will get a scientifically valid answer.'
