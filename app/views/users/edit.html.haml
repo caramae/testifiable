@@ -3,7 +3,7 @@
   /%h1=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize
   %h1=t '.title', :default => ['Account Settings'], :model => model_class.model_name.human.titleize
 
--if @current_user
+-if @current_user && @current_user.is_admin == true
   %p
     %strong='Name:'
     %br
