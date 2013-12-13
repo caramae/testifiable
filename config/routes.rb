@@ -1,5 +1,7 @@
 Samplesite1::Application.routes.draw do
-  resources :datapoints
+  resources :datapoints do
+    collection { post :import }
+  end
 
   resources :experiments
   post "experiments/enroll", :as => :enroll

@@ -7,14 +7,14 @@
     -if @experiment.enrolled_status(@user.id) == 1
       = @experiment.action
     -elsif @experiment.enrolled_status(@user.id) == 2
-      =@experiment.control
+      = @experiment.control
   %br
   %br
   .control-group
     %strong
       Did you perform the following action?
     %br
-    =@experiment.action
+    = @experiment.action
     .controls{:style=>'padding-left:10px;'}
       = radio_button_tag 'action', 'Yes'
       Yes

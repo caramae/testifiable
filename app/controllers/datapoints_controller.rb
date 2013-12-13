@@ -7,6 +7,16 @@ class DatapointsController < ApplicationController
   # GET /datapoints.json
   def index
     @datapoints = Datapoint.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @datapoints.to_csv }
+      format.xls # { send_data @datapoints.to_csv(col_sep: "\t") }
+    end
+  end
+
+  def import
+    Datapoint.import(params[:file])
+    redirect_to datapoints_url, notice: "Datapoints imported."
   end
 
   # GET /datapoints/1
@@ -24,7 +34,7 @@ class DatapointsController < ApplicationController
 
       @experiment = Experiment.find(@datapoint.experiment_id)
     else
-      redirect_to @current_user, notice: 'Please an experiment in which you are enrolled.'
+      redirect_to @current_user, notice: 'Please select an experiment in which you are enrolled.'
     end
   end
 

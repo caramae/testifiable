@@ -1,9 +1,6 @@
 class User < ActiveRecord::Base
   has_secure_password
-  validates_uniqueness_of :email
-  validates_uniqueness_of :name
-
-
+  validates_uniqueness_of :name, :email
 
   has_many :enrolls
   has_many :experiments, through: :enrolls
@@ -20,6 +17,4 @@ class User < ActiveRecord::Base
     experiments = Experiment.where('author=?', self.id)
     return experiments
   end
-
-
 end
