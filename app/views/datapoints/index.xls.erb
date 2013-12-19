@@ -1,0 +1,14 @@
+<table border="1">
+	<tr>
+		<th>Experiment ID</th>
+		<th>Value</th>
+		<th>Compliance</th>
+	</tr>
+	<% @datapoints.each do |datapoint| %>
+		<tr>
+			<td><%= datapoint.experiment_id %></td>
+			<td><%= datapoint.value %></td>
+			<td><%= datapoint.value %></td>
+		</tr>
+	<% end %>
+</table>

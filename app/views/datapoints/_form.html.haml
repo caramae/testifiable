@@ -24,7 +24,7 @@
   %br
   .control-group
     %strong
-      = 'Record in ' + @experiment.unit + ': '
+      = 'Record ' + @experiment.outcome + ' in ' + @experiment.unit + ': '
     .controls
       = f.text_field :value, :class => 'text_field', :placeholder=>'Update data here in ' + @experiment.unit.downcase
       = f.hidden_field :experiment_id

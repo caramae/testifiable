@@ -7,6 +7,11 @@ class DatapointsController < ApplicationController
   # GET /datapoints.json
   def index
     @datapoints = Datapoint.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @datapoints.to_csv }
+      format.xls
+    end
   end
 
   # GET /datapoints/1
@@ -26,6 +31,11 @@ class DatapointsController < ApplicationController
     else
       redirect_to @current_user, notice: 'Please an experiment in which you are enrolled.'
     end
+  end
+
+  def import
+    Datapoint.import(params[:file])
+    redirect_to root_url, notice: "Datapoints imported."
   end
 
   # GET /datapoints/1/edit

@@ -16,7 +16,7 @@ gem 'bcrypt-ruby', '> 3.1.0'
 
 #gem "therubyracer"
 #gem "less-rails"
-gem "twitter-bootstrap-rails"
+gem 'twitter-bootstrap-rails'
 
 
 group :development do
