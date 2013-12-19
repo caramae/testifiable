@@ -35,7 +35,7 @@ class DatapointsController < ApplicationController
 
   def import
     Datapoint.import(params[:file])
-    redirect_to root_url, notice: "Datapoints imported."
+    redirect_to datapoints_url, notice: "Datapoints imported."
   end
 
   # GET /datapoints/1/edit
@@ -94,6 +94,6 @@ class DatapointsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def datapoint_params
-      params.require(:datapoint).permit(:experiment_id, :user_id, :value)
+      params.require(:datapoint).permit(:experiment_id, :user_id, :value, :value2, :compliance)
     end
 end

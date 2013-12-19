@@ -1,6 +1,7 @@
 class Experiment < ActiveRecord::Base
   has_many :enrolls
   has_many :users, through: :enrolls
+  validates_presence_of :action, :control, :outcome, :unit
 
 
   def is_enrolled(user_id)

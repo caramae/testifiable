@@ -14,6 +14,14 @@
   %strong= model_class.human_attribute_name(:value) + ':'
   %br
   = @datapoint.value
+%p
+  %strong= model_class.human_attribute_name(:value2) + ':'
+  %br
+  = @datapoint.value2
+%p
+  %strong= model_class.human_attribute_name(:compliance) + ':'
+  %br
+  = @datapoint.compliance
 
 .form-actions
   = link_to t('.back', :default => t("helpers.links.back")), datapoints_path, :class => 'btn'

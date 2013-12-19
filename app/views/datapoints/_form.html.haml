@@ -14,19 +14,25 @@
     %strong
       Did you perform the following action?
     %br
-    =@experiment.action
+    = @experiment.action
     .controls{:style=>'padding-left:10px;'}
-      = radio_button_tag 'action', 'Yes'
+      = f.check_box :compliance, :class => 'check-box_field'
       Yes
-      %br
-      = radio_button_tag 'action', 'No'
-      No
+      /= radio_button_tag 'action', 'Yes'
+      /Yes
+      /%br
+      /= radio_button_tag 'action', 'No'
+      /No
   %br
   .control-group
     %strong
       = 'Record ' + @experiment.outcome + ' in ' + @experiment.unit + ': '
     .controls
       = f.text_field :value, :class => 'text_field', :placeholder=>'Update data here in ' + @experiment.unit.downcase
+      = 'Value 2'
+      = f.text_field :value2, :class => 'text_field', :placeholder=>'Update data here in ' + @experiment.unit.downcase
+      = radio_button_tag 'action', 'Unknown'
+      Unknown
       = f.hidden_field :experiment_id
       = f.hidden_field :user_id
   .form-actions

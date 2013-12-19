@@ -12,9 +12,10 @@ class Datapoint < ActiveRecord::Base
 
   def self.import(file)
   	CSV.foreach(file.path, headers: true) do |row|
-  		datapoint = find_by_id(row["id"]) || new
-  		datapoint.attributes = row.to_hash.slice(:experiment_id, :value)
-  		datapoint.save!
+      Datapoint.create! row.to_hash
+  		#datapoint = find_by_id(row["id"]) || new
+  		#datapoint.attributes = row.to_hash.slice(:value, :value2, :compliance)
+  		#datapoint.save!
   	end
   end
 end

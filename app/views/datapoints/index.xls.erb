@@ -1,14 +1,14 @@
 <table border="1">
 	<tr>
-		<th>Experiment ID</th>
-		<th>Value</th>
+		<th>Value 1</th>
+		<th>Value 2</th>
 		<th>Compliance</th>
 	</tr>
 	<% @datapoints.each do |datapoint| %>
 		<tr>
-			<td><%= datapoint.experiment_id %></td>
 			<td><%= datapoint.value %></td>
-			<td><%= datapoint.value %></td>
+			<td><%= datapoint.value2 %></td>
+			<td><%= datapoint.compliance %></td>
 		</tr>
 	<% end %>
 </table>
