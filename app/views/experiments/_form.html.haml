@@ -1,4 +1,10 @@
 = form_for @experiment, :html => {} do |f|
+  - if @experiment.errors.any?
+    #error_explanation
+      %h2= "There are #{pluralize(@experiment.errors.count, "error")}:"
+      %ul
+        - @experiment.errors.full_messages.each do |msg|
+          %li= msg
 
   .contentBlock='What is the impact of'
   %br

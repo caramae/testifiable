@@ -7,6 +7,7 @@
     %tr
       %th= 'Experiment'
       %th= 'Action'
+      %th= 'Time left'
   %tbody
     - @experiments.each do |experiment|
       %tr
@@ -15,10 +16,16 @@
           -if @current_user
             -if experiment.is_enrolled(@current_user.id)
               .btn.btn-mini{:disabled=>'disabled'}="Enrolled"
+              /add option to unenroll
             -else
               =link_to "Enroll", {:action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
           -else
             =link_to "Enroll", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
             .muted="Login to enroll!"
+        %td
+          -if @current_user && experiment.is_enrolled(@current_user.id)
+            = Time.now
+          -else
+            = "TKTKTK"
 
 = link_to t('.new', :default => t("helpers.links.new")), new_experiment_path, :class => 'btn btn-primary whiteText'

@@ -1,4 +1,11 @@
 = form_for @user, :html => { :class => 'form-horizontal' } do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2= "There are #{pluralize(@user.errors.count, "error")}:"
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+
   .control-group
     = f.label :name, "Username", :class => 'control-label'
     .controls

@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
+  include ActiveModel::Validations
+
   has_secure_password
-  validates_presence_of :name, :message => "Username is missing."
-  validates_presence_of :email, :message => "Email address is missing."
-  validates_uniqueness_of :name, :message => "This username already exists."
-  validates_uniqueness_of :email, :message => "This email address is already used."
+  validates :name, presence: true, uniqueness: true, length: { minimum: 2 }
+  validates :email, presence: true, uniqueness: true, email: true
+  validates :password, length: { minimum: 5 }
 
   has_many :enrolls
   has_many :experiments, through: :enrolls
@@ -20,6 +21,4 @@ class User < ActiveRecord::Base
     experiments = Experiment.where('author=?', self.id)
     return experiments
   end
-
-
 end
