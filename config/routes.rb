@@ -1,6 +1,7 @@
 Samplesite1::Application.routes.draw do
   resources :datapoints do
     collection { post :import }
+    collection { post :analyze }
   end
 
   resources :experiments

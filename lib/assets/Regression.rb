@@ -17,5 +17,6 @@ beta = inv(Z.t*X)*Z.t*Y
 Omega = Matrix.diagonal(Y - X*beta)
 P_z = Z*inv(Z.t*Z)*Z.t
 Variance = inv(X.t*P_z*X)*(X.t*Z*inv(Z.t*Z)*(Z.t*Omega*Z)*inv(Z.t*Z)*Z.t*X)*inv(X.t*P_z*X)
+
 SE = sqrt(Variance)
 CI = [beta - 1.96*se, beta + 1.96*se]

@@ -1,6 +1,14 @@
 class Datapoint < ActiveRecord::Base
   belongs_to :experiment
 
+  def compliant()
+    if compliance == true
+      return 1
+    else
+      return 0
+    end
+  end
+
   def self.to_csv(options = {})
   	CSV.generate(options) do |csv|
   		csv << column_names

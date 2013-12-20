@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20131219223722) do
     t.decimal  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "compliance"
+    t.integer  "compliance"
     t.decimal  "value2"
   end
 

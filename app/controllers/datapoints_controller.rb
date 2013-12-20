@@ -1,3 +1,5 @@
+require 'matrix'
+
 class DatapointsController < ApplicationController
   before_action :set_datapoint, only: [:show, :edit, :update, :destroy]
   before_filter :signed_in?
@@ -11,6 +13,30 @@ class DatapointsController < ApplicationController
       format.html
       format.csv { send_data @datapoints.to_csv }
       format.xls
+    end
+  end
+
+  def analyze
+    @datapoints = Datapoint.all
+    xmat = Matrix.column_vector(Datapoint.pluck(:value))
+    ymat = Matrix.column_vector(Datapoint.pluck(:value2))
+    #comp = Datapoint.pluck(:compliance)
+    #comp.each {|c| c = (c ? 1 : 0)}
+    zmat = Matrix.column_vector(Datapoint.pluck(:compliance))
+
+    beta = (zmat.t * xmat).inv * zmat.t * ymat
+    omega = Matrix.diagonal(*(ymat - xmat*beta))
+    p_z = zmat * (zmat.t * zmat).inv * zmat.t
+    #variance = (xmat.t * p_z * xmat).inv * (xmat.t * zmat * (zmat.t * zmat).inv * (zmat.t * omega * zmat) * (zmat.t * zmat).inv * zmat.t * xmat) * (xmat.t * p_z * xmat).inv
+
+    standard_error = p_z.row_count#sqrt(Variance)
+    confint1 = beta[0,0]#beta - 1.96*se
+    confint2 = p_z.column_count#beta + 1.96*se
+
+    Datapoint.create(experiment_id:standard_error, value:confint1, value2:confint2)
+    respond_to do |format|
+      format.html { redirect_to datapoints_path, notice: 'Here are the results!' }
+      #format.json { render action: 'index', status: :created, location: experiments_path }
     end
   end
 
