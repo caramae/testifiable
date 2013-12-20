@@ -5,15 +5,18 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-
-      =link_to image_tag('logo.png'), root_path, :class=>'brand'
+      -if current_user
+        =link_to image_tag('logo.png'), current_user, :class=>'brand'
+      -else
+        =link_to image_tag('logo.png'), root_path, :class=>'brand'
       .nav-collapse
         %ul.nav.pull-right
           %li=link_to "All Experiments", experiments_path
           /%li=link_to "About", static_pages_about_path
           -if current_user
-            %li=link_to current_user.name, user_path(current_user)
+            %li=link_to 'Welcome', root_path
             %li=link_to 'Account Settings', edit_user_path(current_user)
+            %li=link_to current_user.name, user_path(current_user)
             %li=link_to "Logout", session_path(:current), method: :delete
           -else
             %li{:class => "signin"}=link_to "Log in", login_path
