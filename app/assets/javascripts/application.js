@@ -16,7 +16,7 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).ready(function() {
+/*$(document).ready(function() {
 	$(".signin").click(function(e) {
 	    e.preventDefault();
 	    $("fieldset#signin_menu").toggle();
@@ -32,4 +32,4 @@ $(document).ready(function() {
 	        $("fieldset#signin_menu").hide();
 	    }
 	});
-});
+});*/

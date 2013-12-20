@@ -10,7 +10,7 @@ function ExperimentEvents()
     var regNum = /[0-9]*/;
     var respText = actionText;
 
-    alert("Blur called 2");
+    //alert("Blur called 2");
     respText = actionText.replace(' less ',' more ');
     if(respText == actionText)
     { respText = actionText.replace(' more ', ' less '); }

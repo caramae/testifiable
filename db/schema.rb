@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131220050616) do
+ActiveRecord::Schema.define(version: 20131220233017) do
 
   create_table "datapoints", force: true do |t|
     t.integer  "experiment_id"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20131220050616) do
     t.datetime "updated_at"
     t.boolean  "compliance"
     t.decimal  "value2"
+    t.string   "comment"
   end
 
   create_table "enrolls", force: true do |t|
