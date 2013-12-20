@@ -13,8 +13,8 @@ class UsersController < ApplicationController
   def show
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
 
-    @enrolled_experiments = @user.enrolled_experiments
-    @recommended_experiments = Experiment.where('id not in (?)', @enrolled_experiments.select('id'))
+    @enrolled_experiments = @user.enrolled_experiments.order('id DESC')
+    @recommended_experiments = Experiment.where('id not in (?)', @enrolled_experiments.select('id')).order('id DESC')
   end
 
   # GET /users/new
@@ -26,7 +26,6 @@ class UsersController < ApplicationController
   def edit
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
-
 
   # POST /users
   # POST /users.json
