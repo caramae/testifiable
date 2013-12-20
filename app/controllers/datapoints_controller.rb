@@ -18,22 +18,33 @@ class DatapointsController < ApplicationController
 
   def analyze
     @datapoints = Datapoint.all
-    xmat = Matrix.column_vector(Datapoint.pluck(:value))
+    xarr = Datapoint.pluck(:value)
+    xmat = Matrix.columns([Array.new(xarr.length, 1), xarr])
+
     ymat = Matrix.column_vector(Datapoint.pluck(:value2))
+    #yarr = Datapoint.pluck(:value2)
+    #ymat = Matrix.columns([Array.new(yarr.length, 1), yarr])
     #comp = Datapoint.pluck(:compliance)
     #comp.each {|c| c = (c ? 1 : 0)}
-    zmat = Matrix.column_vector(Datapoint.pluck(:compliance))
+    zarr = Datapoint.pluck(:compliance)
+    zmat = Matrix.columns([Array.new(zarr.length, 1), zarr])
 
     beta = (zmat.t * xmat).inv * zmat.t * ymat
-    omega = Matrix.diagonal(*(ymat - xmat*beta))
+    omg = (ymat.column_vectors[0] - xmat.column_vectors[1]*beta[1,0]).to_a
+    omega = Matrix.diagonal(*omg)
+
+    xmat = Matrix.column_vector(Datapoint.pluck(:value))
+    zmat = Matrix.column_vector(Datapoint.pluck(:compliance))
     p_z = zmat * (zmat.t * zmat).inv * zmat.t
-    #variance = (xmat.t * p_z * xmat).inv * (xmat.t * zmat * (zmat.t * zmat).inv * (zmat.t * omega * zmat) * (zmat.t * zmat).inv * zmat.t * xmat) * (xmat.t * p_z * xmat).inv
+    z2 = (zmat.t * zmat).inv
+    xpx = (xmat.t * p_z * xmat).inv
+    var = xpx * (xmat.t * zmat * z2 * (zmat.t * omega * zmat) * z2 * zmat.t * xmat) * xpx
+    se2 = Math.sqrt(var[0,0])
 
-    standard_error = p_z.row_count#sqrt(Variance)
-    confint1 = beta[0,0]#beta - 1.96*se
-    confint2 = p_z.column_count#beta + 1.96*se
+    #confint1 = beta[1,0] - 1.96*standard_error
+    #confint2 = beta[1,0] + 1.96*standard_error
 
-    Datapoint.create(experiment_id:standard_error, value:confint1, value2:confint2)
+    Datapoint.create(experiment_id:beta[0,0], value:beta[1,0], value2:se2)
     respond_to do |format|
       format.html { redirect_to datapoints_path, notice: 'Here are the results!' }
       #format.json { render action: 'index', status: :created, location: experiments_path }
