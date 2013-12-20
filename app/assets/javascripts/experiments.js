@@ -10,6 +10,7 @@ function ExperimentEvents()
     var regNum = /[0-9]*/;
     var respText = actionText;
 
+    alert("Blur called 2");
     respText = actionText.replace(' less ',' more ');
     if(respText == actionText)
     { respText = actionText.replace(' more ', ' less '); }
@@ -22,11 +23,16 @@ function ExperimentEvents()
     {
       respText = actionText.replace(/[0-9]\S/, '0');
     }
-    else if(respText==actionText)
+    else
     {
+      alert("Do Something in here");
       respText = 'Not ' + actionText;
     }
+    
+    
     $('#expControl').val(respText);
+
+
   });
 }
 
