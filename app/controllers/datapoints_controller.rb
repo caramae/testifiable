@@ -131,6 +131,6 @@ class DatapointsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def datapoint_params
-      params.require(:datapoint).permit(:experiment_id, :user_id, :value, :value2, :compliance)
+      params.require(:datapoint).permit(:experiment_id, :user_id, :value, :value2, :compliance, :comment)
     end
 end

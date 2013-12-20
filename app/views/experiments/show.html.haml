@@ -1,23 +1,30 @@
 - model_class = Experiment
-.page-header
-  %h1=t '.title', :default => model_class.model_name.human.titleize
+.container
+  .page-header
+    %h3=t '.title', :default => model_class.model_name.human.titleize
 
-%p
-  %strong= 'Question:'
+  %p
+    %strong= 'Question:'
+    = "What is the impact of " + @experiment.action
+    = " vs. " + @experiment.control
+    = " on " + @experiment.outcome
+    = " as measured in " + @experiment.unit + '?'
+    %br
+    %strong= 'Prerequisites:'
+    = @experiment.prereqs
+    %br
+    %strong= 'Timespan:'
+    = @experiment.duration_in_days.to_s + ' days'
+    %br
+    = 'Created by user'
+    = @experiment.author
+    /should link to author profile page
+
   %br
   %br
-  = "What is the impact of " + @experiment.action
-  = " vs. " + @experiment.control
-  = " on " + @experiment.outcome
-  = " as measured in " + @experiment.unit + '?'
 
-%br
-%br
-%br
-%br
-
-.form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), experiments_path, :class => 'btn'
-  -if @current_user && @experiment.author == @current_user.id
-    = link_to t('.edit', :default => t("helpers.links.edit")), edit_experiment_path(@experiment), :class => 'btn'
-    = link_to t('.destroy', :default => t("helpers.links.destroy")), experiment_path(@experiment), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger whiteText'
+  .form-actions
+    = link_to t('.back', :default => t("helpers.links.back")), experiments_path, :class => 'btn'
+    -if @current_user && @experiment.author == @current_user.id
+      = link_to t('.edit', :default => t("helpers.links.edit")), edit_experiment_path(@experiment), :class => 'btn'
+      = link_to t('.destroy', :default => t("helpers.links.destroy")), experiment_path(@experiment), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger whiteText'

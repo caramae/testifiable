@@ -29,12 +29,16 @@
       = 'Record ' + @experiment.outcome + ' in ' + @experiment.unit + ': '
     .controls
       = f.text_field :value, :class => 'text_field', :placeholder=>'Update data here in ' + @experiment.unit.downcase
-      = 'Value 2'
-      = f.text_field :value2, :class => 'text_field', :placeholder=>'Update data here in ' + @experiment.unit.downcase
+      /= 'Value 2'
+      /= f.text_field :value2, :class => 'text_field', :placeholder=>'Update data here in ' + @experiment.unit.downcase
       = radio_button_tag 'action', 'Unknown'
       Unknown
       = f.hidden_field :experiment_id
       = f.hidden_field :user_id
+    
+    = 'Optional: add a comment, such as other actions you took that may have influenced your outcome.'
+    .controls
+      = f.text_field :comment, :class => 'text_field'
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), datapoints_path, :class => 'btn'

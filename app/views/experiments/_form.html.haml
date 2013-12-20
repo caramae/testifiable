@@ -11,13 +11,21 @@
   %br
   %br
   .contentBlock='On'
+  = f.text_field :outcome, :class => 'text_field span3', :placeholder => 'Outcome (eg. "Weight")'
   %br
-  = f.text_field :outcome, :class => 'text_field span6', :placeholder => 'Outcome (eg. "Weight")'
+  %br
+  .contentBlock='As measured in'
+  = f.text_field :unit, :class => 'text_field span3', :placeholder => 'Units (eg. "lb.")'
   %br
   %br
-  .contentBlock='As measured by'
+  %strong= 'Optional'
+  .contentBlock='Timespan of a single trial (in days)'
   %br
-  = f.text_field :unit, :class => 'text_field span6', :placeholder => 'Units (eg. "lb.")'
+  = f.text_field :duration_in_days, :class => 'text_field span6', :placeholder => '0 days'
+  %br
+  .contentBlock='Conditions for participation in the experiment'
+  %br
+  = f.text_area :prereqs, :class => 'text_field span12', :placeholder => 'Enter conditions that people must meet in order to participate in the study.'
 
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
