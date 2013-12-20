@@ -10,7 +10,7 @@
       .nav-collapse
         %ul.nav.pull-right
           %li=link_to "All Experiments", experiments_path
-          //%li=link_to "About", static_pages_about_path
+          /%li=link_to "About", static_pages_about_path
           -if current_user
             %li=link_to current_user.name, user_path(current_user)
             %li=link_to 'Account Settings', edit_user_path(current_user)
@@ -18,13 +18,13 @@
           -else
             %li{:class => "signin"}=link_to "Log in", login_path
             %li=link_to "Sign up", new_user_path
-      
+-#
   .container
     .topnav{:id => "topnav"}
       %a{:href => login_path, :class => "signin"}
         %span= "Sign in"
     %fieldset{:id => "signin_menu"}
-      %form{:method => "post", :id => "signin", :action => new_session_path}
+      %form{:method => "post", :id => "signin", :action => "sessions"}
         %p
           %label{:for => "username"}= "Username or email"
           %input{:id => "username", :name => "username", :value => "", :title => "username", :tabindex => "4", :type => "text"}
