@@ -6,35 +6,34 @@
         - @experiment.errors.full_messages.each do |msg|
           %li= msg
 
-  .contentBlock='What is the impact of'
-  %br
+  %h5='What is the impact of'
   =f.text_field :action, :class => 'text_field span6', :placeholder => 'Action (eg. "Performing 20 mins of exercise")', :id=>'expAction'
-  %br
   %br
   .input-prepend
     %span.add-on="vs."
     = f.text_field :control, :class => 'text_field span6', :placeholder => 'Control (eg. "Performing 0 mins of exercise")', :id=>'expControl'
   %br
+  .input-prepend
+    %span.add-on="on"
+    = f.text_field :outcome, :class => 'text_field span3', :placeholder => 'Outcome (eg. "Weight")'
+  .input-prepend
+    %span.add-on="as measured in"
+    = f.text_field :unit, :class => 'text_field span2', :placeholder => 'Units (eg. "lb.")'
   %br
-  .contentBlock='On'
-  = f.text_field :outcome, :class => 'text_field span3', :placeholder => 'Outcome (eg. "Weight")'
   %br
-  %br
-  .contentBlock='As measured in'
-  = f.text_field :unit, :class => 'text_field span3', :placeholder => 'Units (eg. "lb.")'
-  %br
-  %br
-  %strong= 'Optional'
+  %strong= 'Advanced options'
   .contentBlock='Timespan of a single trial (in days)'
-  %br
-  = f.text_field :duration_in_days, :class => 'text_field span6', :placeholder => '0 days'
-  %br
+  = f.text_field :duration_in_days, :class => 'text_field span1', :placeholder => '0 days'
+  .contentBlock='Frequency of reminders (in days)'
+  = f.text_field :duration_in_days, :class => 'text_field span1', :placeholder => '0 days'
   .contentBlock='Conditions for participation in the experiment'
-  %br
-  = f.text_area :prereqs, :class => 'text_field span12', :placeholder => 'Enter conditions that people must meet in order to participate in the study.'
-  .contentBlock='Make this experiment private'
+  = f.text_area :prereqs, :class => 'text_area span6', :placeholder => 'Enter conditions that people must meet in order to participate in the study.'
   %br
   = f.check_box :is_public, {}, false, true
+  %span='Make this experiment private'
+  %br
+  = f.check_box :is_public, {}, false, true
+  %span='Allow repeated entries'
 
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
