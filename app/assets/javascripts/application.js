@@ -34,5 +34,34 @@ function SignInPopup() {
 	});
 }
 
-$(document).ready(function(){ SignInPopup(); });
-$(document).on('page:load', function(){ SignInPopup(); });
+function RecordDataPopup() {
+	/*eventually move this to users.js.coffee*/
+	$(".recorddata").click(function(e) {
+	    /*e.preventDefault();
+	    req.open("GET","/datapoints/_form.html.haml",false);
+	    req.send(null);
+	    if( req.status == 200 ) {
+		  popup.innerHTML = req.responseText;
+		  return true;
+		} else {
+		  popup.innerHTML = "<p class='error'>"+req.status+" ("+req.statusText+")</p>";
+		  return false;
+		}
+	    $(this).toggleClass("menu-open");
+	    $("fieldset#recorddata_menu").toggle();*/
+	});
+
+	/*$("fieldset#recorddata_menu").mouseup(function() {
+	    return false
+	});
+	$(document).mouseup(function(e) {
+	    if(!$(e.target).hasClass("recorddata")) {
+	        $(".recorddata").removeClass("menu-open");
+	        $("fieldset#recorddata_menu").hide();
+	    }
+	});*/
+}
+
+
+$(document).ready(function(){ SignInPopup(); RecordDataPopup(); });
+$(document).on('page:load', function(){ SignInPopup(); RecordDataPopup(); });

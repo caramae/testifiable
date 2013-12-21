@@ -27,7 +27,10 @@
                   ='Randomize to action!'
               %td
                 -if experiment.enrolled_status(@user.id) > 0
-                  =link_to "Record Data", {:controller=>'datapoints',:action=>'new', :experiment_id=>experiment.id}, :class=>"btn btn-mini"
+                  .recorddata= link_to "Record Data", {:controller=>'datapoints',:action=>'new', :experiment_id=>experiment.id}, :class=>"btn btn-mini"
+                  /%fieldset{:id => "recorddata"}
+                  /  .container
+                  /    =render 'datapoints/form'
                 -else
                   =link_to "Randomize Action", randomize_path(:experiment_id => experiment.id), :method=>:post, :class=>"btn btn-mini"
 

@@ -32,12 +32,12 @@
                     =password_field_tag :password, '', class: 'text_field'
                   =submit_tag 'Log in', class: 'submitbutton btn btn-primary whiteText'
                   &nbsp&nbsp
-                  %span{:class => "remember"}
-                    %input{:id => "remember", :name => "remember_me", :value => "1", :tabindex => "7", :type => "checkbox"}
-                    = "Remember me"
+                  /%span{:class => "remember"}
+                  /  %input{:id => "remember", :name => "remember_me", :value => "1", :tabindex => "7", :type => "checkbox"}
+                  /  = "Remember me"
                   %br
                   %span{:class => "forgot"}
                     %a{:href => "#", :id => "resend_password_link"}= "Forgot your password?"
                   &nbsp&nbsp
-                  %span{:class => "forgot-username"}
-                    %a{:href => "#", :id => "forgot_username_link", :title => "If you remember your password, try logging in with your email"}= "Forgot your username?"
+                  /%span{:class => "forgot-username"}
+                  /  %a{:href => "#", :id => "forgot_username_link", :title => "If you remember your password, try logging in with your email"}= "Forgot your username?"
