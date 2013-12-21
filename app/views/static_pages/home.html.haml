@@ -22,19 +22,19 @@
 
   .row
     .span3
-      =link_to content_tag(:h5,'Step 1: Sign up'), login_path, :title => 'Login'
-      =link_to image_tag('step1_signup.png'), login_path, :class=>'no-back-hover'
+      =link_to content_tag(:h5,'Step 1: Sign up'), new_user_path
+      =link_to image_tag('step1_signup.png'), new_user_path, :class=>'no-back-hover'
       %h5
         %small='Sign up for free to propose an experiment.'
     .span1
     .span3
-      =link_to content_tag(:h5,'Step 2: Testify'), experiments_path, :title => 'Testify'
+      =link_to content_tag(:h5,'Step 2: Testify'), experiments_path
       =link_to image_tag('step2_enroll.png'), experiments_path, :class=>'no-back-hover'
       %h5
         %small='Enroll in experiments of interest to you.'
     .span1
     .span3
-      =link_to content_tag(:h5,'Step 3: Analyze'), experiments_path, :title => 'Analyze'
+      =link_to content_tag(:h5,'Step 3: Analyze'), experiments_path
       =link_to image_tag('step3_analyze.png'), experiments_path, :class=>'no-back-hover'
       %h5
         %small='Use the results to inform your decisions.'

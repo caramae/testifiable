@@ -16,20 +16,23 @@
 //= require turbolinks
 //= require_tree .
 
-/*$(document).ready(function() {
-	$(".signin").click(function(e) {
+function SignInPopup() {
+	$("li.signin").click(function(e) {
 	    e.preventDefault();
+	    $(this).toggleClass("menu-open");
 	    $("fieldset#signin_menu").toggle();
-	    $(".signin").toggleClass("menu-open");
 	});
 
 	$("fieldset#signin_menu").mouseup(function() {
 	    return false
 	});
 	$(document).mouseup(function(e) {
-	    if($(e.target).parent("a.signin").length==0) {
+	    if(!$(e.target).hasClass("signin")) {
 	        $(".signin").removeClass("menu-open");
 	        $("fieldset#signin_menu").hide();
 	    }
 	});
-});*/
+}
+
+$(document).ready(function(){ SignInPopup(); });
+$(document).on('page:load', function(){ SignInPopup(); });

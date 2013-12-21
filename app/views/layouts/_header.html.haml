@@ -20,7 +20,29 @@
             %li=link_to raw("<i class=\"fa fa-sign-out fa-lg\"></i>"), session_path(:current), method: :delete
           -else
             %li=link_to raw("<i class=\"fa fa-user fa-lg\"></i> ")+"Sign up", new_user_path
-            %li=link_to raw("<i class=\"fa fa-sign-in fa-lg\"></i>") + " Log in", login_path
+            %li{:class => "signin"}=link_to raw("<i class=\"fa fa-sign-in fa-lg\"></i>") + " Log in", login_path
+            %fieldset{:id => "signin_menu"}
+              .container
+                =form_tag sessions_path do
+                  .field
+                    =label_tag :email
+                    =text_field_tag :email, params[:email], class: 'text_field'
+                  .field
+                    =label_tag :password
+                    =password_field_tag :password, '', class: 'text_field'
+                  =submit_tag 'Log in', class: 'submitbutton btn btn-primary whiteText'
+                  &nbsp&nbsp
+                  %span{:class => "remember"}
+                    %input{:id => "remember", :name => "remember_me", :value => "1", :tabindex => "7", :type => "checkbox"}
+                    = "Remember me"
+                  %br
+                  %span{:class => "forgot"}
+                    %a{:href => "#", :id => "resend_password_link"}= "Forgot your password?"
+                  &nbsp&nbsp
+                  %span{:class => "forgot-username"}
+                    %a{:href => "#", :id => "forgot_username_link", :title => "If you remember your password, try logging in with your email"}= "Forgot your username?"
+
+
 -#
   .container
     .topnav{:id => "topnav"}

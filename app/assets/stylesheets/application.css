@@ -74,7 +74,7 @@ a.no-click-change:visted
 }
 
 
-/*
+
 #container {
     width:780px;
     margin:0 auto;
@@ -157,20 +157,23 @@ a.signin.menu-open span {
     -webkit-border-bottom-left-radius:5px;
     -webkit-border-bottom-right-radius:5px;
     display:none;
-    background-color:#ddeef6;
+    background-color:#eee;
     position:absolute;
-    width:210px;
     z-index:100;
     border:1px transparent;
     text-align:left;
     padding:12px;
-    top: 24.5px;
+    top: 40px;
     right: 0px;
     margin-top:5px;
     margin-right: 0px;
     *margin-right: -1px;
     color:#789;
     font-size:11px;
+}
+
+#signin_menu .container {
+    width:300px;
 }
 
 #signin_menu input[type=text], #signin_menu input[type=password] {
@@ -221,4 +224,4 @@ a.signin.menu-open span {
 #signin_submit:hover, #signin_submit:focus {
     background-position:0 -5px;
     cursor:pointer;
-}*/
+}

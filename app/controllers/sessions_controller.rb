@@ -10,13 +10,13 @@ class SessionsController < ApplicationController
       redirect_to user
     else
       flash[:error] = 'Invalid username or password.'
-      redirect_to login_path
+      redirect_to root_path
     end
   end
 
   def destroy
     reset_session
     #flash[:notice] = "Logged Out!"
-    redirect_to login_path
+    redirect_to root_path
   end
 end

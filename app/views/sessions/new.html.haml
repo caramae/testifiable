@@ -1,19 +1,21 @@
-.hero.signin_hero
-  .container
-    %br
+This page should never be visible
+-#
+  .hero.signin_hero
     .container
-      =form_tag sessions_path do
-        .field
-          =label_tag :email
-          =text_field_tag :email, params[:email], class: 'text_field'
-        .field
-          =label_tag :password
-          =password_field_tag :password, '', class: 'text_field'
-        .form-actions
-          =submit_tag 'Log in', class: 'submitbutton btn btn-primary whiteText'
-          %br
-          %br
-          %br
-          Not a member yet?
-          %br
-          =link_to 'Sign up!', new_user_path, class: 'btn btn-info whiteText'
+      %br
+      .container
+        =form_tag sessions_path do
+          .field
+            =label_tag :email
+            =text_field_tag :email, params[:email], class: 'text_field'
+          .field
+            =label_tag :password
+            =password_field_tag :password, '', class: 'text_field'
+          .form-actions
+            =submit_tag 'Log in', class: 'submitbutton btn btn-primary whiteText'
+            %br
+            %br
+            %br
+            Not a member yet?
+            %br
+            =link_to 'Sign up!', new_user_path, class: 'btn btn-info whiteText'

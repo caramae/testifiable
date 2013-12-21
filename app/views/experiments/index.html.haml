@@ -10,7 +10,7 @@
       %th= 'Time left'
   %tbody
     - @experiments.each do |experiment|
-      -if experiment.is_public || (experiment.author==@current_user.id) || @current_user.is_admin
+      -if experiment.is_public || (@current_user && ((experiment.author==@current_user.id) || @current_user.is_admin))
         %tr
           %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome+'? (Measured in ' + experiment.unit + ')', experiment_path(experiment), :class=>'no-back-hover no-click-change'
           %td
