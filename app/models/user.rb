@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   has_secure_password
   validates :name, presence: true, uniqueness: true, length: { minimum: 2 }
-  validates :email, presence: true, uniqueness: true, email: true
+  #validates :email, presence: true, uniqueness: true, email: true
   #validates :password, length: { minimum: 5 }
 
   has_many :enrolls
