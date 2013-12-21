@@ -22,6 +22,9 @@
     %br
     %strong= 'Visibility:'
     = @experiment.is_public ? 'Public' : 'Private'
+    %br
+    %strong= 'Repeated entries allowed:'
+    = @experiment.allow_repeats ? 'Yes' : 'No'
 
   %br
   %br

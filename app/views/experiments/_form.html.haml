@@ -32,8 +32,8 @@
   = f.check_box :is_public, {}, false, true
   %span='Make this experiment private'
   %br
-  = f.check_box :allow_repeats
-  %span='Allow repeated entries'
+  = f.check_box :allow_repeats, {}, false, true
+  %span='Restrict to one trial per participant'
 
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
