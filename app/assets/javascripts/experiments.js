@@ -25,7 +25,7 @@ function ExperimentEvents()
     }
     else
     {
-      alert("Do Something in here");
+      /*alert("Do Something in here");*/
       respText = 'Not ' + actionText;
     }
     

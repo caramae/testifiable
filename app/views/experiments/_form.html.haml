@@ -22,7 +22,7 @@
   %br
   %br
   %strong= 'Advanced options'
-  .contentBlock='Timespan of a single trial (in days)'
+  .contentBlock='Minimum time between trials (in days)'
   = f.text_field :duration_in_days, :class => 'text_field span1', :placeholder => '0 days', :autocomplete => :off
   .contentBlock='Frequency of reminders (in days)'
   = f.text_field :duration_in_days, :class => 'text_field span1', :placeholder => '0 days', :autocomplete => :off
@@ -32,7 +32,7 @@
   = f.check_box :is_public, {}, false, true
   %span='Make this experiment private'
   %br
-  = f.check_box :is_public, {}, false, true
+  = f.check_box :allow_repeats
   %span='Allow repeated entries'
 
   .form-actions
