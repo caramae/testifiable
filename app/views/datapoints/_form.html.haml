@@ -22,18 +22,15 @@
       %br
       = f.radio_button :compliance, false
       = @experiment.enrolled_status(@user.id)==1 ? @experiment.control : @experiment.action
-      %br
-      = f.radio_button :compliance, false
-      = 'Other (please describe what you did instead).'
-      = f.text_field :comment, :class => 'text_field'
   %br
   .control-group
     %strong
       = 'Record ' + @experiment.outcome + ' in ' + @experiment.unit + ': '
     .controls
-      = f.text_field :value, :class => 'text_field', :placeholder=>'Update data here in ' + @experiment.unit.downcase
+      = f.text_field :value, :class => 'text_field'
       /= 'Value 2'
       /= f.text_field :value2, :class => 'text_field', :placeholder=>'Update data here in ' + @experiment.unit.downcase
+      %br
       = radio_button_tag 'action', 'Unknown'
       Unknown
       = f.hidden_field :experiment_id

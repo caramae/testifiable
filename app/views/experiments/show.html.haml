@@ -13,8 +13,8 @@
     %strong= 'Prerequisites:'
     = @experiment.prereqs.empty? ? "None" : @experiment.prereqs
     %br
-    %strong= 'Timespan:'
-    = @experiment.duration_in_days.to_s + ' days'
+    %strong= 'Time between trial entries:'
+    = @experiment.timeframe
     %br
     %strong= 'Creator:'
     = User.find(@experiment.author).name
@@ -22,9 +22,6 @@
     %br
     %strong= 'Visibility:'
     = @experiment.is_public ? 'Public' : 'Private'
-    %br
-    %strong= 'Repeated entries allowed:'
-    = @experiment.allow_repeats ? 'Yes' : 'No'
 
   %br
   %br

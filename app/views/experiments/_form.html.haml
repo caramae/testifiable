@@ -22,18 +22,28 @@
   %br
   %br
   %strong= 'Advanced options'
-  .contentBlock='Minimum time between trials (in days)'
-  = f.text_field :duration_in_days, :class => 'text_field span1', :placeholder => '0 days', :autocomplete => :off
-  .contentBlock='Frequency of reminders (in days)'
-  = f.text_field :duration_in_days, :class => 'text_field span1', :placeholder => '0 days', :autocomplete => :off
-  .contentBlock='Conditions for participation in the experiment'
-  = f.text_area :prereqs, :class => 'text_area span6', :placeholder => 'Enter conditions that people must meet in order to participate in the study.'
   %br
-  = f.check_box :is_public, {}, false, true
-  %span='Make this experiment private'
-  %br
-  = f.check_box :allow_repeats, {}, false, true
-  %span='Restrict to one trial per participant'
+  .field
+    Minimum time between trial entries: 
+    %i{:class => "fa fa-info-circle", :title => "Set the time frame of your trials in order to prevent users from making repeated and frivolous entries."}
+    = f.label :timeframe
+    %br
+    = f.label :timeframe, "Hourly", :value => "0"
+    = f.radio_button :timeframe, "0"
+    = f.label :timeframe, "Daily", :value => "1"
+    = f.radio_button :timeframe, "1"
+    = f.label :timeframe, "Other (enter a duration in days)"
+    = f.radio_button :timeframe, {}
+    = f.text_field :timeframe, :class => 'text_field span1', :placeholder => '7', :autocomplete => :off
+    = f.label :timeframe, "Restrict to one trial per person", :value => "-1"
+    = f.radio_button :timeframe, "-1"
+    %br
+  .field
+    .contentBlock='Conditions for participation in the experiment'
+    = f.text_area :prereqs, :class => 'text_area span6', :placeholder => 'Enter conditions that people must meet in order to participate in the study.'
+  .field
+    = f.check_box :is_public, {}, false, true
+    %span='Make this experiment private'
 
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'

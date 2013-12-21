@@ -4,9 +4,9 @@
     %h3= "Dashboard"
 
   .row
-    .span6.pull-left
+    .span8.pull-left
       .headingBlock
-        Enrolled Experiments
+        %h5= "Enrolled Experiments"
       %table.table.table-striped
 
         %thead
@@ -14,11 +14,12 @@
             %th= 'Experiment'
             %th= 'Action'
             %th= 'Testify'
+            %th= 'Time left'
         %tbody
           - @enrolled_experiments.each do |experiment|
             %tr
               %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
-              %td.muted
+              %td
                 -if experiment.enrolled_status(@user.id) == 1
                   =experiment.action
                 -elsif experiment.enrolled_status(@user.id) == 2
@@ -33,11 +34,16 @@
                   /    =render 'datapoints/form'
                 -else
                   =link_to "Randomize Action", randomize_path(:experiment_id => experiment.id), :method=>:post, :class=>"btn btn-mini"
+              %td
+                -if @current_user && experiment.is_enrolled(@current_user.id)
+                  = Time.now
+                -else
+                  = "TKTKTK"
 
 
-    .span6.pull-right
+    .span4.pull-right
       .headingBlock
-        Recommended Experiments
+        %h5= "Recommended Experiments"
       %table.table.table-striped
 
         %thead

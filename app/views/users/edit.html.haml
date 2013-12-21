@@ -1,30 +1,31 @@
 - model_class = User
-.page-header
-  /%h1=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize
-  %h1=t '.title', :default => ['Account Settings'], :model => model_class.model_name.human.titleize
+.container
+  .page-header
+    /%h1=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize
+    %h3=t '.title', :default => ['Account Settings'], :model => model_class.model_name.human.titleize
 
--if @current_user && @current_user.is_admin == true
-  %p
-    %strong='Name:'
-    %br
-    = @user.name
-  %p
-    %strong= 'Email:'
-    %br
-    = @user.email
-  %p
-    %strong= 'Is Administrator:'
-    %br
-    = @user.is_admin
-  = form_for @user, :html => { :class => 'form-horizontal' } do |f|
-    .control-group
-      =f.label :is_admin, :class => 'control-label'
-      .controls
-        =f.check_box :is_admin, :class => 'check-box_field'
+  -if @current_user && @current_user.is_admin == true
+    %p
+      %strong='Name:'
+      %br
+      = @user.name
+    %p
+      %strong= 'Email:'
+      %br
+      = @user.email
+    %p
+      %strong= 'Is Administrator:'
+      %br
+      = @user.is_admin
+    = form_for @user, :html => { :class => 'form-horizontal' } do |f|
+      .control-group
+        =f.label :is_admin, :class => 'control-label'
+        .controls
+          =f.check_box :is_admin, :class => 'check-box_field'
 
-    .form-actions
-      = f.submit nil, :class => 'btn btn-primary'
-      = link_to t('.cancel', :default => t("helpers.links.cancel")), @user, :class => 'btn'
+      .form-actions
+        = f.submit nil, :class => 'btn btn-primary'
+        = link_to t('.cancel', :default => t("helpers.links.cancel")), @user, :class => 'btn'
 
--elsif @current_user && @current_user.id == @user.id
-  = render :partial => "form"
+  -elsif @current_user && @current_user.id == @user.id
+    = render :partial => "form"

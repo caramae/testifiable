@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131221215111) do
+ActiveRecord::Schema.define(version: 20131221233949) do
 
   create_table "datapoints", force: true do |t|
     t.integer  "experiment_id"
@@ -43,8 +43,7 @@ ActiveRecord::Schema.define(version: 20131221215111) do
     t.integer  "author"
     t.string   "prereqs"
     t.boolean  "is_public"
-    t.integer  "duration_in_days"
-    t.boolean  "allow_repeats",    default: true
+    t.integer  "timeframe"
   end
 
   create_table "users", force: true do |t|
