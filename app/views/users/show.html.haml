@@ -43,18 +43,20 @@
             %th= 'Action'
         %tbody
           - @recommended_experiments.each do |experiment|
-            %tr
-              %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
-              %td
-                -if @current_user
-                  -if experiment.is_enrolled(@current_user.id)
-                    =link_to "Enrolled", root_path, :class=>"btn btn-mini", :disabled=>'disabled'
-                  -else
-                    =link_to "Testify", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
+            -if experiment.is_public || (experiment.author==@current_user.id) || @current_user.is_admin
+              /this needs to have actual recommendations
+              %tr
+                %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
+                %td
+                  -if @current_user
+                    -if experiment.is_enrolled(@current_user.id)
+                      =link_to "Enrolled", root_path, :class=>"btn btn-mini", :disabled=>'disabled'
+                    -else
+                      =link_to "Testify", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
 
-                -else
-                  =link_to "Testify", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
-                  .muted="Login to testify!"
+                  -else
+                    =link_to "Testify", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
+                    .muted="Login to testify!"
 
   .form-actions
     -if @current_user && @current_user.is_admin

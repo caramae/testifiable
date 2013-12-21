@@ -10,21 +10,22 @@
       %th= 'Time left'
   %tbody
     - @experiments.each do |experiment|
-      %tr
-        %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome+'? (Measured in ' + experiment.unit + ')', experiment_path(experiment), :class=>'no-back-hover no-click-change'
-        %td
-          -if @current_user
-            -if experiment.is_enrolled(@current_user.id)
-              .btn.btn-mini{:disabled=>'disabled'}="Enrolled"
+      -if experiment.is_public || (experiment.author==@current_user.id) || @current_user.is_admin
+        %tr
+          %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome+'? (Measured in ' + experiment.unit + ')', experiment_path(experiment), :class=>'no-back-hover no-click-change'
+          %td
+            -if @current_user
+              -if experiment.is_enrolled(@current_user.id)
+                .btn.btn-mini{:disabled=>'disabled'}="Enrolled"
+              -else
+                =link_to "Enroll", {:action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
             -else
-              =link_to "Enroll", {:action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
-          -else
-            =link_to "Enroll", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
-            .muted="Login to enroll!"
-        %td
-          -if @current_user && experiment.is_enrolled(@current_user.id)
-            = Time.now
-          -else
-            = "TKTKTK"
+              =link_to "Enroll", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
+              .muted="Login to enroll!"
+          %td
+            -if @current_user && experiment.is_enrolled(@current_user.id)
+              = Time.now
+            -else
+              = "TKTKTK"
 
 = link_to t('.new', :default => t("helpers.links.new")), new_experiment_path, :class => 'btn btn-primary whiteText'

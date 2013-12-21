@@ -32,6 +32,9 @@
   .contentBlock='Conditions for participation in the experiment'
   %br
   = f.text_area :prereqs, :class => 'text_field span12', :placeholder => 'Enter conditions that people must meet in order to participate in the study.'
+  .contentBlock='Make this experiment private'
+  %br
+  = f.check_box :is_public, {}, false, true
 
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'

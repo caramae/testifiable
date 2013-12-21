@@ -32,7 +32,6 @@ function ExperimentEvents()
     
     $('#expControl').val(respText);
 
-
   });
 }
 

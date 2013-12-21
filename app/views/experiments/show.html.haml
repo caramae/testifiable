@@ -19,10 +19,11 @@
     = 'Created by user'
     = @experiment.author
     /should link to author profile page
+    %br
+    = @experiment.is_public ? 'Public' : 'Private'
 
   %br
   %br
-
   .form-actions
     = link_to t('.back', :default => t("helpers.links.back")), experiments_path, :class => 'btn'
     -if @current_user && @experiment.author == @current_user.id

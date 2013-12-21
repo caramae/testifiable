@@ -1,0 +1,38 @@
+/-if current_user
+/  .container
+/    .span6.pull-left
+/      .headingBlock
+/        Popular experiments
+/    .span6.pull-right
+/      .headingBlock
+/        Recommended experiments
+/      .headingBlock
+/        My enrolled experiments
+/-else
+.hero-unit
+
+  = "Enroll in experiments of interest to you or propose your own experiments"
+  .row
+    .span3
+      =link_to content_tag(:h5,'Propose'), experiments_path, :title => 'Login'
+      =link_to image_tag('step1_signup.png'), experiments_path, :class=>'no-back-hover'
+      %h5
+        %small='Propose an experiment by...'
+    .span1
+    .span3
+      =link_to content_tag(:h5,'Enroll'), experiments_path, :title => 'Testify'
+      =link_to image_tag('step2_enroll.png'), experiments_path, :class=>'no-back-hover'
+      %h5
+        %small='Enroll.'
+    .span1
+    .span3
+      =link_to content_tag(:h5,'Analyze'), experiments_path, :title => 'Analyze'
+      =link_to image_tag('step3_analyze.png'), experiments_path, :class=>'no-back-hover'
+      %h5
+        %small='Use the results to inform your decisions.'
+    .span1
+
+  %hr
+    %h3='Frequently Asked Questions'
+    %p='Q. Maybe you’ve heard that drinking tea will make a cough go away faster?'
+    %p='A. etc.'

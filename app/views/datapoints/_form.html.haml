@@ -12,17 +12,17 @@
   %br
   .control-group
     %strong
-      Did you perform the following action?
-    %br
-    = @experiment.action
+      Which action did you take?
     .controls{:style=>'padding-left:10px;'}
-      = f.check_box :compliance, :class => 'check-box_field'
-      Yes
-      /= radio_button_tag 'action', 'Yes'
+      /= f.check_box :compliance, :class => 'check-box_field'
       /Yes
-      /%br
-      /= radio_button_tag 'action', 'No'
-      /No
+      /= radio_button_tag 'action', 'Yes'
+      = f.radio_button :compliance, true
+      = @experiment.action
+      %br
+      = f.radio_button :compliance, false
+      = 'Other (you may describe what you did instead).'
+      = f.text_field :comment, :class => 'text_field'
   %br
   .control-group
     %strong
@@ -36,9 +36,10 @@
       = f.hidden_field :experiment_id
       = f.hidden_field :user_id
     
-    = 'Optional: add a comment, such as other actions you took that may have influenced your outcome.'
-    .controls
-      = f.text_field :comment, :class => 'text_field'
+    /= 'Optional: add a comment, such as other actions you took that may have influenced your outcome.'
+    /.controls
+    /  = f.text_field :comment, :class => 'text_field'
+
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), datapoints_path, :class => 'btn'

@@ -10,6 +10,7 @@
       %th= model_class.human_attribute_name(:value)
       %th= model_class.human_attribute_name(:value2)
       %th= model_class.human_attribute_name(:compliance)
+      /%th= model_class.human_attribute_name(:comment)
       /%th= model_class.human_attribute_name(:created_at)
       %th=t '.actions', :default => t("helpers.actions")
   %tbody
@@ -21,6 +22,7 @@
         %td= datapoint.value
         %td= datapoint.value2
         %td= datapoint.compliance
+        /%td= datapoint.comment
         /%td=l datapoint.created_at
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_datapoint_path(datapoint), :class => 'btn btn-mini'
