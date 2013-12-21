@@ -34,6 +34,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        UserMailer.welcome_email(@user).deliver
+        
         @adminUser = User.find(User.minimum(:id))
         @adminUser.is_admin = true
         @adminUser.save();

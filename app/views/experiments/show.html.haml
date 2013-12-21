@@ -11,21 +11,26 @@
     = " as measured in " + @experiment.unit + '?'
     %br
     %strong= 'Prerequisites:'
-    = @experiment.prereqs
+    = @experiment.prereqs.empty? ? "None" : @experiment.prereqs
     %br
     %strong= 'Timespan:'
     = @experiment.duration_in_days.to_s + ' days'
     %br
-    = 'Created by user'
-    = @experiment.author
+    %strong= 'Creator:'
+    = User.find(@experiment.author).name
     /should link to author profile page
     %br
+    %strong= 'Visibility:'
     = @experiment.is_public ? 'Public' : 'Private'
 
   %br
   %br
   .form-actions
     = link_to t('.back', :default => t("helpers.links.back")), experiments_path, :class => 'btn'
+    /-if @experiment.is_enrolled(current_user.id)
+    /  = link_to "Submit data", edit_experiment_path(@experiment), :class => 'btn'
     -if @current_user && @experiment.author == @current_user.id
       = link_to t('.edit', :default => t("helpers.links.edit")), edit_experiment_path(@experiment), :class => 'btn'
       = link_to t('.destroy', :default => t("helpers.links.destroy")), experiment_path(@experiment), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger whiteText'
+    /-if @current_user && @current_user.is_admin
+      /= link_to t('.approve', :default => t("helpers.links.approve")), approve_experiment_path(@experiment), :class => 'btn'
