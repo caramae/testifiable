@@ -18,10 +18,13 @@
       /Yes
       /= radio_button_tag 'action', 'Yes'
       = f.radio_button :compliance, true
-      = @experiment.action
+      = @experiment.enrolled_status(@user.id)==1 ? @experiment.action : @experiment.control
       %br
       = f.radio_button :compliance, false
-      = 'Other (you may describe what you did instead).'
+      = @experiment.enrolled_status(@user.id)==1 ? @experiment.control : @experiment.action
+      %br
+      = f.radio_button :compliance, false
+      = 'Other (please describe what you did instead).'
       = f.text_field :comment, :class => 'text_field'
   %br
   .control-group
