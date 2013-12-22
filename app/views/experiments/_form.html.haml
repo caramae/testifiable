@@ -26,17 +26,19 @@
   .field
     Minimum time between trial entries: 
     %i{:class => "fa fa-info-circle", :title => "Set the time frame of your trials in order to prevent users from making repeated and frivolous entries."}
-    = f.label :timeframe
     %br
-    = f.label :timeframe, "Hourly", :value => "0"
     = f.radio_button :timeframe, "0"
-    = f.label :timeframe, "Daily", :value => "1"
+    Hourly
+    %br
     = f.radio_button :timeframe, "1"
-    = f.label :timeframe, "Other (enter a duration in days)"
+    Daily
+    %br
     = f.radio_button :timeframe, {}
+    Other (enter a duration in days)
     = f.text_field :timeframe, :class => 'text_field span1', :placeholder => '7', :autocomplete => :off
-    = f.label :timeframe, "Restrict to one trial per person", :value => "-1"
+    %br
     = f.radio_button :timeframe, "-1"
+    Restrict to one trial per person
     %br
   .field
     .contentBlock='Conditions for participation in the experiment'

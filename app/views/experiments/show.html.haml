@@ -14,11 +14,10 @@
     = @experiment.prereqs.empty? ? "None" : @experiment.prereqs
     %br
     %strong= 'Time between trial entries:'
-    = @experiment.timeframe
+    DEBUG THIS!!
     %br
     %strong= 'Creator:'
-    = User.find(@experiment.author).name
-    /should link to author profile page
+    =link_to User.find(@experiment.author).name, user_path(User.find(@experiment.author))
     %br
     %strong= 'Visibility:'
     = @experiment.is_public ? 'Public' : 'Private'
