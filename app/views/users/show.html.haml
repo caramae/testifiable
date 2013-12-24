@@ -35,10 +35,7 @@
                 -else
                   =link_to "Randomize Action", randomize_path(:experiment_id => experiment.id), :method=>:post, :class=>"btn btn-mini"
               %td
-                -if @current_user && experiment.is_enrolled(@current_user.id)
-                  = Time.now
-                -else
-                  = "TKTKTK"
+                = Date.today + experiment.timeframe
 
 
     .span4.pull-right

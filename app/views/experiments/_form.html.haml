@@ -6,6 +6,11 @@
         - @experiment.errors.full_messages.each do |msg|
           %li= msg
 
+  %h5="Type of experiment:"
+  /= f.radio_button :timeframe, 1
+  Qualitative
+  %br
+
   %h5='What is the impact of'
   =f.text_field :action, :class => 'text_field span6', :placeholder => 'Action (eg. "Performing 20 mins of exercise")', :id=>'expAction', :autocomplete => :off
   %br
@@ -20,24 +25,32 @@
     %span.add-on="as measured in"
     = f.text_field :unit, :class => 'text_field span2', :placeholder => 'Units (eg. "lb.")', :autocomplete => :off
   %br
+  .field{:id => "timeframeform"}
+    Amount of time needed to perform the action.
+    %i{:class => "fa fa-info-circle", :title => "Participants will not be able to record data until this time has elapsed."}
+    %br
+    = f.text_field :timeframe, :class => 'text_field span1', :placeholder => '0', :autocomplete => :off
+    = select(:post, "time", options_for_select(%w[minutes hours days], selected: "hours"), {}, {})
+    %br
+  %br
   %br
   %strong= 'Advanced options'
   %br
-  .field
-    Minimum time between trial entries: 
+  .field{:id => "timeframeform"}
+    Minimum time between trial entries:
     %i{:class => "fa fa-info-circle", :title => "Set the time frame of your trials in order to prevent users from making repeated and frivolous entries."}
     %br
-    = f.radio_button :timeframe, "0"
+    /= f.radio_button :timeframe, "0", :checked => true
     Hourly
     %br
-    = f.radio_button :timeframe, "1"
+    /= f.radio_button :timeframe, "1"
     Daily
     %br
-    = f.radio_button :timeframe, {}
+    /= f.radio_button :timeframe, "5", :id => "timeframeradio"
     Other (enter a duration in days)
-    = f.text_field :timeframe, :class => 'text_field span1', :placeholder => '7', :autocomplete => :off
+    /= f.text_field :timeframe, :class => 'text_field span1', :autocomplete => :off, :id => "timeframefield"
     %br
-    = f.radio_button :timeframe, "-1"
+    /= f.radio_button :timeframe, "-1"
     Restrict to one trial per person
     %br
   .field

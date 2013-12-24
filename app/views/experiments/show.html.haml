@@ -13,8 +13,16 @@
     %strong= 'Prerequisites:'
     = @experiment.prereqs.empty? ? "None" : @experiment.prereqs
     %br
-    %strong= 'Time between trial entries:'
-    DEBUG THIS!!
+    %strong= 'Duration of each trial:'
+    =@experiment.timeframe
+    %br
+    %strong= 'Time between trials:'
+    -if @experiment.timeinterval==-1
+      One trial per participant
+    -elsif @experiment.timeinterval==0
+      Hourly
+    -else
+      =@experiment.timeinterval
     %br
     %strong= 'Creator:'
     =link_to User.find(@experiment.author).name, user_path(User.find(@experiment.author))
