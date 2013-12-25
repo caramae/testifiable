@@ -1,5 +1,5 @@
 class ExperimentsController < ApplicationController
-  before_action :set_experiment, only: [:show, :edit, :update, :destroy, :enroll], except: [:randomize]
+  before_action :set_experiment, only: [:show, :edit, :update, :destroy, :enroll, :unenroll], except: [:randomize]
   before_filter :signed_in?, except: [:index, :show]
 
   
@@ -14,7 +14,7 @@ class ExperimentsController < ApplicationController
 
   def enroll
     if session[:user_id]
-      Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, randomize:0)
+      Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, randomize:0, is_active:true)
       respond_to do |format|
         format.html { redirect_to current_user, notice: 'Successfully enrolled in experiment!' }
         format.json { render action: 'index', status: :created, location: current_user }
@@ -28,10 +28,11 @@ class ExperimentsController < ApplicationController
   end
 
   def unenroll
-    Enroll.delete(experiment_id:@experiment.id, user_id:session[:user_id].to_i, randomize:0)
+    @user = User.find(session[:user_id].to_i)
+    Enroll.where('experiment_id=? and user_id=?', @experiment.id, @user.id)[0].destroy!
     respond_to do |format|
       format.html { redirect_to current_user, notice: 'Successfully unenrolled.' }
-      format.json { render action: 'index', status: :deleted, location: current_user }
+      format.json { render action: 'index', status: :created, location: current_user }
     end
   end
 

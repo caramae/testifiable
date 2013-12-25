@@ -8,7 +8,6 @@
       .headingBlock
         %h5= "Enrolled Experiments"
       %table.table.table-striped
-
         %thead
           %tr
             %th= 'Experiment'
@@ -50,7 +49,6 @@
         %tbody
           - @recommended_experiments.each do |experiment|
             -if experiment.is_public || (experiment.author==@current_user.id) || @current_user.is_admin
-              /this needs to have actual recommendations
               %tr
                 %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
                 %td
@@ -72,5 +70,4 @@
     -else
       .btn= link_to 'Home', root_path
     -if @current_user && @current_user.id == @user.id && !@current_user.is_admin
-      /= link_to 'Edit my Profile', edit_user_path(@user), :class => 'btn'
       = link_to 'Create New Experiment', new_experiment_path, :class => 'btn'

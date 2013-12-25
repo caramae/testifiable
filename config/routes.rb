@@ -6,8 +6,8 @@ Samplesite1::Application.routes.draw do
 
   resources :experiments
   post "experiments/enroll", :as => :enroll
+  post "experiments/unenroll", :as => :unenroll
   post "experiments/randomize", :as => :randomize
-  delete "experiments/unenroll", :as => :unenroll
   resources :users
 
   get "static_pages/home"

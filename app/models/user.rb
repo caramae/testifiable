@@ -10,10 +10,14 @@ class User < ActiveRecord::Base
   has_many :experiments, through: :enrolls
 
 
-  def enrolled_experiments
-    exp_ids = Enroll.select('experiment_id').where('user_id=?', self.id)
-    experiments = Experiment.where(id: exp_ids)
+  def fetch_enrolls
+    enrolls = Enroll.where(user_id: self.id, is_active: true)
+    return enrolls
+  end
 
+  def enrolled_experiments
+    exp_ids = Enroll.select('experiment_id').where(user_id: self.id, is_active: true)
+    experiments = Experiment.where(id: exp_ids)
     return experiments
   end
 
