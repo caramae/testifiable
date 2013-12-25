@@ -14,15 +14,17 @@
     = @experiment.prereqs.empty? ? "None" : @experiment.prereqs
     %br
     %strong= 'Duration of each trial:'
-    =@experiment.timeframe
+    = @experiment.timeframe
     %br
     %strong= 'Time between trials:'
     -if @experiment.timeinterval==-1
       One trial per participant
     -elsif @experiment.timeinterval==0
+      None
+    -elsif @experiment.timeinterval==1
       Hourly
     -else
-      =@experiment.timeinterval
+      Daily
     %br
     %strong= 'Creator:'
     =link_to User.find(@experiment.author).name, user_path(User.find(@experiment.author))
@@ -34,7 +36,11 @@
   %br
   .form-actions
     = link_to t('.back', :default => t("helpers.links.back")), experiments_path, :class => 'btn'
-    -if @current_user && @experiment.author == @current_user.id
+    -if @current_user && @experiment.is_enrolled(@current_user.id)
+      = link_to "Leave experiment (replace with real path!!)", root_path, :class => 'btn'
+    -elsif @current_user
+      = link_to "Enroll in experiment", {:action=>'enroll', :id=>@experiment.id}, :method=>:post, :confirm => @experiment.prereqs.empty? ? nil : "You may only enroll in this experiment if you meet the following conditions:\n"+@experiment.prereqs, :class=>"btn"
+    -if @current_user && @experiment.author == @current_user.id && @experiment.datapoints.empty?
       = link_to t('.edit', :default => t("helpers.links.edit")), edit_experiment_path(@experiment), :class => 'btn'
       = link_to t('.destroy', :default => t("helpers.links.destroy")), experiment_path(@experiment), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger whiteText'
     /-if @current_user && @current_user.is_admin

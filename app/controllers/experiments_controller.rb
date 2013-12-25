@@ -16,7 +16,7 @@ class ExperimentsController < ApplicationController
     if session[:user_id]
       Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, randomize:0)
       respond_to do |format|
-        format.html { redirect_to current_user, notice: 'Successfully Enrolled in experiment!' }
+        format.html { redirect_to current_user, notice: 'Successfully enrolled in experiment!' }
         format.json { render action: 'index', status: :created, location: current_user }
       end
     else
@@ -24,6 +24,14 @@ class ExperimentsController < ApplicationController
         format.html { redirect_to experiments_path, notice: 'Please login to enroll.' }
         format.json { render action: 'index', status: :created, location: experiments_path }
       end
+    end
+  end
+
+  def unenroll
+    Enroll.delete(experiment_id:@experiment.id, user_id:session[:user_id].to_i, randomize:0)
+    respond_to do |format|
+      format.html { redirect_to current_user, notice: 'Successfully unenrolled.' }
+      format.json { render action: 'index', status: :deleted, location: current_user }
     end
   end
 

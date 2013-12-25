@@ -1,29 +1,30 @@
 - model_class = Datapoint
-.page-header
-  %h1='Measurement on Experiment'
+.container
+  .page-header
+    %h1='Measurement on Experiment'
 
-%p
-  %strong= model_class.human_attribute_name(:experiment_id) + ':'
-  %br
-  = @datapoint.experiment_id
-%p
-  %strong= model_class.human_attribute_name(:user_id) + ':'
-  %br
-  = @datapoint.user_id
-%p
-  %strong= model_class.human_attribute_name(:value) + ':'
-  %br
-  = @datapoint.value
-%p
-  %strong= model_class.human_attribute_name(:value2) + ':'
-  %br
-  = @datapoint.value2
-%p
-  %strong= model_class.human_attribute_name(:compliance) + ':'
-  %br
-  = @datapoint.compliance
+  %p
+    %strong= model_class.human_attribute_name(:experiment_id) + ':'
+    %br
+    = @datapoint.experiment_id
+  %p
+    %strong= model_class.human_attribute_name(:user_id) + ':'
+    %br
+    = @datapoint.user_id
+  %p
+    %strong= model_class.human_attribute_name(:value) + ':'
+    %br
+    = @datapoint.value
+  %p
+    %strong= model_class.human_attribute_name(:value2) + ':'
+    %br
+    = @datapoint.value2
+  %p
+    %strong= model_class.human_attribute_name(:compliance) + ':'
+    %br
+    = @datapoint.compliance
 
-.form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), datapoints_path, :class => 'btn'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_datapoint_path(@datapoint), :class => 'btn'
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), datapoint_path(@datapoint), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+  .form-actions
+    = link_to t('.back', :default => t("helpers.links.back")), datapoints_path, :class => 'btn'
+    = link_to t('.edit', :default => t("helpers.links.edit")), edit_datapoint_path(@datapoint), :class => 'btn'
+    = link_to t('.destroy', :default => t("helpers.links.destroy")), datapoint_path(@datapoint), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

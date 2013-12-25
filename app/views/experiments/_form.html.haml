@@ -6,10 +6,14 @@
         - @experiment.errors.full_messages.each do |msg|
           %li= msg
 
-  %h5="Type of experiment:"
-  /= f.radio_button :timeframe, 1
-  Qualitative
-  %br
+  .field
+    %h5="Type of experiment:"
+    /= f.radio_button :type, "Quantitative"
+    /= f.radio_button :type, "Qualitative"
+    = f.hidden_field :_destroy
+    = link_to_function "remove", "remove_fields(this)"
+    Qualitative
+    %br
 
   %h5='What is the impact of'
   =f.text_field :action, :class => 'text_field span6', :placeholder => 'Action (eg. "Performing 20 mins of exercise")', :id=>'expAction', :autocomplete => :off
@@ -25,37 +29,37 @@
     %span.add-on="as measured in"
     = f.text_field :unit, :class => 'text_field span2', :placeholder => 'Units (eg. "lb.")', :autocomplete => :off
   %br
-  .field{:id => "timeframeform"}
-    Amount of time needed to perform the action.
-    %i{:class => "fa fa-info-circle", :title => "Participants will not be able to record data until this time has elapsed."}
+  /link_to_add_fields "Add Outcome", f, :questions
+  .field
+    Amount of time to perform the experiment (from the start of the action to the outcome).
+    %i{:class => "fa fa-info-circle", :title => "Participants will not be able to record data until this time has elapsed since enrollment."}
     %br
     = f.text_field :timeframe, :class => 'text_field span1', :placeholder => '0', :autocomplete => :off
-    = select(:post, "time", options_for_select(%w[minutes hours days], selected: "hours"), {}, {})
+    = select(:timeframe, {}, options_for_select(['minutes', 'hours', 'days'], selected: "hours"))
     %br
   %br
   %br
   %strong= 'Advanced options'
   %br
-  .field{:id => "timeframeform"}
-    Minimum time between trial entries:
-    %i{:class => "fa fa-info-circle", :title => "Set the time frame of your trials in order to prevent users from making repeated and frivolous entries."}
+  .field
+    Minimum time between trials:
+    %i{:class => "fa fa-info-circle", :title => "If your experiment has a short duration, you may prevent users from making repeated and frivolous entries by setting a delay between the end of a trial and the beginning of the next."}
     %br
-    /= f.radio_button :timeframe, "0", :checked => true
+    = f.radio_button :timeinterval, "0", :checked => true
+    None
+    %br
+    = f.radio_button :timeinterval, "1"
     Hourly
     %br
-    /= f.radio_button :timeframe, "1"
+    = f.radio_button :timeinterval, "2"
     Daily
     %br
-    /= f.radio_button :timeframe, "5", :id => "timeframeradio"
-    Other (enter a duration in days)
-    /= f.text_field :timeframe, :class => 'text_field span1', :autocomplete => :off, :id => "timeframefield"
-    %br
-    /= f.radio_button :timeframe, "-1"
+    = f.radio_button :timeinterval, "-1"
     Restrict to one trial per person
     %br
   .field
     .contentBlock='Conditions for participation in the experiment'
-    = f.text_area :prereqs, :class => 'text_area span6', :placeholder => 'Enter conditions that people must meet in order to participate in the study.'
+    = f.text_area :prereqs, :class => 'text_area span6', :placeholder => 'Enter conditions that people must meet in order to participate in the study.', :rows => 3
   .field
     = f.check_box :is_public, {}, false, true
     %span='Make this experiment private'

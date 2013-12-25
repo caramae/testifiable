@@ -33,20 +33,6 @@ function ExperimentEvents()
     $('#expControl').val(respText);
 
   });
-
-  /*$("#timeframeform").change(function(){
-    alert('hi');
-    alert(​$('#timeframefield:not([readonly])').length);
-    $("#timeframefield").val("").attr("readonly",true);
-    if($("#timeframeradio").is(":checked")){
-        $("#timeframefield").removeAttr("readonly");
-        $("#timeframefield").focus();
-    }
-    else if(!$("#timeframeradio").is(":checked")){
-        $("#timeframefield").removeAttr("readonly");
-        $("#timeframefield").focus();   
-    }
-  });*/
 }
 
 $(document).ready(function(){ ExperimentEvents(); });

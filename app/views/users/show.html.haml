@@ -35,7 +35,7 @@
                 -else
                   =link_to "Randomize Action", randomize_path(:experiment_id => experiment.id), :method=>:post, :class=>"btn btn-mini"
               %td
-                = Date.today + experiment.timeframe
+                = Date.today# + experiment.timeframe
 
 
     .span4.pull-right
