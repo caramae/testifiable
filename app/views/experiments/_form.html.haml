@@ -13,58 +13,61 @@
     /= f.hidden_field :_destroy
     /= link_to_function "remove", "remove_fields(this)"
     /Qualitative
+  
+  .content.row
+    .span8
+      %h5='What is the impact of'
+      =f.text_field :action, :class => 'text_field span6', :placeholder => 'Action (eg. "Exercising 20 mins a day")', :id=>'expAction', :autocomplete => :off
+      %br
+      .input-prepend
+        %span.add-on="vs."
+        = f.text_field :control, :class => 'text_field span6', :placeholder => 'Control (eg. "Exercising 0 mins a day")', :id=>'expControl', :autocomplete => :off
+      %br
+      .input-prepend
+        %span.add-on="on"
+        = f.text_field :outcome, :class => 'text_field span3', :placeholder => 'Outcome (eg. "Weight after 10 days")', :autocomplete => :off
+      .input-prepend
+        %span.add-on="as measured in"
+        = f.text_field :unit, :class => 'text_field span2', :placeholder => 'Units (eg. "lb.")', :autocomplete => :off
+      %br
+      %br
+      /link_to_add_fields "Add Outcome", f, :questions
+      .field
+        Amount of time to perform the experiment (from the start of the action to the outcome).
+        %i{:class => "fa fa-info-circle", :title => "Participants will not be able to record data until this time has elapsed since enrollment."}
+        %br
+        = f.text_field :timeframe, :class => 'text_field span_tiny', :placeholder => "0", :autocomplete => :off
+        = f.select :timeframe_units, ['minutes', 'hours', 'days']
+      .field
+        Category
+        = f.select :category, ['','Education', 'Health', 'Lifestyle', 'Politics', 'Work', 'Other']
 
-  %h5='What is the impact of'
-  =f.text_field :action, :class => 'text_field span6', :placeholder => 'Action (eg. "Performing 20 mins of exercise")', :id=>'expAction', :autocomplete => :off
-  %br
-  .input-prepend
-    %span.add-on="vs."
-    = f.text_field :control, :class => 'text_field span6', :placeholder => 'Control (eg. "Performing 0 mins of exercise")', :id=>'expControl', :autocomplete => :off
-  %br
-  .input-prepend
-    %span.add-on="on"
-    = f.text_field :outcome, :class => 'text_field span3', :placeholder => 'Outcome (eg. "Weight")', :autocomplete => :off
-  .input-prepend
-    %span.add-on="as measured in"
-    = f.text_field :unit, :class => 'text_field span2', :placeholder => 'Units (eg. "lb.")', :autocomplete => :off
-  %br
-  %br
-  /link_to_add_fields "Add Outcome", f, :questions
-  .field
-    Amount of time to perform the experiment (from the start of the action to the outcome).
-    %i{:class => "fa fa-info-circle", :title => "Participants will not be able to record data until this time has elapsed since enrollment."}
-    %br
-    = f.text_field :timeframe, :class => 'text_field span_tiny', :placeholder => "0", :autocomplete => :off
-    = f.select :timeframe_units, ['minutes', 'hours', 'days']
-  .field
-    Category
-    = f.select :category, ['','Education', 'Health', 'Lifestyle', 'Politics', 'Work', 'Other']
-
-  %br
-  %strong= 'Advanced options'
-  %br
-  .field
-    Minimum time between trials:
-    %i{:class => "fa fa-info-circle", :title => "If your experiment has a short duration, you may prevent users from making repeated and frivolous entries by setting a delay between the end of a trial and the beginning of the next."}
-    %br
-    = f.radio_button :timeinterval, "0", :checked => true
-    None
-    %br
-    = f.radio_button :timeinterval, "1"
-    Hourly
-    %br
-    = f.radio_button :timeinterval, "2"
-    Daily
-    %br
-    = f.radio_button :timeinterval, "-1"
-    Restrict to one trial per person
-    %br
-  .field
-    .contentBlock='Conditions for participation in the experiment'
-    = f.text_area :prereqs, :class => 'text_area span6', :placeholder => 'Enter conditions that people must meet in order to participate in the study.', :rows => 3
-  .field
-    = f.check_box :is_public, {}, false, true
-    %span='Make this experiment private'
+    .span4
+      %br
+      %strong= 'Advanced options'
+      %br
+      .field
+        Minimum time between trials:
+        %i{:class => "fa fa-info-circle", :title => "If your experiment has a short duration, you may prevent users from making repeated and frivolous entries by setting a delay between the end of a trial and the beginning of the next."}
+        %br
+        = f.radio_button :timeinterval, "0", :checked => true
+        None
+        %br
+        = f.radio_button :timeinterval, "1"
+        Hourly
+        %br
+        = f.radio_button :timeinterval, "2"
+        Daily
+        %br
+        = f.radio_button :timeinterval, "-1"
+        Restrict to one trial per person
+        %br
+      .field
+        .contentBlock='Conditions for participation in the experiment'
+        = f.text_area :prereqs, :class => 'text_area span4', :placeholder => 'Enter conditions that people must meet in order to participate in the study.', :rows => 3
+      .field
+        = f.check_box :is_public, {}, false, true
+        %span='Make this experiment private'
 
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
