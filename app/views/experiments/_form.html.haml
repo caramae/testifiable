@@ -28,13 +28,17 @@
     %span.add-on="as measured in"
     = f.text_field :unit, :class => 'text_field span2', :placeholder => 'Units (eg. "lb.")', :autocomplete => :off
   %br
+  %br
   /link_to_add_fields "Add Outcome", f, :questions
   .field
     Amount of time to perform the experiment (from the start of the action to the outcome).
     %i{:class => "fa fa-info-circle", :title => "Participants will not be able to record data until this time has elapsed since enrollment."}
     %br
     = f.text_field :timeframe, :class => 'text_field span1', :placeholder => "0", :autocomplete => :off
-    = f.select :timeframe_units, options_for_select(['minutes', 'hours', 'days'], selected: "hours")
+    = f.select :timeframe_units, ['minutes', 'hours', 'days']
+  .field
+    Category
+    = f.select :category, ['','Education', 'Health', 'Lifestyle', 'Politics', 'Work', 'Other']
 
   %br
   %br

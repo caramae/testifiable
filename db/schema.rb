@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131225232626) do
+ActiveRecord::Schema.define(version: 20131226060121) do
 
   create_table "datapoints", force: true do |t|
     t.integer  "experiment_id"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20131225232626) do
     t.integer  "timeframe",       limit: 255
     t.string   "timeinterval"
     t.string   "timeframe_units"
+    t.string   "category"
   end
 
   create_table "outcomes", force: true do |t|

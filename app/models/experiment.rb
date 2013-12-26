@@ -40,16 +40,18 @@ class Experiment < ActiveRecord::Base
     return enroll[0].is_active
   end
 
+  def get_enroll(user_id)
+    enroll = Enroll.where('user_id=? and experiment_id = ?', user_id, self.id)
+    return enroll[0]
+  end
+
   def get_ending_time
-    return DateTime.now
-    units = :timeframe_units
-    if units == 'minutes'
-      duration = :timeframe*60
-    elsif units == 'hours'
-      duration = :timeframe*3600
+    if timeframe_units == 'minutes'
+      return DateTime.now + timeframe.minutes
+    elsif timeframe_units == 'hours'
+      return DateTime.now + timeframe.hours
     else
-      duration = :timeframe*86400
+      return DateTime.now + timeframe.days
     end
-    return duration + DateTime.now
   end
 end

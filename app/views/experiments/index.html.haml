@@ -8,6 +8,7 @@
       %tr
         %th= 'Experiment'
         %th= 'Action'
+        %th= 'Category'
     %tbody
       - @experiments.each do |experiment|
         -if experiment.is_public || (@current_user && ((experiment.author==@current_user.id) || @current_user.is_admin))

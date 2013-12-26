@@ -12,8 +12,7 @@
           %tr
             %th= 'Experiment'
             %th= 'Action'
-            %th= 'Testify'
-            %th= 'Time left'
+            %th= 'Record data'
         %tbody
           - @enrolled_experiments.each do |experiment|
             %tr
@@ -23,20 +22,22 @@
                   =experiment.action
                 -elsif experiment.enrolled_status(@user.id) == 2
                   =experiment.control
-                -else
-                  ='Randomize to action!'
               %td
-                -if experiment.enrolled_status(@user.id) > 0
+                -if experiment.get_enroll(@user.id).end_time - DateTime.now < 0
                   .recorddata= link_to "Record Data", {:controller=>'datapoints',:action=>'new', :experiment_id=>experiment.id}, :class=>"btn btn-mini"
                   /%fieldset{:id => "recorddata"}
                   /  .container
                   /    =render 'datapoints/form'
                 -else
-                  =link_to "Randomize Action", randomize_path(:experiment_id => experiment.id), :method=>:post, :class=>"btn btn-mini"
-              %td
-                = #@fetch_enroll(experiment).end_time - DateTime.now
+                  -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).round > 0
+                    = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).round, "day")}"
+                  -elsif ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).round > 0
+                    = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).round, "hour")}"
+                  -else
+                    = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round, "minute")}"
+                  &= "before you can record"
 
-
+  -#
     .span4.pull-right
       .headingBlock
         %h5= "Recommended Experiments"

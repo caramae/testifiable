@@ -14,7 +14,7 @@ class ExperimentsController < ApplicationController
 
   def enroll
     if session[:user_id]
-      Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, randomize:0, is_active:true, end_time: @experiment.get_ending_time)
+      Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, randomize:Random.rand(1..2), is_active:true, end_time: @experiment.get_ending_time)
       respond_to do |format|
         format.html { redirect_to current_user, notice: 'Successfully enrolled in experiment!' }
         format.json { render action: 'index', status: :created, location: current_user }
@@ -36,6 +36,8 @@ class ExperimentsController < ApplicationController
     end
   end
 
+=begin
+#=link_to "Randomize Action", randomize_path(:experiment_id => experiment.id), :method=>:post, :class=>"btn btn-mini"
   def randomize
     if session[:user_id]
       if !params[:experiment_id].blank?
@@ -55,6 +57,7 @@ class ExperimentsController < ApplicationController
       end
     end
   end
+=end
 
   # GET /experiments/1
   # GET /experiments/1.json
@@ -126,6 +129,6 @@ class ExperimentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def experiment_params
-      params.require(:experiment).permit(:action, :control, :outcome, :unit, :prereqs, :is_public, :timeframe, :timeinterval, :timeframe_units)
+      params.require(:experiment).permit(:action, :control, :outcome, :unit, :prereqs, :is_public, :timeframe, :timeinterval, :timeframe_units, :category)
     end
 end
