@@ -34,13 +34,12 @@
     Amount of time to perform the experiment (from the start of the action to the outcome).
     %i{:class => "fa fa-info-circle", :title => "Participants will not be able to record data until this time has elapsed since enrollment."}
     %br
-    = f.text_field :timeframe, :class => 'text_field span1', :placeholder => "0", :autocomplete => :off
+    = f.text_field :timeframe, :class => 'text_field span_tiny', :placeholder => "0", :autocomplete => :off
     = f.select :timeframe_units, ['minutes', 'hours', 'days']
   .field
     Category
     = f.select :category, ['','Education', 'Health', 'Lifestyle', 'Politics', 'Work', 'Other']
 
-  %br
   %br
   %strong= 'Advanced options'
   %br

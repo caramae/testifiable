@@ -10,6 +10,9 @@
     = " on " + @experiment.outcome
     = " as measured in " + @experiment.unit + '?'
     %br
+    %strong= 'Category:'
+    = @experiment.category
+    %br
     %strong= 'Prerequisites:'
     = @experiment.prereqs.empty? ? "None" : @experiment.prereqs
     %br
@@ -17,11 +20,11 @@
     = @experiment.timeframe.to_s + " " + @experiment.timeframe_units
     %br
     %strong= 'Delay between trials:'
-    -if @experiment.timeinterval==-1
+    -if @experiment.timeinterval=="-1"
       One trial per participant
-    -elsif @experiment.timeinterval==0
+    -elsif @experiment.timeinterval=="0"
       None
-    -elsif @experiment.timeinterval==1
+    -elsif @experiment.timeinterval=="1"
       1 hour
     -else
       1 day
@@ -32,7 +35,7 @@
     %strong= 'Visibility:'
     = @experiment.is_public ? 'Public' : 'Private'
     %br
-    -if !@experiment.permits(@current_user.id)
+    -if !@experiment.permits_enrollment(@current_user.id)
       %emphasis= "You have already participated in this experiment and cannot join again."
 
   %br
@@ -43,7 +46,7 @@
     -if @current_user
       -if @experiment.is_enrolled(@current_user.id)
         = link_to "Leave experiment", {:action=>'unenroll', :id=>@experiment.id}, :method=>:post, :class => 'btn'
-      -elsif @experiment.permits(@current_user.id)
+      -elsif @experiment.permits_enrollment(@current_user.id)
         = link_to "Enroll in experiment", {:action=>'enroll', :id=>@experiment.id}, :method=>:post, :confirm => @experiment.prereqs.empty? ? nil : "You may only enroll in this experiment if you meet the following conditions:\n"+@experiment.prereqs, :class=>"btn"
 
       -if @current_user.is_admin || (@experiment.author == @current_user.id && @experiment.datapoints.empty?)

@@ -18,8 +18,10 @@
               -if @current_user
                 -if experiment.is_enrolled(@current_user.id)
                   =link_to "Unenroll", {:action=>'unenroll', :id=>experiment.id}, :method=>:post, :class => 'btn btn-mini'
-                -else
+                -elsif experiment.permits_enrollment(@current_user.id)
                   =link_to "Enroll", {:action=>'enroll', :id=>experiment.id}, :method=>:post, :confirm => experiment.prereqs.empty? ? nil : "You may only enroll in this experiment if you meet the following conditions:\n"+experiment.prereqs, :class=>"btn btn-mini"
+                -else
+                  = "This experiment does not allow multiple trials."
               -else
                 =link_to "Enroll", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
                 .muted="Login to enroll!"

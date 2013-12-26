@@ -10,7 +10,7 @@ class Experiment < ActiveRecord::Base
   #accepts_nested_attributes_for :datapoints, :reject_if => lambda { |a| a[:content].blank? }
 
   def is_enrolled(user_id)
-    enrolls = Enroll.where('user_id=? and experiment_id = ?', user_id, self.id)
+    enrolls = Enroll.where('user_id=? and experiment_id = ? and is_active = ?', user_id, self.id, true)
     if enrolls && enrolls.count>0
       status = true
     else
@@ -32,7 +32,7 @@ class Experiment < ActiveRecord::Base
     return status
   end
 
-  def permits(user_id)
+  def permits_enrollment(user_id)
     enroll = Enroll.where('user_id=? and experiment_id = ?', user_id, self.id)
     if enroll.empty?
       return true
