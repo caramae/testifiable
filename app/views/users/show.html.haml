@@ -34,14 +34,13 @@
                 -else
                   =link_to "Randomize Action", randomize_path(:experiment_id => experiment.id), :method=>:post, :class=>"btn btn-mini"
               %td
-                = Date.today# + experiment.timeframe
+                = #@fetch_enroll(experiment).end_time - DateTime.now
 
 
     .span4.pull-right
       .headingBlock
         %h5= "Recommended Experiments"
       %table.table.table-striped
-
         %thead
           %tr
             %th= 'Experiment'
@@ -53,13 +52,9 @@
                 %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
                 %td
                   -if @current_user
-                    -if experiment.is_enrolled(@current_user.id)
-                      =link_to "Enrolled", root_path, :class=>"btn btn-mini", :disabled=>'disabled'
-                    -else
-                      =link_to "Testify", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
-
+                    =link_to "Enroll", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
                   -else
-                    =link_to "Testify", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
+                    =link_to "Enroll", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
                     .muted="Login to testify!"
 
   .form-actions

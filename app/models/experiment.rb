@@ -4,9 +4,9 @@ class Experiment < ActiveRecord::Base
   has_many :enrolls, :dependent => :destroy
   has_many :datapoints, :dependent => :destroy
   has_many :users, through: :enrolls
+  validates_numericality_of :timeframe, :only_integer =>true, :greater_than_or_equal_to =>0, :message => "Invalid duration"
   #validates_presence_of :action, :control, :outcome, :unit
   #validates_uniqueness_of :action
-  #validates_numericality_of :timeframe, :only_integer =>true, :greater_than_or_equal_to =>0, :message => "Invalid duration"
   #accepts_nested_attributes_for :datapoints, :reject_if => lambda { |a| a[:content].blank? }
 
   def is_enrolled(user_id)
@@ -30,5 +30,26 @@ class Experiment < ActiveRecord::Base
       status = 0
     end
     return status
+  end
+
+  def permits(user_id)
+    enroll = Enroll.where('user_id=? and experiment_id = ?', user_id, self.id)
+    if enroll.empty?
+      return true
+    end
+    return enroll[0].is_active
+  end
+
+  def get_ending_time
+    return DateTime.now
+    units = :timeframe_units
+    if units == 'minutes'
+      duration = :timeframe*60
+    elsif units == 'hours'
+      duration = :timeframe*3600
+    else
+      duration = :timeframe*86400
+    end
+    return duration + DateTime.now
   end
 end
