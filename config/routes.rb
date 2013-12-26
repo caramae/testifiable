@@ -6,6 +6,7 @@ Samplesite1::Application.routes.draw do
 
   resources :experiments
   post "experiments/enroll", :as => :enroll
+  post "experiments/reenroll", :as => :reenroll
   post "experiments/unenroll", :as => :unenroll
   post "experiments/randomize", :as => :randomize
   resources :users

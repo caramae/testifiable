@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131226060121) do
+ActiveRecord::Schema.define(version: 20131226134919) do
 
   create_table "datapoints", force: true do |t|
     t.integer  "experiment_id"
@@ -29,10 +29,11 @@ ActiveRecord::Schema.define(version: 20131226060121) do
     t.integer  "experiment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "randomize"
+    t.integer  "status"
     t.datetime "recording_time"
     t.boolean  "is_active"
     t.datetime "end_time"
+    t.datetime "next_time"
   end
 
   create_table "experiments", force: true do |t|

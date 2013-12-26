@@ -1,5 +1,5 @@
 class ExperimentsController < ApplicationController
-  before_action :set_experiment, only: [:show, :edit, :update, :destroy, :enroll, :unenroll], except: [:randomize]
+  before_action :set_experiment, only: [:show, :edit, :update, :destroy, :enroll, :unenroll, :reenroll]
   before_filter :signed_in?, except: [:index, :show]
 
   
@@ -14,7 +14,7 @@ class ExperimentsController < ApplicationController
 
   def enroll
     if session[:user_id]
-      Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, randomize:Random.rand(1..2), is_active:true, end_time: @experiment.get_ending_time)
+      Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, status:Random.rand(1..2), is_active:true, end_time: @experiment.get_ending_time)
       respond_to do |format|
         format.html { redirect_to current_user, notice: 'Successfully enrolled in experiment!' }
         format.json { render action: 'index', status: :created, location: current_user }
@@ -27,9 +27,20 @@ class ExperimentsController < ApplicationController
     end
   end
 
+  def reenroll
+    enroll = Enroll.where('experiment_id=? and user_id=?', @experiment.id, session[:user_id].to_i)[0]
+    enroll.is_active = true
+    enroll.status = Random.rand(1..2)
+    enroll.end_time = @experiment.get_ending_time
+    enroll.save()
+    respond_to do |format|
+      format.html { redirect_to current_user, notice: 'Successfully reenrolled.' }
+      format.json { render action: 'index', status: :created, location: current_user }
+    end
+  end
+
   def unenroll
-    @user = User.find(session[:user_id].to_i)
-    Enroll.where('experiment_id=? and user_id=?', @experiment.id, @user.id)[0].destroy!
+    Enroll.where('experiment_id=? and user_id=?', @experiment.id, session[:user_id].to_i)[0].destroy!
     respond_to do |format|
       format.html { redirect_to current_user, notice: 'Successfully unenrolled.' }
       format.json { render action: 'index', status: :created, location: current_user }

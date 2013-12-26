@@ -87,16 +87,15 @@ class DatapointsController < ApplicationController
     respond_to do |format|
       if @datapoint.save
         enroll = Enroll.where('experiment_id=? and user_id=?', @datapoint.experiment_id, @datapoint.user_id)[0]
-        if @experiment.timeinterval=="-1" #1 trial/participant
-          enroll.randomize = 0
+        if @experiment.timeinterval=='-1' #1 trial/participant
+          enroll.status = -2
           enroll.is_active = false
           enroll.save()
-        elsif @experiment.timeinterval=="0" #no restrictions
-          enroll.destroy!
-        elsif @experiment.timeinterval=="1" #must wait 1 hour before next trial
-          enroll.destroy!
-        else #must wait 1 day before next trial
-          enroll.destroy!
+        else
+          enroll.status = -1
+          enroll.next_time = @experiment.get_next_time
+          enroll.is_active = false
+          enroll.save()
         end
         format.html { redirect_to @experiment, notice: 'Datapoint was created. Thank you for participating in the experiment.' }
         format.json { render action: 'show', status: :created, location: @datapoint }

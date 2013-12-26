@@ -29,9 +29,9 @@
                   /  .container
                   /    =render 'datapoints/form'
                 -else
-                  -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).round > 0
+                  -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).floor > 0
                     = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).round, "day")}"
-                  -elsif ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).round > 0
+                  -elsif ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).floor > 0
                     = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).round, "hour")}"
                   -else
                     = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round, "minute")}"

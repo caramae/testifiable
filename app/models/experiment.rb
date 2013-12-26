@@ -20,24 +20,20 @@ class Experiment < ActiveRecord::Base
   end
   def enrolled_status(user_id)
     enrolls = Enroll.where('user_id=? and experiment_id = ?', user_id, self.id)
-    if enrolls
-      if enrolls.count>0
-        status = enrolls[0].randomize
-      else
-        status = 0
-      end
-    else
-      status = 0
+    if enrolls && enrolls.count>0
+      return enrolls[0].status
     end
-    return status
+    return 0
+  end
+
+  def first_enrollment(user_id)
+    enroll = Enroll.where('user_id=? and experiment_id = ?', user_id, self.id)
+    return enroll.empty?
   end
 
   def permits_enrollment(user_id)
     enroll = Enroll.where('user_id=? and experiment_id = ?', user_id, self.id)
-    if enroll.empty?
-      return true
-    end
-    return enroll[0].is_active
+    return enroll.empty? || enroll[0].status > 0 || (enroll[0].status == -1 && enroll[0].next_time <= DateTime.now)
   end
 
   def get_enroll(user_id)
@@ -52,6 +48,16 @@ class Experiment < ActiveRecord::Base
       return DateTime.now + timeframe.hours
     else
       return DateTime.now + timeframe.days
+    end
+  end
+
+  def get_next_time
+    if timeinterval == '1'
+      return DateTime.now + 1.hour
+    elsif timeinterval == '2'
+      return DateTime.now + 1.day
+    else
+      return DateTime.now
     end
   end
 end

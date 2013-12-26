@@ -36,7 +36,14 @@
     = @experiment.is_public ? 'Public' : 'Private'
     %br
     -if !@experiment.permits_enrollment(@current_user.id)
-      %emphasis= "You have already participated in this experiment and cannot join again."
+      -if !@experiment.get_enroll(@current_user.id).next_time.nil? && @experiment.get_enroll(@current_user.id).next_time > DateTime.now
+        %emphasis= "You may re-enroll in"
+        -if ((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).floor > 0
+          &= "#{pluralize(((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).round, "hour")}"
+        -else
+          &= "#{pluralize(((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.minute).round, "minute")}"
+      -else
+        %emphasis= "You have already participated in this experiment and cannot join again."
 
   %br
   %br
@@ -45,9 +52,11 @@
 
     -if @current_user
       -if @experiment.is_enrolled(@current_user.id)
-        = link_to "Leave experiment", {:action=>'unenroll', :id=>@experiment.id}, :method=>:post, :class => 'btn'
+        = link_to "Unenroll", {:action=>'unenroll', :id=>@experiment.id}, :method=>:post, :class => 'btn'
+      -elsif @experiment.first_enrollment(@current_user.id)
+        =link_to "Enroll", {:action=>'enroll', :id=>@experiment.id}, :method=>:post, :confirm => @experiment.prereqs.empty? ? nil : "You may only enroll in this experiment if you meet the following conditions:\n"+@experiment.prereqs, :class=>"btn"
       -elsif @experiment.permits_enrollment(@current_user.id)
-        = link_to "Enroll in experiment", {:action=>'enroll', :id=>@experiment.id}, :method=>:post, :confirm => @experiment.prereqs.empty? ? nil : "You may only enroll in this experiment if you meet the following conditions:\n"+@experiment.prereqs, :class=>"btn"
+        =link_to "Re-enroll", {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, :confirm => @experiment.prereqs.empty? ? nil : "You may only enroll in this experiment if you meet the following conditions:\n"+@experiment.prereqs, :class=>"btn"
 
       -if @current_user.is_admin || (@experiment.author == @current_user.id && @experiment.datapoints.empty?)
         = link_to t('.edit', :default => t("helpers.links.edit")), edit_experiment_path(@experiment), :class => 'btn'
