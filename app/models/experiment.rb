@@ -1,13 +1,17 @@
 class Experiment < ActiveRecord::Base
-  #has_many :outcomes, :dependent => :destroy
-  #has_many :outcomes, :dependent => :destroy
+  has_many :outcomes, :dependent => :destroy
   has_many :enrolls, :dependent => :destroy
   has_many :datapoints, :dependent => :destroy
   has_many :users, through: :enrolls
   validates_numericality_of :timeframe, :only_integer =>true, :greater_than_or_equal_to =>0, :message => "Invalid duration"
-  #validates_presence_of :action, :control, :outcome, :unit
+  #validates_presence_of :action, :control
   #validates_uniqueness_of :action
-  #accepts_nested_attributes_for :datapoints, :reject_if => lambda { |a| a[:content].blank? }
+  validate :validate_outcomes
+  accepts_nested_attributes_for :outcomes, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
+
+  def validate_outcomes
+    errors.add(:outcomes, "too few outcomes") if outcomes.length < 1
+  end
 
   def is_enrolled(user_id)
     enrolls = Enroll.where('user_id=? and experiment_id = ? and is_active = ?', user_id, self.id, true)

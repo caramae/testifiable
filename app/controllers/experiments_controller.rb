@@ -81,6 +81,7 @@ class ExperimentsController < ApplicationController
   # GET /experiments/new
   def new
     @experiment = Experiment.new
+    @experiment.outcomes.build
   end
 
   # GET /experiments/1/edit
@@ -93,9 +94,7 @@ class ExperimentsController < ApplicationController
     @experiment = Experiment.new(experiment_params)
     @experiment.author = session[:user_id]
     @experiment.action = @experiment.action.downcase
-    @experiment.outcome = @experiment.outcome.downcase
     @experiment.control = @experiment.control.downcase
-    @experiment.unit = @experiment.unit.downcase
 
     respond_to do |format|
       if @experiment.save
@@ -140,6 +139,6 @@ class ExperimentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def experiment_params
-      params.require(:experiment).permit(:action, :control, :outcome, :unit, :prereqs, :is_public, :timeframe, :timeinterval, :timeframe_units, :category)
+      params.require(:experiment).permit(:action, :control, :prereqs, :is_public, :timeframe, :timeinterval, :timeframe_units, :category)
     end
 end

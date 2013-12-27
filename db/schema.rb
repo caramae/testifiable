@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131227045227) do
+ActiveRecord::Schema.define(version: 20131227062126) do
 
   create_table "datapoints", force: true do |t|
     t.integer  "experiment_id"
@@ -39,8 +39,6 @@ ActiveRecord::Schema.define(version: 20131227045227) do
   create_table "experiments", force: true do |t|
     t.string   "action"
     t.string   "control"
-    t.string   "outcome"
-    t.string   "unit"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "author"
@@ -55,8 +53,10 @@ ActiveRecord::Schema.define(version: 20131227045227) do
   create_table "outcomes", force: true do |t|
     t.string   "name"
     t.string   "type"
+    t.string   "unit"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "experiment_id"
   end
 
   create_table "users", force: true do |t|

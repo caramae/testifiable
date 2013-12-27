@@ -1,0 +1,10 @@
+.fields
+  .input-prepend
+    %span.add-on="on"
+    = f.text_field :name, :class => 'text_field span3', :placeholder => 'Outcome (eg. "Weight after 10 days")', :autocomplete => :off
+  .input-prepend
+    %span.add-on="as measured in"
+    = f.text_field :unit, :class => 'text_field span2', :placeholder => 'Units (eg. "lb.")', :autocomplete => :off
+  = link_to_remove_fields "Remove outcome", f
+  /= link_to_change_type "Toggle type", f
+  %br
