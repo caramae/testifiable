@@ -18,11 +18,11 @@ class DatapointsController < ApplicationController
 
   def analyze
     @datapoints = Datapoint.all
-    xarr = Datapoint.pluck(:value)
+    xarr = Datapoint.pluck(:iv_value)
     xmat = Matrix.columns([Array.new(xarr.length, 1), xarr])
 
-    ymat = Matrix.column_vector(Datapoint.pluck(:value2))
-    #yarr = Datapoint.pluck(:value2)
+    ymat = Matrix.column_vector(Datapoint.pluck(:value))
+    #yarr = Datapoint.pluck(:value)
     #ymat = Matrix.columns([Array.new(yarr.length, 1), yarr])
     #comp = Datapoint.pluck(:compliance)
     #comp.each {|c| c = (c ? 1 : 0)}
@@ -33,7 +33,7 @@ class DatapointsController < ApplicationController
     omg = (ymat.column_vectors[0] - xmat.column_vectors[1]*beta[1,0]).to_a
     omega = Matrix.diagonal(*omg)
 
-    xmat = Matrix.column_vector(Datapoint.pluck(:value))
+    xmat = Matrix.column_vector(Datapoint.pluck(:iv_value))
     zmat = Matrix.column_vector(Datapoint.pluck(:compliance))
     p_z = zmat * (zmat.t * zmat).inv * zmat.t
     z2 = (zmat.t * zmat).inv
@@ -44,7 +44,7 @@ class DatapointsController < ApplicationController
     #confint1 = beta[1,0] - 1.96*standard_error
     #confint2 = beta[1,0] + 1.96*standard_error
 
-    Datapoint.create(experiment_id:beta[0,0], value:beta[1,0], value2:se2)
+    Datapoint.create(experiment_id:beta[0,0], iv_value:beta[1,0], value:se2)
     respond_to do |format|
       format.html { redirect_to datapoints_path, notice: 'Here are the results!' }
       #format.json { render action: 'index', status: :created, location: experiments_path }
@@ -63,8 +63,8 @@ class DatapointsController < ApplicationController
       @datapoint.user_id = @current_user.id
       @datapoint.experiment_id = params[:experiment_id].to_i
       @user = User.find(session[:user_id].to_i)
-
       @experiment = Experiment.find(@datapoint.experiment_id)
+      @datapoint.iv_value = @experiment.enrolled_status(@user.id)
     else
       redirect_to @current_user, notice: 'Please an experiment in which you are enrolled.'
     end
@@ -139,6 +139,6 @@ class DatapointsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def datapoint_params
-      params.require(:datapoint).permit(:experiment_id, :user_id, :value, :value2, :compliance, :comment)
+      params.require(:datapoint).permit(:experiment_id, :user_id, :value, :iv_value, :compliance, :comment)
     end
 end

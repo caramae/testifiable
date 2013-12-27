@@ -4,10 +4,7 @@
   %br
   %strong='Your recommended action: '
   %span
-    -if @experiment.enrolled_status(@user.id) == 1
-      = @experiment.action.humanize
-    -elsif @experiment.enrolled_status(@user.id) == 2
-      = @experiment.control.humanize
+    = (@experiment.enrolled_status(@user.id) == 1 ? @experiment.action : @experiment.control).humanize
   %br
   %br
   .control-group
@@ -24,14 +21,15 @@
       = 'Record ' + @experiment.outcome + ' in ' + @experiment.unit + ': '
     .controls
       = f.text_field :value, :class => 'text_field'
-      /= 'Value 2'
-      /= f.text_field :value2, :class => 'text_field', :placeholder=>'Update data here in ' + @experiment.unit.downcase
       %br
       = radio_button_tag 'action', 'Unknown'
+      /Link this to something
+      /Should not let someone select this with a filled text field
       Unknown
       %i{:class => "fa fa-info-circle", :title => "If you didn't get to record your outcome, please check this button instead of trying to guess."}
       = f.hidden_field :experiment_id
       = f.hidden_field :user_id
+      = f.hidden_field :iv_value
     
     /= 'Optional: add a comment, such as other actions you took that may have influenced your outcome.'
     /.controls

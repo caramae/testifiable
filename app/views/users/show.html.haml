@@ -16,7 +16,7 @@
         %tbody
           - @enrolled_experiments.each do |experiment|
             %tr
-              %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment)
+              %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '?', experiment_path(experiment)
               %td
                 -if experiment.enrolled_status(@user.id) == 1
                   =experiment.action.humanize
@@ -27,7 +27,7 @@
                   .recorddata= link_to "Record Data", '#', :class=>"btn btn-mini"
                   %fieldset.recorddata_menu
                     .container
-                      -@datapoint = Datapoint.new(experiment_id:experiment.id, user_id:@current_user.id)
+                      -@datapoint = Datapoint.new(experiment_id:experiment.id, user_id:@current_user.id, iv_value:experiment.enrolled_status(@user.id))
                       -@experiment = experiment
                       =render 'datapoints/form'
                 -else

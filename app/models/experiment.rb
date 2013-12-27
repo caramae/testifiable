@@ -36,6 +36,10 @@ class Experiment < ActiveRecord::Base
     return enroll.empty? || enroll[0].status > 0 || (enroll[0].status == -1 && enroll[0].next_time <= DateTime.now)
   end
 
+  def count_datapoints(assigned_action, complied)
+    return Datapoint.where(experiment_id: self.id, compliance: complied, iv_value: assigned_action).count
+  end
+
   def get_enroll(user_id)
     enroll = Enroll.where('user_id=? and experiment_id = ?', user_id, self.id)
     return enroll[0]

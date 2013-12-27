@@ -1,5 +1,6 @@
 class Datapoint < ActiveRecord::Base
   belongs_to :experiment
+  validates_presence_of :value
 
   def compliant
     if compliance == true

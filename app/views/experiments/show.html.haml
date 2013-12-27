@@ -54,6 +54,31 @@
       -else
         %em= "You have already participated in this experiment and cannot join again."
 
+  -if @current_user && ((@experiment.author==@current_user.id) || @current_user.is_admin)
+    .row
+      .span6
+        %table.table
+          %thead
+            %tr
+              %th= 'Assignment'
+              %th= 'Action'
+              %th= '#'
+          %tbody
+            %tr
+              %td{:rowspan => "2"}= @experiment.action.humanize
+              %td= @experiment.action.humanize
+              %td= @experiment.count_datapoints(1, true)
+            %tr
+              %td= @experiment.control.humanize
+              %td= @experiment.count_datapoints(1, false)
+            %tr
+              %td{:rowspan => "2"}= @experiment.control.humanize
+              %td= @experiment.action.humanize
+              %td= @experiment.count_datapoints(2, false)
+            %tr
+              %td= @experiment.control.humanize
+              %td= @experiment.count_datapoints(2, true)
+
   .form-actions
     = link_to t('.back', :default => t("helpers.links.back")), experiments_path, :class => 'btn'
 

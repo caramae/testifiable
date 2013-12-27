@@ -8,8 +8,8 @@
         %th= model_class.human_attribute_name(:id)
         %th= model_class.human_attribute_name(:experiment_id)
         %th= model_class.human_attribute_name(:user_id)
+        %th= model_class.human_attribute_name(:iv_value)
         %th= model_class.human_attribute_name(:value)
-        %th= model_class.human_attribute_name(:value2)
         %th= model_class.human_attribute_name(:compliance)
         /%th= model_class.human_attribute_name(:comment)
         /%th= model_class.human_attribute_name(:created_at)
@@ -20,8 +20,8 @@
           %td= link_to datapoint.id, datapoint_path(datapoint)
           %td= datapoint.experiment_id
           %td= datapoint.user_id
+          %td= datapoint.iv_value
           %td= datapoint.value
-          %td= datapoint.value2
           %td= datapoint.compliance
           /%td= datapoint.comment
           /%td=l datapoint.created_at
