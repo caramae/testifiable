@@ -1,13 +1,13 @@
 = form_for @datapoint, :html => { :class => 'form-vertical' } do |f|
-  ='What is the impact of ' + @experiment.action + ' on ' + @experiment.outcome+'? (Measured in ' + @experiment.unit + ')'
+  %em='What is the impact of ' + @experiment.action + ' on ' + @experiment.outcome+'?'
   %br
   %br
-  ='Your Recommended Action: '
-  %span.muted
+  %strong='Your recommended action: '
+  %span
     -if @experiment.enrolled_status(@user.id) == 1
-      = @experiment.action
+      = @experiment.action.humanize
     -elsif @experiment.enrolled_status(@user.id) == 2
-      =@experiment.control
+      = @experiment.control.humanize
   %br
   %br
   .control-group
@@ -15,11 +15,10 @@
       Which action did you take?
     .controls{:style=>'padding-left:10px;'}
       = f.radio_button :compliance, true
-      = @experiment.enrolled_status(@user.id)==1 ? @experiment.action : @experiment.control
+      = (@experiment.enrolled_status(@user.id)==1 ? @experiment.action : @experiment.control).humanize
       %br
       = f.radio_button :compliance, false
-      = @experiment.enrolled_status(@user.id)==1 ? @experiment.control : @experiment.action
-  %br
+      = (@experiment.enrolled_status(@user.id)==1 ? @experiment.control : @experiment.action).humanize
   .control-group
     %strong
       = 'Record ' + @experiment.outcome + ' in ' + @experiment.unit + ': '
@@ -30,6 +29,7 @@
       %br
       = radio_button_tag 'action', 'Unknown'
       Unknown
+      %i{:class => "fa fa-info-circle", :title => "If you didn't get to record your outcome, please check this button instead of trying to guess."}
       = f.hidden_field :experiment_id
       = f.hidden_field :user_id
     
@@ -37,6 +37,5 @@
     /.controls
     /  = f.text_field :comment, :class => 'text_field'
 
-  .form-actions
-    = f.submit nil, :class => 'btn btn-primary'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), datapoints_path, :class => 'btn'
+  = f.submit nil, :class => 'btn btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), datapoints_path, :class => 'btn'
