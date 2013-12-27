@@ -7,8 +7,14 @@
     %strong= 'Question:'
     = "What is the impact of " + @experiment.action
     = " vs. " + @experiment.control
-    = " on " + @experiment.outcome
-    = " as measured in " + @experiment.unit + '?'
+    -if @experiment.outcomes.count == 1
+      -outcome = @experiment.outcomes.first
+      = " on " + outcome.name
+      = " as measured in " + outcome.unit + '?'
+    -else
+      -@experiment.outcomes.each do |outcome|
+        = " on " + outcome.name
+        = " as measured in " + outcome.unit + '?'
     %br
     %strong= 'Category:'
     = @experiment.category

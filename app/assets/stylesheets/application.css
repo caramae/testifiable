@@ -108,6 +108,11 @@ a.no-click-change:visted
   position: absolute;
 }
 
+/*.smalltext {
+  font-size: 12px !important;
+  line-height: 13px !important;
+}*/
+
 .recorddata_menu {
     -moz-border-radius-topleft:5px;
     -moz-border-radius-topright:5px;

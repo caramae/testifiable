@@ -6,8 +6,8 @@ class Experiment < ActiveRecord::Base
   validates_numericality_of :timeframe, :only_integer =>true, :greater_than_or_equal_to =>0, :message => "Invalid duration"
   #validates_presence_of :action, :control
   #validates_uniqueness_of :action
-  validate :validate_outcomes
-  accepts_nested_attributes_for :outcomes, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
+  #validate :validate_outcomes
+  accepts_nested_attributes_for :outcomes, :allow_destroy => true#, :reject_if => lambda { |a| a[:name].blank? },
 
   def validate_outcomes
     errors.add(:outcomes, "too few outcomes") if outcomes.length < 1

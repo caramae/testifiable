@@ -95,6 +95,8 @@ class ExperimentsController < ApplicationController
     @experiment.author = session[:user_id]
     @experiment.action = @experiment.action.downcase
     @experiment.control = @experiment.control.downcase
+    outcome = Outcome.create(experiment_id: @experiment.id)
+    @experiment.outcomes = Outcome.where('experiment_id = ?', @experiment.id)
 
     respond_to do |format|
       if @experiment.save
@@ -139,6 +141,6 @@ class ExperimentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def experiment_params
-      params.require(:experiment).permit(:action, :control, :prereqs, :is_public, :timeframe, :timeinterval, :timeframe_units, :category)
+      params.require(:experiment).permit(:action, :control, :outcomes, :prereqs, :is_public, :timeframe, :timeinterval, :timeframe_units, :category)
     end
 end

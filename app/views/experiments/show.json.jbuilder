@@ -1,1 +1,1 @@
-json.extract! @experiment, :action, :control, :outcome, :unit, :created_at, :updated_at
+json.extract! @experiment, :action, :control, :created_at, :updated_at
