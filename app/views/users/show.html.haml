@@ -11,23 +11,23 @@
         %thead
           %tr
             %th= 'Experiment'
-            %th= 'Action'
+            %th= 'Assigned Action'
             %th= 'Record data'
         %tbody
           - @enrolled_experiments.each do |experiment|
             %tr
-              %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
+              %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment)
               %td
                 -if experiment.enrolled_status(@user.id) == 1
-                  =experiment.action
-                -elsif experiment.enrolled_status(@user.id) == 2
-                  =experiment.control
+                  =experiment.action.humanize
+                -else
+                  =experiment.control.humanize
               %td
                 -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round <= 0
-                  .recorddata= link_to "Record Data", {:controller=>'datapoints',:action=>'new', :experiment_id=>experiment.id}, :class=>"btn btn-mini"
-                  /%fieldset{:id => "recorddata"}
-                  /  .container
-                  /    =render 'datapoints/form'
+                  /.recorddata= link_to "Record Data", {:controller=>'datapoints',:action=>'new', :experiment_id=>experiment.id}, :class=>"btn btn-mini"
+                  %fieldset{:id => "recorddata"}
+                    .container
+                      =render 'datapoints/form'
                 -else
                   -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).floor > 0
                     = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).round, "day")}"
@@ -52,12 +52,42 @@
               %tr
                 %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
                 %td
-                  -if @current_user
-                    =link_to "Enroll", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
-                  -else
-                    =link_to "Enroll", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
-                    .muted="Login to testify!"
+                  =link_to "Enroll", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
 
+  .row
+  -#
+    .span8.pull-left
+      .headingBlock
+        %h5= "Previous Experiments"
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= 'Experiment'
+            %th= 'Last enrolled'
+            %th= 'Enroll'
+        %tbody
+          - @enrolled_experiments.each do |experiment|
+            %tr
+              %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment)
+              %td
+                -if experiment.enrolled_status(@user.id) == 1
+                  =experiment.action.humanize
+                -else
+                  =experiment.control.humanize
+              %td
+                -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round <= 0
+                  /.recorddata= link_to "Record Data", {:controller=>'datapoints',:action=>'new', :experiment_id=>experiment.id}, :class=>"btn btn-mini"
+                  %fieldset{:id => "recorddata"}
+                    .container
+                      =render 'datapoints/form'
+                -else
+                  -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).floor > 0
+                    = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).round, "day")}"
+                  -elsif ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).floor > 0
+                    = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).round, "hour")}"
+                  -else
+                    = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round, "minute")}"
+                  &= "before you can record"
   .form-actions
     -if @current_user && @current_user.is_admin
       = link_to t('.edit', :default => t("helpers.links.edit")), edit_user_path(@user), :class => 'btn'

@@ -19,6 +19,12 @@
     %strong= 'Duration of each trial:'
     = @experiment.timeframe.to_s + " " + @experiment.timeframe_units
     %br
+    %strong= 'Number of participants:'
+    = @experiment.enrolls.count
+    %br
+    %strong= 'Number of datapoints:'
+    = @experiment.datapoints.count
+    %br
     %strong= 'Delay between trials:'
     -if @experiment.timeinterval=="-1"
       One trial per participant
@@ -35,18 +41,19 @@
     %strong= 'Visibility:'
     = @experiment.is_public ? 'Public' : 'Private'
     %br
-    -if !@experiment.permits_enrollment(@current_user.id)
+    %br
+    -if @current_user.nil?
+      %em= "Log in to enroll!"
+    -elsif !@experiment.permits_enrollment(@current_user.id)
       -if !@experiment.get_enroll(@current_user.id).next_time.nil? && @experiment.get_enroll(@current_user.id).next_time > DateTime.now
-        %emphasis= "You may re-enroll in"
+        %em= "You may re-enroll in"
         -if ((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).floor > 0
-          &= "#{pluralize(((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).round, "hour")}"
+          %em= "#{pluralize(((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).round, "hour")}"
         -else
-          &= "#{pluralize(((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.minute).round, "minute")}"
+          %em= "#{pluralize(((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.minute).round, "minute")}"
       -else
-        %emphasis= "You have already participated in this experiment and cannot join again."
+        %em= "You have already participated in this experiment and cannot join again."
 
-  %br
-  %br
   .form-actions
     = link_to t('.back', :default => t("helpers.links.back")), experiments_path, :class => 'btn'
 

@@ -13,7 +13,7 @@
       - @experiments.each do |experiment|
         -if experiment.is_public || (@current_user && ((experiment.author==@current_user.id) || @current_user.is_admin))
           %tr
-            %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome+'? (Measured in ' + experiment.unit + ')', experiment_path(experiment), :class=>'no-back-hover no-click-change'
+            %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome+'?', experiment_path(experiment), :class=>'no-back-hover no-click-change'
             %td
               -if @current_user
                 -if experiment.is_enrolled(@current_user.id)
@@ -30,7 +30,6 @@
                 -else
                   = "This experiment does not allow multiple trials."
               -else
-                =link_to "Enroll", root_path, :class=>"btn btn-mini", :disabled=>"disabled"
-                .muted="Login to enroll!"
+                .muted="Log in to enroll!"
 
   = link_to t('.new', :default => t("helpers.links.new")), new_experiment_path, :class => 'btn btn-primary whiteText'

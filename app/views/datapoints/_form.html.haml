@@ -14,9 +14,6 @@
     %strong
       Which action did you take?
     .controls{:style=>'padding-left:10px;'}
-      /= f.check_box :compliance, :class => 'check-box_field'
-      /Yes
-      /= radio_button_tag 'action', 'Yes'
       = f.radio_button :compliance, true
       = @experiment.enrolled_status(@user.id)==1 ? @experiment.action : @experiment.control
       %br

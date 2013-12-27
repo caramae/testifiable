@@ -1,7 +1,7 @@
 class Datapoint < ActiveRecord::Base
   belongs_to :experiment
 
-  def compliant()
+  def compliant
     if compliance == true
       return 1
     else
