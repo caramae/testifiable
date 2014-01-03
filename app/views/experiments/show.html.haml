@@ -5,16 +5,20 @@
 
   %p
     %strong= 'Question:'
-    = "What is the impact of " + @experiment.action
-    = " vs. " + @experiment.control
+    = "What is the impact of " + @experiment.action + " vs. " + @experiment.control + " on " + @experiment.outcomes.first.name
     -if @experiment.outcomes.count == 1
-      -outcome = @experiment.outcomes.first
-      = " on " + outcome.name
-      = " as measured in " + outcome.unit + '?'
+      = " as measured in " + @experiment.outcomes.first.unit + '?'
     -else
+      = " (outcomes of interest: "
       -@experiment.outcomes.each do |outcome|
-        = " on " + outcome.name
-        = " as measured in " + outcome.unit + '?'
+        -if outcome != @experiment.outcomes.first
+          %span>,&nbsp;
+        -if outcome == @experiment.outcomes.last
+          = "and "
+        = outcome.name
+        -if !outcome.unit.empty?
+          = " as measured in " + outcome.unit
+      %span>)
     %br
     %strong= 'Category:'
     = @experiment.category
@@ -85,19 +89,19 @@
               %td= @experiment.control.humanize
               %td= @experiment.count_datapoints(2, true)
 
+  -if @current_user
+    -if @experiment.is_enrolled(@current_user.id)
+      = link_to "Unenroll", {:action=>'unenroll', :id=>@experiment.id}, :method=>:post, confirm: "Unenroll", :class => 'btn'
+    -elsif @experiment.first_enrollment(@current_user.id)
+      =link_to 'Enroll', {:action=>'enroll', :id=>@experiment.id}, method: :post, confirm: @experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", :class=>"btn btn-primary whiteText"
+    -elsif @experiment.permits_enrollment(@current_user.id)
+      =link_to "Re-enroll", {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, confirm: @experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", :class=>"btn btn-primary whiteText"
+
   .form-actions
-    = link_to t('.back', :default => t("helpers.links.back")), experiments_path, :class => 'btn'
+    = link_to raw('<i class="fa fa-chevron-left"></i> Back'), experiments_path, :class => 'btn'
 
-    -if @current_user
-      -if @experiment.is_enrolled(@current_user.id)
-        = link_to "Unenroll", {:action=>'unenroll', :id=>@experiment.id}, :method=>:post, :class => 'btn'
-      -elsif @experiment.first_enrollment(@current_user.id)
-        =link_to "Enroll", {:action=>'enroll', :id=>@experiment.id}, :method=>:post, :confirm => @experiment.prereqs.empty? ? nil : "You may only enroll in this experiment if you meet the following conditions:\n"+@experiment.prereqs, :class=>"btn"
-      -elsif @experiment.permits_enrollment(@current_user.id)
-        =link_to "Re-enroll", {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, :confirm => @experiment.prereqs.empty? ? nil : "You may only enroll in this experiment if you meet the following conditions:\n"+@experiment.prereqs, :class=>"btn"
-
-      -if @current_user.is_admin || (@experiment.author == @current_user.id && @experiment.datapoints.empty?)
-        = link_to t('.edit', :default => t("helpers.links.edit")), edit_experiment_path(@experiment), :class => 'btn'
-        = link_to t('.destroy', :default => t("helpers.links.destroy")), experiment_path(@experiment), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger whiteText'
-      /-if @current_user && @current_user.is_admin
-      /  = link_to t('.approve', :default => t("helpers.links.approve")), approve_experiment_path(@experiment), :class => 'btn'
+    -if @current_user && (@current_user.is_admin || (@experiment.author == @current_user.id && @experiment.datapoints.empty?))
+      = link_to raw('<i class="fa fa-pencil"></i> Edit'), edit_experiment_path(@experiment), :class => 'btn'
+      = link_to raw('<i class="fa fa-trash-o"></i>'), experiment_path(@experiment), :method => "delete", confirm: "Delete experiment", :class => 'btn btn-danger whiteText'
+    /-if @current_user && @current_user.is_admin
+    /  = link_to t('.approve', :default => t("helpers.links.approve")), approve_experiment_path(@experiment), :class => 'btn'

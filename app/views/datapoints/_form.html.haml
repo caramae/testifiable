@@ -1,5 +1,5 @@
 = form_for @datapoint, :html => { :class => 'form-vertical' } do |f|
-  %em='What is the impact of ' + @experiment.action + ' on ' + @experiment.outcome+'?'
+  %em='What is the impact of ' + @experiment.action + ' on ' + @experiment.outcomes.first.name+'?'
   %br
   %br
   %strong='Your recommended action: '
@@ -18,7 +18,7 @@
       = (@experiment.enrolled_status(@user.id)==1 ? @experiment.control : @experiment.action).humanize
   .control-group
     %strong
-      = 'Record ' + @experiment.outcome + ' in ' + @experiment.unit + ': '
+      = 'Record ' + @experiment.outcomes.first.name + ' in ' + @experiment.outcomes.first.unit + ': '
     .controls
       = f.text_field :value, :class => 'text_field'
       %br
@@ -26,7 +26,7 @@
       /Link this to something
       /Should not let someone select this with a filled text field
       Unknown
-      %i{:class => "fa fa-info-circle", :title => "If you didn't get to record your outcome, please check this button instead of trying to guess."}
+      %i{:class => "fa fa-info-circle", :title => "Click this button if you are unsure of your "+@experiment.outcomes.first.name+"."}
       = f.hidden_field :experiment_id
       = f.hidden_field :user_id
       = f.hidden_field :iv_value

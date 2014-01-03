@@ -52,7 +52,7 @@
           - @recommended_experiments.each do |experiment|
             -if experiment.is_public || (experiment.author==@current_user.id) || @current_user.is_admin
               %tr
-                %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment), :class=>'no-back-hover no-click-change'
+                %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment), :class=>'no-back-hover no-click-change'
                 %td
                   =link_to "Enroll", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
 
@@ -70,7 +70,7 @@
         %tbody
           - @enrolled_experiments.each do |experiment|
             %tr
-              %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcome + '? (Measured in ' + experiment.unit + ")", experiment_path(experiment)
+              %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
               %td= "TKTK"
               %td= "TKTK"
   .form-actions

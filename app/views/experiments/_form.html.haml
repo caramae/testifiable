@@ -7,12 +7,13 @@
           %li= msg
 
   .field
-    /%h5="Type of experiment:"
-    /= f.radio_button :type, "Quantitative"
-    /= f.radio_button :type, "Qualitative"
-    /= f.hidden_field :_destroy
-    /= link_to_function "remove", "remove_fields(this)"
-    /Qualitative
+    -#
+      %h5="Type of experiment:"
+      = f.radio_button :type, "Quantitative"
+      = f.radio_button :type, "Qualitative"
+      = f.hidden_field :_destroy
+      = link_to_function "remove", "remove_fields(this)"
+      Qualitative
   
   .content.row
     .span9
@@ -28,7 +29,7 @@
       .btn.btn-mini= link_to_add_fields "Add Outcome", f, :outcomes
       %br
       .field
-        Amount of time to perform the experiment (from the start of the action to the outcome).
+        Minimum time between enrolling and entering data (to prevent cheating)
         %i{:class => "fa fa-info-circle", :title => "Participants will not be able to record data until this time has elapsed since enrollment."}
         %br
         = f.text_field :timeframe, :class => 'text_field span_tiny', :autocomplete => :off
@@ -36,27 +37,31 @@
       .field
         Category
         = f.select :category, ['','Education', 'Health', 'Lifestyle', 'Politics', 'Work', 'Other']
+      .field
+        = f.check_box :timeinterval, {}, "-1", "0"
+        Restrict to one trial per person
 
     .span3
       %br
       %strong= 'Advanced options'
       %br
-      .field
-        Minimum time between trials:
-        %i{:class => "fa fa-info-circle", :title => "If your experiment has a short duration, you may prevent users from making repeated and frivolous entries by setting a delay between the end of a trial and the beginning of the next."}
-        %br
-        = f.radio_button :timeinterval, "0", :checked => true
-        None
-        %br
-        = f.radio_button :timeinterval, "1"
-        Hourly
-        %br
-        = f.radio_button :timeinterval, "2"
-        Daily
-        %br
-        = f.radio_button :timeinterval, "-1"
-        Restrict to one trial per person
-        %br
+      -#
+        .field
+          Minimum time between trials:
+          %i{:class => "fa fa-info-circle", :title => "If your experiment has a short duration, you may prevent users from making repeated and frivolous entries by setting a delay between the end of a trial and the beginning of the next."}
+          %br
+          = f.radio_button :timeinterval, "0", :checked => true
+          None
+          %br
+          = f.radio_button :timeinterval, "1"
+          Hourly
+          %br
+          = f.radio_button :timeinterval, "2"
+          Daily
+          %br
+          = f.radio_button :timeinterval, "-1"
+          Restrict to one trial per person
+          %br
       .field
         .contentBlock='Conditions for participation in the experiment'
         = f.text_area :prereqs, :class => 'text_area span3', :rows => 3
@@ -65,5 +70,5 @@
         %span='Make this experiment private'
 
   .form-actions
-    = f.submit "Create", :class => 'btn btn-primary'
+    = f.submit nil, :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), experiments_path, :class => 'btn'

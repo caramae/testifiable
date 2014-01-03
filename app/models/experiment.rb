@@ -3,14 +3,16 @@ class Experiment < ActiveRecord::Base
   has_many :enrolls, :dependent => :destroy
   has_many :datapoints, :dependent => :destroy
   has_many :users, through: :enrolls
+
+  accepts_nested_attributes_for :outcomes, :reject_if => lambda { |a| a[:name].blank? }, :allow_destroy => true
+  
   validates_numericality_of :timeframe, :only_integer =>true, :greater_than_or_equal_to =>0, :message => "Invalid duration"
-  #validates_presence_of :action, :control
+  #validates_presence_of :action, :control, :category
   #validates_uniqueness_of :action
-  #validate :validate_outcomes
-  accepts_nested_attributes_for :outcomes, :allow_destroy => true#, :reject_if => lambda { |a| a[:name].blank? },
+  validate :validate_outcomes
 
   def validate_outcomes
-    errors.add(:outcomes, "too few outcomes") if outcomes.length < 1
+    errors.add(:outcomes, "are missing") if outcomes.length < 1
   end
 
   def is_enrolled(user_id)
