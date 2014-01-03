@@ -1,14 +1,15 @@
 - model_class = Experiment
 .container
   .page-header
-    %h3=t '.title', :default => model_class.model_name.human.pluralize.titleize
+    %h2="All Experiments"
   %table.table.table-striped
 
     %thead
       %tr
         %th= 'Experiment'
-        %th= 'Action'
+        %th= ''
         %th= 'Category'
+        %th= 'Date created'
     %tbody
       - @experiments.each do |experiment|
         -if experiment.is_public || (@current_user && ((experiment.author==@current_user.id) || @current_user.is_admin))
@@ -19,7 +20,7 @@
                 -if experiment.is_enrolled(@current_user.id)
                   =link_to "Unenroll", {:action=>'unenroll', :id=>experiment.id}, :method=>:post, :class => 'btn btn-mini'
                 -elsif experiment.first_enrollment(@current_user.id)
-                  =link_to "Enroll", {:action=>'enroll', :id=>experiment.id}, :method=>:post, :confirm => experiment.prereqs.empty? ? nil : "You may only enroll in this experiment if you meet the following conditions:\n"+experiment.prereqs, :class=>"btn btn-mini"
+                  =link_to 'Enroll', {:action=>'enroll', :id=>experiment.id}, method: :post, confirm: experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", :class=>"btn btn-mini"
                 -elsif experiment.permits_enrollment(@current_user.id)
                   =link_to "Re-enroll", {:action=>'reenroll', :id=>experiment.id}, :method=>:post, :confirm => experiment.prereqs.empty? ? nil : "You may only enroll in this experiment if you meet the following conditions:\n"+experiment.prereqs, :class=>"btn btn-mini"
                 -elsif experiment.get_enroll(@current_user.id).next_time > DateTime.now
@@ -31,5 +32,18 @@
                   = "This experiment does not allow multiple trials."
               -else
                 .muted="Log in to enroll!"
+            %td= experiment.category
+            %td
+              -if DateTime.yesterday > experiment.created_at
+                = experiment.created_at.strftime("Created %b %-d")
+              -else
+                = "Created"
+                -if (-(experiment.created_at - DateTime.now) / 1.hour).floor > 0
+                  = "#{pluralize((-(experiment.created_at - DateTime.now) / 1.hour).round, "hour")} ago"
+                -elsif (-(experiment.created_at - DateTime.now) / 1.minute).floor > 0
+                  = "#{pluralize((-(experiment.created_at - DateTime.now) / 1.minute).floor, "minute")} ago"
+                -else
+                  = "just now"
 
-  = link_to t('.new', :default => t("helpers.links.new")), new_experiment_path, :class => 'btn btn-primary whiteText'
+  -if @current_user
+    = link_to (raw t('helpers.links.new', type: "experiment")), new_experiment_path, :class => 'btn btn-primary whiteText'

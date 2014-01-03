@@ -70,11 +70,6 @@ a.no-click-change:visted
   color:inherit;
 }
 
-.whiteText
-{
-  color:#ffffff !important;
-}
-
 
 
 #signin_menu {
@@ -108,11 +103,6 @@ a.no-click-change:visted
   position: absolute;
 }
 
-/*.smalltext {
-  font-size: 12px !important;
-  line-height: 13px !important;
-}*/
-
 .recorddata_menu {
     -moz-border-radius-topleft:5px;
     -moz-border-radius-topright:5px;
@@ -125,7 +115,6 @@ a.no-click-change:visted
     display:none;
     background-color:lightblue;
     position: absolute;
-    /*float: right;*/
     z-index:100;
     border:1px transparent;
     padding:12px;

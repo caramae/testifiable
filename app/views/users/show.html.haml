@@ -3,41 +3,56 @@
   .page-header
     %h3= "Dashboard"
 
-  .row
-    .span8.pull-left
-      .headingBlock
-        %h5= "Enrolled Experiments"
+  -if @enrolled_experiments.empty?
+    %em= "You are not signed up for any experiments. Enroll in an experiment today!"
+    %br
+    .pull-left
       %table.table.table-striped
         %thead
           %tr
             %th= 'Experiment'
-            %th= 'Assigned Action'
-            %th= 'Record data'
         %tbody
-          - @enrolled_experiments.each do |experiment|
+          - @recommended_experiments.each do |experiment|
+            -if experiment.is_public || (experiment.author==@current_user.id) || @current_user.is_admin
+              %tr
+                %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment), :class=>'no-back-hover no-click-change'
+                %td= link_to (raw t('helpers.links.enroll')), {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm: experiment.prereqs.empty? ? nil : "Prereqs #{experiment.prereqs}", :class=>"btn btn-mini"
+  -else
+    .row
+      .span8.pull-left
+        .headingBlock
+          %h5= "Enrolled Experiments"
+        %table.table.table-striped
+          %thead
             %tr
-              %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
-              %td
-                -if experiment.enrolled_status(@user.id) == 1
-                  =experiment.action.humanize
-                -else
-                  =experiment.control.humanize
-              %td{:id => "recorddata_cell"}
-                -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round <= 0
-                  .recorddata= link_to "Record Data", '#', :class=>"btn btn-mini"
-                  %fieldset.recorddata_menu
-                    .container
-                      -@datapoint = Datapoint.new(experiment_id:experiment.id, user_id:@current_user.id, iv_value:experiment.enrolled_status(@user.id))
-                      -@experiment = experiment
-                      =render 'datapoints/form'
-                -else
-                  -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).floor > 0
-                    = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).round, "day")}"
-                  -elsif ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).floor > 0
-                    = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).round, "hour")}"
+              %th= 'Experiment'
+              %th= 'Assigned Action'
+              %th= 'Record data'
+          %tbody
+            - @enrolled_experiments.each do |experiment|
+              %tr
+                %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
+                %td
+                  -if experiment.enrolled_status(@user.id) == 1
+                    =experiment.action.humanize
                   -else
-                    = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round, "minute")}"
-                  &= "before you can record"
+                    =experiment.control.humanize
+                %td{:id => "recorddata_cell"}
+                  -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round <= 0
+                    .recorddata= link_to "Record Data", '#', :class=>"btn btn-mini"
+                    %fieldset.recorddata_menu
+                      .container
+                        -@datapoint = Datapoint.new(experiment_id:experiment.id, user_id:@current_user.id, iv_value:experiment.enrolled_status(@user.id))
+                        -@experiment = experiment
+                        =render 'datapoints/form'
+                  -else
+                    -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).floor > 0
+                      = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).round, "day")}"
+                    -elsif ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).floor > 0
+                      = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).round, "hour")}"
+                    -else
+                      = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round, "minute")}"
+                    &= "before you can record"
 
   -#
     .span4.pull-right
@@ -53,8 +68,7 @@
             -if experiment.is_public || (experiment.author==@current_user.id) || @current_user.is_admin
               %tr
                 %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment), :class=>'no-back-hover no-click-change'
-                %td
-                  =link_to "Enroll", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
+                %td= link_to t('helpers.links.enroll'), {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm: experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", :class=>"btn btn-mini"
 
   .row
   -#
@@ -74,11 +88,4 @@
               %td= "TKTK"
               %td= "TKTK"
   .form-actions
-    -if @current_user && @current_user.is_admin
-      = link_to t('.edit', :default => t("helpers.links.edit")), edit_user_path(@user), :class => 'btn'
-      = link_to t('.back', :default => t("helpers.links.back")), users_path, :class => 'btn'
-      =link_to 'Create New Experiment', new_experiment_path, :class => 'btn'
-    -else
-      .btn= link_to 'Home', root_path
-    -if @current_user && @current_user.id == @user.id && !@current_user.is_admin
-      = link_to 'Create New Experiment', new_experiment_path, :class => 'btn'
+    =link_to (raw t('helpers.links.new', type: "experiment")), new_experiment_path, :class => 'btn btn-primary whiteText'

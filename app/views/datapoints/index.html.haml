@@ -26,10 +26,10 @@
           /%td= datapoint.comment
           /%td=l datapoint.created_at
           %td
-            = link_to t('.edit', :default => t("helpers.links.edit")), edit_datapoint_path(datapoint), :class => 'btn btn-mini'
-            = link_to t('.destroy', :default => t("helpers.links.destroy")), datapoint_path(datapoint), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
+            = link_to (raw t('helpers.links.edit')), edit_datapoint_path(datapoint), :class => 'btn btn-mini'
+            = link_to (raw t('helpers.links.delete')), datapoint_path(datapoint), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
 
-  = link_to t('.new', :default => t("helpers.links.new")), new_datapoint_path, :class => 'btn btn-primary'
+  = link_to (raw t('helpers.links.new', type: "Datapoint")), new_datapoint_path, :class => 'btn btn-primary whiteText'
   /= link_to "Delete all", root_path, :class => 'btn btn-primary'
 
   %br

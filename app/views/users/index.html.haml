@@ -1,25 +1,24 @@
 - model_class = User
-.page-header
-  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
-%table.table.table-striped
-  %thead
-    %tr
-      %th= model_class.human_attribute_name(:id)
-      %th= model_class.human_attribute_name(:name)
-      %th= model_class.human_attribute_name(:email)
-      %th= model_class.human_attribute_name(:is_admin)
-      %th= model_class.human_attribute_name(:created_at)
-      %th=t '.actions', :default => t("helpers.actions")
-  %tbody
-    - @users.each do |user|
+.container
+  .page-header
+    %h3="All Users (Admin only)"
+  %table.table.table-striped
+    %thead
       %tr
-        %td= user.id
-        %td= link_to user.name, user_path(user)
-        %td= user.email
-        %td= user.is_admin
-        %td=l user.created_at
-        %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_user_path(user), :class => 'btn btn-mini'
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), user_path(user), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
-
-= link_to t('.new', :default => t("helpers.links.new")), new_user_path, :class => 'btn btn-primary'
+        %th= model_class.human_attribute_name(:id)
+        %th= model_class.human_attribute_name(:name)
+        %th= model_class.human_attribute_name(:email)
+        %th= model_class.human_attribute_name(:is_admin)
+        %th= model_class.human_attribute_name(:created_at)
+        %th=t '.actions', :default => t("helpers.actions")
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.id
+          %td= link_to user.name, user_path(user)
+          %td= user.email
+          %td= user.is_admin
+          %td=l user.created_at
+          %td
+            = link_to (raw t('helpers.links.edit')), edit_user_path(user), :class => 'btn btn-mini'
+            = link_to (raw t('helpers.links.delete')), user_path(user), :method => :delete, confirm: "Delete user", :class => 'btn btn-mini btn-danger whiteText'

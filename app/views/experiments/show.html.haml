@@ -1,7 +1,7 @@
 - model_class = Experiment
 .container
   .page-header
-    %h3=t '.title', :default => model_class.model_name.human.titleize
+    %h3= "What is the impact of " + @experiment.action + " on " + @experiment.outcomes.first.name + "?"
 
   %p
     %strong= 'Question:'
@@ -91,17 +91,17 @@
 
   -if @current_user
     -if @experiment.is_enrolled(@current_user.id)
-      = link_to "Unenroll", {:action=>'unenroll', :id=>@experiment.id}, :method=>:post, confirm: "Unenroll", :class => 'btn'
+      = link_to t('helpers.links.unenroll'), {:action=>'unenroll', :id=>@experiment.id}, :method=>:post, confirm: "Unenroll", :class => 'btn'
     -elsif @experiment.first_enrollment(@current_user.id)
-      =link_to 'Enroll', {:action=>'enroll', :id=>@experiment.id}, method: :post, confirm: @experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", :class=>"btn btn-primary whiteText"
+      = link_to t('helpers.links.enroll'), {:action=>'enroll', :id=>@experiment.id}, method: :post, confirm: @experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", :class=>"btn btn-primary whiteText"
     -elsif @experiment.permits_enrollment(@current_user.id)
-      =link_to "Re-enroll", {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, confirm: @experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", :class=>"btn btn-primary whiteText"
+      = link_to t('helpers.links.reenroll'), {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, confirm: @experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", :class=>"btn btn-primary whiteText"
 
   .form-actions
-    = link_to raw('<i class="fa fa-chevron-left"></i> Back'), experiments_path, :class => 'btn'
+    = link_to (raw t('helpers.links.back')), :back, :class => 'btn'
 
     -if @current_user && (@current_user.is_admin || (@experiment.author == @current_user.id && @experiment.datapoints.empty?))
-      = link_to raw('<i class="fa fa-pencil"></i> Edit'), edit_experiment_path(@experiment), :class => 'btn'
-      = link_to raw('<i class="fa fa-trash-o"></i>'), experiment_path(@experiment), :method => "delete", confirm: "Delete experiment", :class => 'btn btn-danger whiteText'
+      = link_to (raw t('helpers.links.edit')), edit_experiment_path(@experiment), :class => 'btn'
+      = link_to (raw t('helpers.links.delete')), experiment_path(@experiment), :method => "delete", confirm: "Delete experiment", :class => 'btn btn-danger whiteText'
     /-if @current_user && @current_user.is_admin
     /  = link_to t('.approve', :default => t("helpers.links.approve")), approve_experiment_path(@experiment), :class => 'btn'

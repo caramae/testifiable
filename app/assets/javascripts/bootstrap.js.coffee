@@ -15,9 +15,7 @@ $.rails.allowAction = (element) ->
       # We don't necessarily want the same styling as the original link/button.
       .removeAttr('class')
       # We don't want to pop up another confirmation (recursion)
-      .removeAttr('data-confirm')
-      # etc.
-      .addClass('btn btn-danger whiteText').html("Yes, I'm certain.")
+      .removeAttr('data-confirm').addClass('btn btn-danger whiteText').html("Yes, I'm certain.")
 
     message = message.slice(7)
 
@@ -67,24 +65,6 @@ $.rails.allowAction = (element) ->
                    </div>
                    <div class="modal-footer">
                      <a data-dismiss="modal" class="btn">Cancel</a>
-                   </div>
-                 </div>
-                 """
-
-  else if message.indexOf("Randomize",0) == 0
-    message = message.slice(10)
-
-    modal_html = """
-                 <div class="modal" id="prereqModal">
-                   <div class="modal-header">
-                     <a class="close" data-dismiss="modal">×</a>
-                     <h4>You have been randomized to the following action:</h4>
-                   </div>
-                   <div class="modal-body">
-                     <p>#{message}</p>
-                   </div>
-                   <div class="modal-footer">
-                     <a data-dismiss="modal" class="btn">Ok</a>
                    </div>
                  </div>
                  """

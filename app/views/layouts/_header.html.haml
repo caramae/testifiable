@@ -20,7 +20,7 @@
             %li=link_to raw("<i class=\"fa fa-sign-out fa-lg\"></i>"), session_path(:current), method: :delete
           -else
             %li=link_to raw("<i class=\"fa fa-user fa-lg\"></i> ")+"Sign up", new_user_path
-            %li{:class => "signin"}=link_to raw("<i class=\"fa fa-sign-in fa-lg\"></i>") + " Log in", login_path
+            %li{:class => "signin"}=link_to raw("<i class=\"fa fa-sign-in fa-lg\"></i>") + " Log in", '#'
             %fieldset{:id => "signin_menu"}
               .container
                 =form_tag sessions_path do
@@ -29,7 +29,7 @@
                     =text_field_tag :email, params[:email], class: 'text_field'
                   .field
                     =label_tag :password
-                    =password_field_tag :password, '', class: 'text_field'
+                    =password_field_tag :password, params[:password], class: 'text_field'
                   =submit_tag 'Log in', class: 'submitbutton btn btn-primary whiteText'
                   &nbsp&nbsp
                   /%span{:class => "remember"}
