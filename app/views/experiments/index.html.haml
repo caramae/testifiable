@@ -14,15 +14,15 @@
       - @experiments.each do |experiment|
         -if experiment.is_public || (@current_user && ((experiment.author==@current_user.id) || @current_user.is_admin))
           %tr
-            %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name+'?', experiment_path(experiment), :class=>'no-back-hover no-click-change'
+            %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name+'?', experiment_path(experiment), :class=>'no-back-hover'
             %td
               -if @current_user
                 -if experiment.is_enrolled(@current_user.id)
-                  =link_to "Unenroll", {:action=>'unenroll', :id=>experiment.id}, :method=>:post, :class => 'btn btn-mini'
+                  =link_to (raw t('helpers.links.unenroll')), {:action=>'unenroll', :id=>experiment.id}, :method=>:post, :class => 'btn btn-mini'
                 -elsif experiment.first_enrollment(@current_user.id)
-                  =link_to 'Enroll', {:action=>'enroll', :id=>experiment.id}, method: :post, confirm: experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", :class=>"btn btn-mini"
+                  =link_to (raw t('helpers.links.enroll')), {:action=>'enroll', :id=>experiment.id}, method: :post, confirm: experiment.prereqs.empty? ? nil : "Prereqs #{experiment.prereqs}", :class=>"btn btn-mini"
                 -elsif experiment.permits_enrollment(@current_user.id)
-                  =link_to "Re-enroll", {:action=>'reenroll', :id=>experiment.id}, :method=>:post, :confirm => experiment.prereqs.empty? ? nil : "You may only enroll in this experiment if you meet the following conditions:\n"+experiment.prereqs, :class=>"btn btn-mini"
+                  =link_to (raw t('helpers.links.reenroll')), {:action=>'reenroll', :id=>experiment.id}, :method=>:post, :confirm => experiment.prereqs.empty? ? nil : "You may only enroll in this experiment if you meet the following conditions:\n"+experiment.prereqs, :class=>"btn btn-mini"
                 -elsif experiment.get_enroll(@current_user.id).next_time > DateTime.now
                   -if ((experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).floor > 0
                     = "You may re-enroll in #{pluralize(((experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).round, "hour")}"
@@ -46,4 +46,4 @@
                   = "just now"
 
   -if @current_user
-    = link_to (raw t('helpers.links.new', type: "experiment")), new_experiment_path, :class => 'btn btn-primary whiteText'
+    = link_to (raw t('helpers.links.new.experiment')), new_experiment_path, :class => 'btn btn-primary whiteText'

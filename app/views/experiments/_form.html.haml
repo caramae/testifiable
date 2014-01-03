@@ -6,15 +6,6 @@
         - @experiment.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    -#
-      %h5="Type of experiment:"
-      = f.radio_button :type, "Quantitative"
-      = f.radio_button :type, "Qualitative"
-      = f.hidden_field :_destroy
-      = link_to_function "remove", "remove_fields(this)"
-      Qualitative
-  
   .content.row
     .span9
       %h5='What is the impact of'
@@ -26,7 +17,7 @@
       %br
       = f.fields_for :outcomes do |builder|
         =render "outcome_fields", :f => builder
-      .btn.btn-mini= link_to_add_fields "Add Outcome", f, :outcomes
+      .btn.btn-mini= link_to_add_fields (raw t("helpers.links.new.outcome")), f, :outcomes
       %br
       .field
         Minimum time between enrolling and entering data (to prevent cheating)

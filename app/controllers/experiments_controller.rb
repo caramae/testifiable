@@ -93,9 +93,6 @@ class ExperimentsController < ApplicationController
   # POST /experiments.json
   def create
     @experiment = Experiment.new(experiment_params)
-    #if @experiment.outcomes.empty?
-    #  @experiment.outcomes.build(name: "height", unit: "cm")
-    #end
     @experiment.author = session[:user_id]
     @experiment.action = @experiment.action.downcase
     @experiment.control = @experiment.control.downcase

@@ -5,6 +5,6 @@
   .input-prepend
     %span.add-on="as measured in"
     = f.text_field :unit, :class => 'text_field span2', :placeholder => 'Units (eg. "lb.")', :autocomplete => :off
-  .btn.btn-mini= link_to_remove_fields "Remove outcome", f
-  .btn.btn-mini= link_to_function "Toggle type", "change_type(this)"
+  .btn.btn-mini= link_to_function "Toggle units", "change_type(this)"
+  .btn.btn-mini= link_to_remove_fields (raw t("helpers.links.remove.outcome")), f
   %br

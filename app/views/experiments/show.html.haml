@@ -26,32 +26,36 @@
     %strong= 'Prerequisites:'
     = @experiment.prereqs.empty? ? "None" : @experiment.prereqs
     %br
-    %strong= 'Duration of each trial:'
-    = @experiment.timeframe.to_s + " " + @experiment.timeframe_units
     %br
-    %strong= 'Number of participants:'
-    = @experiment.enrolls.count
-    %br
-    %strong= 'Number of datapoints:'
-    = @experiment.datapoints.count
-    %br
-    %strong= 'Delay between trials:'
-    -if @experiment.timeinterval=="-1"
-      One trial per participant
-    -elsif @experiment.timeinterval=="0"
-      None
-    -elsif @experiment.timeinterval=="1"
-      1 hour
-    -else
-      1 day
-    %br
-    %strong= 'Creator:'
-    =link_to User.find(@experiment.author).name, user_path(User.find(@experiment.author))
-    %br
-    %strong= 'Visibility:'
-    = @experiment.is_public ? 'Public' : 'Private'
-    %br
-    %br
+    
+    -if @current_user && ((@experiment.author==@current_user.id) || @current_user.is_admin)
+      %strong= 'Number of participants:'
+      = @experiment.enrolls.count
+      %br
+      %strong= 'Number of datapoints:'
+      = @experiment.datapoints.count
+      %br
+      %strong= 'Duration of each trial:'
+      = @experiment.timeframe.to_s + " " + @experiment.timeframe_units
+      %br
+      %strong= 'Delay between trials:'
+      -if @experiment.timeinterval=="-1"
+        One trial per participant
+      -elsif @experiment.timeinterval=="0"
+        None
+      -elsif @experiment.timeinterval=="1"
+        1 hour
+      -else
+        1 day
+      %br
+      %strong= 'Creator:'
+      =link_to User.find(@experiment.author).name, user_path(User.find(@experiment.author))
+      %br
+      %strong= 'Visibility:'
+      = @experiment.is_public ? 'Public' : 'Private'
+      %br
+      %br
+
     -if @current_user.nil?
       %em= "Log in to enroll!"
     -elsif !@experiment.permits_enrollment(@current_user.id)
