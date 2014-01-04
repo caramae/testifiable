@@ -2,71 +2,74 @@
 .container
   .page-header
     %h3= "What is the impact of " + @experiment.action + " on " + @experiment.outcomes.first.name + "?"
-
-  %p
-    %strong= 'Question:'
-    = "What is the impact of " + @experiment.action + " vs. " + @experiment.control + " on " + @experiment.outcomes.first.name
-    -if @experiment.outcomes.count == 1
-      = " as measured in " + @experiment.outcomes.first.unit + '?'
-    -else
-      = " (outcomes of interest: "
-      -@experiment.outcomes.each do |outcome|
-        -if outcome != @experiment.outcomes.first
-          %span>,&nbsp;
-        -if outcome == @experiment.outcomes.last
-          = "and "
-        = outcome.name
-        -if !outcome.unit.empty?
-          = " as measured in " + outcome.unit
-      %span>)
-    %br
-    %strong= 'Category:'
-    = @experiment.category
-    %br
-    %strong= 'Prerequisites:'
-    = @experiment.prereqs.empty? ? "None" : @experiment.prereqs
-    %br
-    %br
-    
-    -if @current_user && ((@experiment.author==@current_user.id) || @current_user.is_admin)
-      %strong= 'Number of participants:'
+  
+  .row.settings
+    .span8.pull-left
+      %strong= 'Possible actions:'
+      = @experiment.action + " vs. " + @experiment.control
+      %br
+      %strong= 'Outcomes of interest:'
+      -if @experiment.outcomes.count == 0
+        = @experiment.outcomes.first.name + " as measured in " + @experiment.outcomes.first.unit + '?'
+      -else
+        -@experiment.outcomes.each do |outcome|
+          -if outcome == @experiment.outcomes.last
+            = "and "
+          -elsif outcome != @experiment.outcomes.first
+            %span>,&nbsp;
+          = outcome.name
+          -if !outcome.unit.empty?
+            = "(measured in " + outcome.unit + ")"
+      %br
+      %strong= 'Category:'
+      = @experiment.category
+      %br
+      %strong= 'Prerequisites:'
+      = @experiment.prereqs.empty? ? "None" : @experiment.prereqs
+      %br
+      %strong= 'Number of active participants:'
       = @experiment.enrolls.count
       %br
       %strong= 'Number of datapoints:'
       = @experiment.datapoints.count
       %br
-      %strong= 'Duration of each trial:'
-      = @experiment.timeframe.to_s + " " + @experiment.timeframe_units
-      %br
-      %strong= 'Delay between trials:'
-      -if @experiment.timeinterval=="-1"
-        One trial per participant
-      -elsif @experiment.timeinterval=="0"
-        None
-      -elsif @experiment.timeinterval=="1"
-        1 hour
-      -else
-        1 day
-      %br
       %strong= 'Creator:'
       =link_to User.find(@experiment.author).name, user_path(User.find(@experiment.author))
       %br
-      %strong= 'Visibility:'
-      = @experiment.is_public ? 'Public' : 'Private'
-      %br
       %br
 
-    -if @current_user.nil?
-      %em= "Log in to enroll!"
-    -elsif !@experiment.permits_enrollment(@current_user.id)
-      -if !@experiment.get_enroll(@current_user.id).next_time.nil? && @experiment.get_enroll(@current_user.id).next_time > DateTime.now
-        %em= "You may re-enroll in"
-        -if ((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).floor > 0
-          %em= "#{pluralize(((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).round, "hour")}"
+      -if @current_user.nil?
+        %em= "Log in to enroll!"
+      -elsif !@experiment.permits_enrollment(@current_user.id)
+        -if !@experiment.get_enroll(@current_user.id).next_time.nil? && @experiment.get_enroll(@current_user.id).next_time > DateTime.now
+          %em= "You may re-enroll in"
+          -if ((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).floor > 0
+            %em= "#{pluralize(((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).round, "hour")}"
+          -else
+            %em= "#{pluralize(((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.minute).round, "minute")}"
         -else
-          %em= "#{pluralize(((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.minute).round, "minute")}"
-      -else
-        %em= "You have already participated in this experiment and cannot join again."
+          %em= "You have already participated in this experiment and cannot join again."
+    
+    -if @current_user && ((@experiment.author==@current_user.id) || @current_user.is_admin)
+      .span4.pull-right
+        %h5= "Other settings"
+        %strong= 'Duration of each trial:'
+        = @experiment.timeframe.to_s + " " + @experiment.timeframe_units
+        %br
+        %strong= 'Limit on multiple trials:'
+        -if @experiment.timeinterval=="-1"
+          One trial per participant
+        -elsif @experiment.timeinterval=="0"
+          None
+        -elsif @experiment.timeinterval=="1"
+          1 hour apart
+        -else
+          1 day apart
+        %br
+        %strong= 'Visibility:'
+        = @experiment.is_public ? 'Public' : 'Private'
+        %br
+        %br
 
   -if @current_user && ((@experiment.author==@current_user.id) || @current_user.is_admin)
     .row

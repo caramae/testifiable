@@ -10,7 +10,7 @@
       %table.table.table-striped
         %thead
           %tr
-            %th= 'Experiment'
+            %th= 'Open Experiments'
         %tbody
           - @recommended_experiments.each do |experiment|
             -if experiment.is_public || (experiment.author==@current_user.id) || @current_user.is_admin
@@ -20,14 +20,12 @@
   -else
     .row
       .span8.pull-left
-        .headingBlock
-          %h5= "Enrolled Experiments"
         %table.table.table-striped
           %thead
             %tr
-              %th= 'Experiment'
+              %th= 'Enrolled Experiments'
               %th= 'Assigned Action'
-              %th= 'Record data'
+              %th= ''
           %tbody
             - @enrolled_experiments.each do |experiment|
               %tr

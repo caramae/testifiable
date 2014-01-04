@@ -59,7 +59,7 @@ function remove_fields(link) {
 }
 
 function change_type(link) {
-  $(link).parent().prev().prev(".input-prepend").toggle();
+  $(link).parent().prev(".input-prepend").toggle();
 }
 
 function add_fields(link, association, content) {
