@@ -17,19 +17,22 @@
       = f.radio_button :compliance, false
       = (@experiment.enrolled_status(@user.id)==1 ? @experiment.control : @experiment.action).humanize
   .control-group
-    %strong
-      = 'Record ' + @experiment.outcomes.first.name + ' in ' + @experiment.outcomes.first.unit + ': '
-    .controls
-      = f.text_field :value, :class => 'text_field'
+    - @experiment.outcomes.each do |outcome|
+      %strong
+        = 'Record ' + outcome.name + (!outcome.unit.empty? ? (' in ' + outcome.unit) : '') + ': '
+      .controls
+        = f.text_field :value, :class => 'text_field'
+        %br
+        = radio_button_tag 'action', 'Unknown'
+        /Link this to something
+        /Should not let someone select this with a filled text field
+        = "Unknown"
+        %i{:class => "fa fa-info-circle", :title => "Click this button if you are unsure of your "+@experiment.outcomes.first.name+"."}
       %br
-      = radio_button_tag 'action', 'Unknown'
-      /Link this to something
-      /Should not let someone select this with a filled text field
-      Unknown
-      %i{:class => "fa fa-info-circle", :title => "Click this button if you are unsure of your "+@experiment.outcomes.first.name+"."}
-      = f.hidden_field :experiment_id
-      = f.hidden_field :user_id
-      = f.hidden_field :iv_value
+
+    = f.hidden_field :experiment_id
+    = f.hidden_field :user_id
+    = f.hidden_field :iv_value
     
     /= 'Optional: add a comment, such as other actions you took that may have influenced your outcome.'
     /.controls

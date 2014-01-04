@@ -35,17 +35,3 @@ en:
             name:
               blank: "is required"
               taken: "has already been taken"
-  helpers:
-    links:
-      new:
-        experiment: "<i class=\"fa fa-plus\"></i> New experiment"
-        datapoint: "<i class=\"fa fa-plus\"></i> Add datapoint"
-        outcome: "<i class=\"fa fa-plus\"></i> Add Outcome"
-      edit: "<i class=\"fa fa-pencil\"></i>"
-      delete: "<i class=\"fa fa-trash-o\"></i>"
-      remove:
-        outcome: "<i class=\"fa fa-minus\"></i> Remove outcome"
-      enroll: "Enroll"
-      reenroll: "Re-enroll"
-      unenroll: "Unenroll"
-      back: "<i class=\"fa fa-angle-left\"></i> Back"

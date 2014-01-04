@@ -18,39 +18,38 @@
                 %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment), :class=>'no-back-hover no-click-change'
                 %td= link_to (raw t('helpers.links.enroll')), {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm: experiment.prereqs.empty? ? nil : "Prereqs #{experiment.prereqs}", :class=>"btn btn-mini"
   -else
-    .row
-      .span8.pull-left
-        %table.table.table-striped
-          %thead
-            %tr
-              %th= 'Enrolled Experiments'
-              %th= 'Assigned Action'
-              %th= ''
-          %tbody
-            - @enrolled_experiments.each do |experiment|
-              %tr
-                %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
-                %td
-                  -if experiment.enrolled_status(@user.id) == 1
-                    =experiment.action.humanize
-                  -else
-                    =experiment.control.humanize
-                %td{:id => "recorddata_cell"}
-                  -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round <= 0
-                    .recorddata= link_to "Record Data", '#', :class=>"btn btn-mini"
-                    %fieldset.recorddata_menu
-                      .container
-                        -@datapoint = Datapoint.new(experiment_id:experiment.id, user_id:@current_user.id, iv_value:experiment.enrolled_status(@user.id))
-                        -@experiment = experiment
-                        =render 'datapoints/form'
-                  -else
-                    -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).floor > 0
-                      = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).round, "day")}"
-                    -elsif ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).floor > 0
-                      = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).round, "hour")}"
-                    -else
-                      = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round, "minute")}"
-                    &= "before you can record"
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= 'Enrolled Experiments'
+          %th= 'Assigned Action'
+      %tbody
+        - @enrolled_experiments.each do |experiment|
+          %tr
+            %td
+              = link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
+              &nbsp;&nbsp;
+              -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round <= 0
+                %span{:id => "recorddata_cell"}
+                  .recorddata= link_to (raw t('helpers.links.record.data')), '#', :class=>"btn btn-mini btn-primary whiteText"
+                  %fieldset.recorddata_menu
+                    .container
+                      -@datapoint = Datapoint.new(experiment_id:experiment.id, user_id:@current_user.id, iv_value:experiment.enrolled_status(@user.id))
+                      -@experiment = experiment
+                      =render 'datapoints/form'
+              -else
+                -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).floor > 0
+                  = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.day).round, "day")}"
+                -elsif ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).floor > 0
+                  = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.hour).round, "hour")}"
+                -else
+                  = "#{pluralize(((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round, "minute")}"
+                &= "before you can record"
+            %td
+              -if experiment.enrolled_status(@user.id) == 1
+                =experiment.action.humanize
+              -else
+                =experiment.control.humanize
 
   -#
     .span4.pull-right
