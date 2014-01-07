@@ -19,12 +19,10 @@ function ExperimentEvents()
     if(respText == actionText)
     { respText = actionText.replace(' at most ', ' more than '); }
 
-    if((respText == actionText) && (regNum.test(actionText)))
-    {
+    if((respText == actionText) && (regNum.test(actionText))) {
       respText = actionText.replace(/[0-9]\S/, '0');
     }
-    else
-    {
+    else {
       /*alert("Do Something in here");*/
       respText = 'Not ' + actionText;
     }
