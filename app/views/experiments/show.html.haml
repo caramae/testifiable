@@ -13,7 +13,7 @@
         = @experiment.outcomes.first.name + " as measured in " + @experiment.outcomes.first.unit + '?'
       -else
         -@experiment.outcomes.each do |outcome|
-          -if outcome == @experiment.outcomes.last
+          -if outcome == @experiment.outcomes.last && @experiment.outcomes.count != 1
             = "and "
           -elsif outcome != @experiment.outcomes.first
             %span>,&nbsp;
@@ -95,6 +95,8 @@
             %tr
               %td= @experiment.control.humanize
               %td= @experiment.count_datapoints(2, true)
+    = high_chart("my_id4", @chart)
+    %br
 
   -if @current_user
     -if @experiment.is_enrolled(@current_user.id)

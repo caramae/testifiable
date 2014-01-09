@@ -48,34 +48,27 @@ class ExperimentsController < ApplicationController
     end
   end
 
-=begin
-#=link_to "Randomize Action", randomize_path(:experiment_id => experiment.id), :method=>:post, :class=>"btn btn-mini"
-  def randomize
-    if session[:user_id]
-      if !params[:experiment_id].blank?
-        @experiment = Experiment.find(params[:experiment_id].to_i)
-        @user = User.find(session[:user_id].to_i)
-        enrolled = Enroll.where('experiment_id=? and user_id=?', @experiment.id, @user.id)[0]
-        enrolled.randomize = Random.rand(1..2)
-        enrolled.save()
-        respond_to do |format|
-          format.html { redirect_to @user, notice: 'Successfully Randomized to an action!' }
-          format.json { render controller:'users', action: 'show', status: :created, location: @user }
-        end
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to login_path, notice: 'Please login to enroll.' }
-      end
-    end
-  end
-=end
-
   # GET /experiments/1
   # GET /experiments/1.json
   def show
     if !session[:user_id].blank?
       @current_user = User.find(session[:user_id].to_i)
+    end
+
+    @chart = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title({ :text=>"Analysis chart"})
+      f.options[:xAxis][:categories] = [@experiment.action.humanize, @experiment.control.humanize]
+      f.labels(:items=>[:html=>"Compliance", :style=>{:left=>"40px", :top=>"8px", :color=>"black"} ])      
+      f.series(:type=> 'column',:name=> "Assigned to " + @experiment.action,:data=> [@experiment.count_datapoints(1, true), @experiment.count_datapoints(1, false)]) #@experiment.datapoints
+      f.series(:type=> 'column',:name=> "Assigned to " + @experiment.control,:data=> [@experiment.count_datapoints(2, false), @experiment.count_datapoints(2, true)])
+      f.series(:type=> 'spline',:name=> 'Average', :data=> [3, 2.67])
+      #f.series(:type=> 'pie',:name=> 'Total consumption', 
+      #  :data=> [
+      #    {:name=> 'Jane', :y=> 13, :color=> 'red'}, 
+      #    {:name=> 'John', :y=> 23,:color=> 'green'},
+      #    {:name=> 'Joe', :y=> 19,:color=> 'blue'}
+      #  ],
+      #  :center=> [100, 80], :size=> 100, :showInLegend=> false)
     end
   end
 

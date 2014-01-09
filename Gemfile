@@ -14,6 +14,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'uglifier', '>= 2.1.1'
 gem 'bcrypt-ruby', '> 3.1.0'
 gem "font-awesome-rails"
+gem 'lazy_high_charts'
 
 #gem "therubyracer"
 #gem "less-rails"
