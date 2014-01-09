@@ -10,19 +10,22 @@
 /        My enrolled experiments
 /-else
 .hero-unit
+  = high_chart("sample_chart", @chart)
+  %br
+  %br
   .row
     .span3
-      =link_to image_tag('step1_signup.png'), experiments_path, :class=>'no-back-hover'
+      =link_to image_tag('step1.png'), experiments_path, :class=>'no-back-hover'
       %h5
         =link_to content_tag(:small,'Propose an experiment'), experiments_path
     .span1
     .span3
-      =link_to image_tag('step2_enroll.png'), experiments_path, :class=>'no-back-hover'
+      =link_to image_tag('step2.png'), experiments_path, :class=>'no-back-hover'
       %h5
         =link_to content_tag(:small,'Enroll in other experiments of interest to you'), experiments_path
     .span1
     .span3
-      =link_to image_tag('step3_analyze.png'), experiments_path, :class=>'no-back-hover'
+      =link_to image_tag('step3.png'), experiments_path, :class=>'no-back-hover'
       %h5
         =link_to content_tag(:small,'Use the results to inform your decisions'), experiments_path
     .span1
