@@ -8,8 +8,8 @@
   %br
   %br
   .control-group
-    %strong
-      Which action did you take?
+    %strong= "Which action did you take?"
+    %br
     .controls{:style=>'padding-left:10px;'}
       = f.radio_button :compliance, true
       = (@experiment.enrolled_status(@user.id)==1 ? @experiment.action : @experiment.control).humanize

@@ -9,11 +9,11 @@
   .content.row
     .span9
       %h5='What is the impact of'
-      =f.text_field :action, :class => 'text_field span6', :placeholder => 'Action (eg. "Exercising 20 mins a day")', :id=>'expAction', :autocomplete => :off
+      =f.text_field :action, :class => 'text_field span6', :placeholder => 'Action (eg. "Exercising at least 20 mins a day")', :id=>'expAction', :autocomplete => :off
       %br
       .input-prepend
         %span.add-on="vs."
-        = f.text_field :control, :class => 'text_field span6', :placeholder => 'Control (eg. "Exercising 0 mins a day")', :id=>'expControl', :autocomplete => :off
+        = f.text_field :control, :class => 'text_field span6', :placeholder => 'Control (eg. "Exercising less than 20 mins a day")', :id=>'expControl', :autocomplete => :off
       %br
       = f.fields_for :outcomes do |builder|
         =render "outcome_fields", :f => builder
