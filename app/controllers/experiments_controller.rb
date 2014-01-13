@@ -15,7 +15,7 @@ class ExperimentsController < ApplicationController
   def enroll
     if session[:user_id]
       Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, status:Random.rand(1..2), is_active:true, end_time: @experiment.get_ending_time)
-      flash[:alert] = "Successfully enrolled in experiment.\nYour assigned action is: " + (status==1 ? @experiment.action : @experiment.control)
+      flash[:modal] = "Successfully enrolled in experiment.\nYour assigned action is: " + (status==1 ? @experiment.action : @experiment.control)
       respond_to do |format|
         format.html { redirect_to current_user }
         format.json { render action: 'index', status: :created, location: current_user }
@@ -59,9 +59,9 @@ class ExperimentsController < ApplicationController
       f.title({ :text=>"Analysis chart"})
       f.options[:xAxis][:categories] = [@experiment.action.humanize, @experiment.control.humanize]
       f.labels(:items=>[:html=>"Compliance", :style=>{:left=>"40px", :top=>"8px", :color=>"black"} ])      
-      f.series(:type=> 'column',:name=> "Assigned to " + @experiment.action,:data=> [@experiment.count_datapoints(1, true), @experiment.count_datapoints(1, false)]) #@experiment.datapoints
-      f.series(:type=> 'column',:name=> "Assigned to " + @experiment.control,:data=> [@experiment.count_datapoints(2, false), @experiment.count_datapoints(2, true)])
-      f.series(:type=> 'spline',:name=> 'Average', :data=> [3, 2.67])
+      f.series(:type=> 'column',:name=> "Assigned to " + @experiment.action,:data=> [@experiment.get_avg_val(1, true), @experiment.get_avg_val(1, false)]) #@experiment.datapoints
+      f.series(:type=> 'column',:name=> "Assigned to " + @experiment.control,:data=> [@experiment.get_avg_val(2, false), @experiment.get_avg_val(2, true)])
+      #f.series(:type=> 'spline',:name=> 'Average', :data=> [3, 2.67])
       #f.series(:type=> 'pie',:name=> 'Total consumption', 
       #  :data=> [
       #    {:name=> 'Jane', :y=> 13, :color=> 'red'}, 

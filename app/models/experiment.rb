@@ -48,7 +48,18 @@ class Experiment < ActiveRecord::Base
 
   def get_avg_val(assigned_action, complied)
     datapoints = Datapoint.where(experiment_id: self.id, compliance: complied, iv_value: assigned_action)
-    return mean(datapoints.value)
+    if datapoints.empty?
+      return 0
+    else
+      return 5
+      sum = 0
+      datapoints.each do |datapoint|
+        sum = sum + datapoint.value
+      end
+      return sum / datapoints.count
+      #return datapoints.inject{ |sum, el| sum + el.value } / datapoints.count
+      #return mean(datapoints.value)
+    end
   end
 
   def get_enroll(user_id)

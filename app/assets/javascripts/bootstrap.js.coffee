@@ -5,8 +5,7 @@ jQuery ->
 $.rails.allowAction = (element) ->
   # The message is something like "Are you sure?"
   message = element.data('confirm')
-  # If there's no message, there's no data-confirm attribute, 
-  # which means there's nothing to confirm
+  # If there's no message, there's no data-confirm attribute, which means there's nothing to confirm
   return true unless message
 
   if message.indexOf("Delete",0) == 0

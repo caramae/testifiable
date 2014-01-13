@@ -15,44 +15,65 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require_tree .
-//= require highcharts/highcharts                                                           
-//= require highcharts/highcharts-more                                                         
-//= require highcharts/highstock
+//= require highcharts/highcharts
+//= require highcharts/highcharts-more
 
 function SignInPopup() {
 	$("li.signin").click(function(e) {
-	    e.preventDefault();
-	    $(this).toggleClass("menu-open");
-	    $("fieldset#signin_menu").toggle();
+    e.preventDefault();
+    $(this).toggleClass("menu-open");
+    $("fieldset#signin_menu").toggle();
 	});
 
 	$("fieldset#signin_menu").mouseup(function() {
 	    return false
 	});
 	$(document).mouseup(function(e) {
-	    if(!$(e.target).hasClass("signin")) {
-	        $(".signin").removeClass("menu-open");
-	        $("fieldset#signin_menu").hide();
-	    }
+    if(!$(e.target).hasClass("signin")) {
+      $(".signin").removeClass("menu-open");
+      $("fieldset#signin_menu").hide();
+    }
 	});
 }
-
+/* Failure notification!
+$(document).ready ->
+  $("#new_post").on("ajax:success", (e, data, status, xhr) ->
+    $("#new_post").append xhr.responseText
+  ).bind "ajax:error", (e, xhr, status, error) ->
+    $("#new_post").append "<p>ERROR</p>"
+*/
 function RecordDataPopup() {
 	/*eventually move this to users.js.coffee*/
 	$(".recorddata").click(function(e) {
-	    e.preventDefault();
-	    $(this).toggleClass("menu-open");
-	    $(this).next("fieldset.recorddata_menu").toggle();
+    e.preventDefault();
+    $(this).toggleClass("menu-open");
+    $(this).next("fieldset.recorddata_menu").toggle();
 	});
 
 	$("fieldset.recorddata_menu").mouseup(function() {
-	    return false
+    return false
 	});
 	$(document).mouseup(function(e) {
-	    if(!$(e.target).hasClass("signin")) {
-	        $(".recorddata").removeClass("menu-open");
-	        $("fieldset.recorddata_menu").hide();
-	    }
+    if(!$(e.target).hasClass("signin")) {
+        $(".recorddata").removeClass("menu-open");
+        $("fieldset.recorddata_menu").hide();
+    }
+	});
+}
+
+function ModalDialog() {
+	/*eventually move this to users.js.coffee*/
+	if ($('.popup').length > 0 && $('.popup').is(":visible")) {
+    var back = document.createElement('div');
+	  back.setAttribute('class', 'modal-backdrop');
+	  document.body.appendChild(back);
+	  var elem = document.getElementsByClassName('popup')[0];
+	  back.appendChild(elem);
+	}
+
+	$('.modal-backdrop').click(function() {
+		$('.modal-backdrop').hide();
+		$('.popup').hide();
 	});
 }
 
@@ -71,5 +92,5 @@ function add_fields(link, association, content) {
   $(link).parent().before(content.replace(regexp, new_id));
 }
 
-$(document).ready(function(){ SignInPopup(); RecordDataPopup(); });
+$(document).ready(function(){ SignInPopup(); RecordDataPopup(); ModalDialog(); });
 $(document).on('page:load', function(){ SignInPopup(); RecordDataPopup(); });

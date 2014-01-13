@@ -1,4 +1,5 @@
 - model_class = User
+.popup= flash[:modal]
 .container
   .page-header
     %h3= "Dashboard"
@@ -31,7 +32,7 @@
               &nbsp;&nbsp;
               -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round <= 0
                 %span{:id => "recorddata_cell"}
-                  .recorddata= link_to (raw t('helpers.links.record.data')), '#', :class=>"btn btn-mini btn-primary whiteText"
+                  .recorddata= link_to (raw t('helpers.links.record.data')), '#', :class=>"btn btn-mini"
                   %fieldset.recorddata_menu
                     .container
                       -@datapoint = Datapoint.new(experiment_id:experiment.id, user_id:@current_user.id, iv_value:experiment.enrolled_status(@user.id))
