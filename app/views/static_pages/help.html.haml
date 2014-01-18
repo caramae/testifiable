@@ -10,9 +10,6 @@
 /        My enrolled experiments
 /-else
 .hero-unit
-  = high_chart("sample_chart", @chart)
-  %br
-  %br
   .row
     .span3
       =link_to image_tag('step1.png'), experiments_path, :class=>'no-back-hover'
@@ -32,5 +29,8 @@
 
   %hr
     %h3='Frequently Asked Questions'
-    %p='Q. How do I restrict who can participate in my experiment?'
-    %p='A. When creating your experiment, check the box under "Make this experiment private".'
+    %p="Q: What if people do not comply with their assigned actions?"
+    %p="A: The statistical analysis we report will be valid even if there is a high degree of non-compliance. Specifically, we require that: 1) Participants must accurately report their action whether or not they complied and 2) Being assigned an action must make participants more likely to comply than if they were assigned something else. That's it!"
+
+    %p="Q: What is the purpose of assigning people an action? Why can't we just compare the results of people who took different actions?"
+    %p="A: Randomization is necessary so that there is a proper control group. People who walk to work in the morning weigh much less than people who don't, but this is not just because they walk to work - these people eat different diets and might exercise more at other times. If we want to figure out the impact of walking to work, we need to compare otherwise identical people who either walk to work or don't. Randomizing allows us to do that."
