@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
-#ruby-gemset=railstutorial_rails_4_0
 
 gem 'rails', '~>4.0.0'
 
@@ -16,8 +15,6 @@ gem 'bcrypt-ruby', '> 3.1.0'
 gem "font-awesome-rails"
 gem 'lazy_high_charts'
 
-#gem "therubyracer"
-#gem "less-rails"
 gem 'twitter-bootstrap-rails'
 
 
@@ -25,7 +22,6 @@ group :development do
   gem 'taps' #transfer data to and from databases in an agnostic fashion
   gem 'sqlite3', '1.3.8'
 end
-
 
 #required for heroku deployment
 group :production do
