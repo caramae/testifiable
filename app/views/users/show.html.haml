@@ -52,6 +52,25 @@
               -else
                 =experiment.control.humanize
 
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= 'Experiments you created'
+          %th= 'Status'
+      %tbody
+        - @enrolled_experiments.each do |experiment|
+          %tr
+            %td
+              = link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
+              &nbsp;&nbsp;
+              .btn-mini= "Edit"
+            %td
+              -if 1==1
+                ="Pending approval"
+              -elsif 1==1
+                .btn-mini= "Approve administrator changes"
+              -else
+                ="Approved"
   -#
     .span4.pull-right
       .headingBlock
