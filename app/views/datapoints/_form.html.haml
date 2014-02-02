@@ -2,11 +2,6 @@
   %em='What is the impact of ' + @experiment.action + ' on ' + @experiment.outcomes.first.name+'?'
   %br
   %br
-  %strong='Your recommended action: '
-  %span
-    = (@experiment.enrolled_status(@user.id) == 1 ? @experiment.action : @experiment.control).humanize
-  %br
-  %br
   .control-group
     %strong= "Which action did you take?"
     %br
@@ -18,7 +13,7 @@
       = (@experiment.enrolled_status(@user.id)==1 ? @experiment.control : @experiment.action).humanize
   .control-group
     - @experiment.outcomes.each do |outcome|
-      -if @experiment.initvalue == 1
+      -if outcome.has_init_value
         %strong
           = 'Record initial ' + outcome.name.downcase + (!outcome.unit.empty? ? (' in ' + outcome.unit) : '') + ': '
         .controls

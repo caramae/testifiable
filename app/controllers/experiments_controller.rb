@@ -133,6 +133,6 @@ class ExperimentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def experiment_params
-      params.require(:experiment).permit(:action, :control, :prereqs, :is_public, :timeframe, :timeinterval, :initvalue, :timeframe_units, :category, outcomes_attributes: [:id, :name, :unit])
+      params.require(:experiment).permit(:action, :control, :author, :prereqs, :is_public, :timeframe, :timeinterval, :initvalue, :timeframe_units, :category, outcomes_attributes: [:id, :name, :unit])
     end
 end

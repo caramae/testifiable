@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
 
     @enrolled_experiments = @user.enrolled_experiments.order('id DESC')
+    @managed_experiments = @user.managed_experiments.order('id DESC')
     @recommended_experiments = Experiment.where('id not in (?)', @enrolled_experiments.select('id')).order('id DESC')
   end
 

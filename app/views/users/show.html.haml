@@ -52,25 +52,26 @@
               -else
                 =experiment.control.humanize
 
+  -unless @managed_experiments.empty?
     %table.table.table-striped
       %thead
         %tr
           %th= 'Experiments you created'
           %th= 'Status'
       %tbody
-        - @enrolled_experiments.each do |experiment|
+        - @managed_experiments.each do |experiment|
           %tr
             %td
               = link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
               &nbsp;&nbsp;
-              .btn-mini= "Edit"
+              = link_to (raw t('helpers.links.edit')), edit_experiment_path, :class=>"btn btn-mini"
             %td
               -if 1==1
-                ="Pending approval"
-              -elsif 1==1
+                ="Approved"
+              -elsif 1==0
                 .btn-mini= "Approve administrator changes"
               -else
-                ="Approved"
+                ="Pending approval"
   -#
     .span4.pull-right
       .headingBlock

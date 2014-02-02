@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   end
 
   def managed_experiments
-    experiments = Experiment.where('author=?', self.id)
+    experiments = Experiment.where(author: self.id)
     return experiments
   end
 end

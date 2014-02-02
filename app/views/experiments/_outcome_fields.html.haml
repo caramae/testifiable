@@ -7,4 +7,8 @@
     = f.text_field :unit, :class => 'text_field span2', :placeholder => 'Units (eg. "lb.")', :autocomplete => :off
   .btn.btn-mini= link_to_function "Toggle units", "change_type(this)"
   .btn.btn-mini= link_to_remove_fields (raw t("helpers.links.remove.outcome")), f
+  .field
+    = f.check_box :has_init_value
+    Include initial value
+    %i{:class => "fa fa-info-circle", :title => "Use this if you would like to look at the difference between this outcome's values before and after the action (e.g. weight before and after a diet)."}
   %br
