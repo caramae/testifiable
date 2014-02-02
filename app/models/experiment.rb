@@ -1,4 +1,5 @@
 class Experiment < ActiveRecord::Base
+  has_many :effects, :dependent => :destroy
   has_many :outcomes, :dependent => :destroy
   has_many :enrolls, :dependent => :destroy
   has_many :datapoints, :dependent => :destroy
