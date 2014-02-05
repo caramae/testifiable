@@ -1,7 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
     reset_session
-    redirect_to root_path
   	unless current_user.nil?
   		redirect_to user_path(current_user)
   	end
