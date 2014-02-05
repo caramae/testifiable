@@ -25,18 +25,19 @@
         %i{:class => "fa fa-info-circle", :title => "Click this button if you are unsure of your "+@experiment.outcomes.first.name+"."}
       %br
 
-    /.control-group
-    /  - @experiment.outcomes.each{|outcome| outcome.has_init_value && @datapoint.init_value.nil?} do |outcome|
-    /    %strong
-    /      = 'Record initial ' + outcome.name.downcase + (!outcome.unit.empty? ? (' in ' + outcome.unit) : '') + ': '
-    /    .controls
-    /      = f.text_field :init_value, :class => 'text_field'
-    /      /Array of values needed
-    /      %br
-    /      = radio_button_tag 'action', 'Unknown'
-    /      /Link this to something - Should not let someone select this with a filled text field
-    /      = "Unknown"
-    /    %br
+  -#
+    .control-group
+      - @experiment.outcomes.each{|outcome| outcome.has_init_value && @datapoint.init_value.nil?} do |outcome|
+        %strong
+          = 'Record initial ' + outcome.name.downcase + (!outcome.unit.empty? ? (' in ' + outcome.unit) : '') + ': '
+        .controls
+          = f.text_field :init_value, :class => 'text_field'
+          /Array of values needed
+          %br
+          = radio_button_tag 'action', 'Unknown'
+          /Link this to something - Should not let someone select this with a filled text field
+          = "Unknown"
+        %br
 
   = f.hidden_field :experiment_id
   = f.hidden_field :user_id

@@ -30,15 +30,16 @@
             %td
               = link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
               &nbsp;&nbsp;
-              -if experiment.outcomes.count {|outcome| outcome.has_init_value && @datapoint.init_value.nil?} > 0
-                %span{:id => "recorddata_cell"}
-                  .recorddata= link_to (raw t('helpers.links.record.data')), '#', :class=>"btn btn-mini"
-                  %fieldset.recorddata_menu
-                    .container
-                      -@datapoint = Datapoint.new(experiment_id:experiment.id, user_id:@current_user.id, iv_value:experiment.enrolled_status(@user.id))
-                      -@experiment = experiment
-                      =render 'datapoints/form'
-              -elsif ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round <= 0
+              -#
+                -if experiment.outcomes.count {|outcome| outcome.has_init_value && @datapoint.init_value.nil?} > 0
+                  %span{:id => "recorddata_cell"}
+                    .recorddata= link_to (raw t('helpers.links.record.data')), '#', :class=>"btn btn-mini"
+                    %fieldset.recorddata_menu
+                      .container
+                        -@datapoint = Datapoint.new(experiment_id:experiment.id, user_id:@current_user.id, iv_value:experiment.enrolled_status(@user.id))
+                        -@experiment = experiment
+                        =render 'datapoints/form'
+              -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round <= 0
                 %span{:id => "recorddata_cell"}
                   .recorddata= link_to (raw t('helpers.links.record.data')), '#', :class=>"btn btn-mini"
                   %fieldset.recorddata_menu
