@@ -54,9 +54,9 @@ function RecordDataPopup() {
     return false
 	});
 	$(document).mouseup(function(e) {
-    if(!$(e.target).hasClass("signin")) {
-        $(".recorddata").removeClass("menu-open");
-        $("fieldset.recorddata_menu").hide();
+    if(!$(e.target).hasClass("signin") || $(e.target).hasClass("cancel")) {
+      $(".recorddata").removeClass("menu-open");
+      $("fieldset.recorddata_menu").hide();
     }
 	});
 }

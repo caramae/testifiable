@@ -73,7 +73,8 @@
             %td
               = link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
               &nbsp;&nbsp;
-              = link_to (raw t('helpers.links.edit')), edit_experiment_path, :class=>"btn btn-mini"
+              -if @current_user.is_admin || (@experiment.author == @current_user.id && @experiment.datapoints.empty?)
+                = link_to (raw t('helpers.links.edit')), edit_experiment_path, :class=>"btn btn-mini"
             %td
               -if 1==1
                 ="Approved"
