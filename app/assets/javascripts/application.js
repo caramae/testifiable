@@ -54,11 +54,26 @@ function RecordDataPopup() {
     return false
 	});
 	$(document).mouseup(function(e) {
-    if(!$(e.target).hasClass("signin") || $(e.target).hasClass("cancel")) {
-      $(".recorddata").removeClass("menu-open");
-      $("fieldset.recorddata_menu").hide();
-    }
+    $(".recorddata").removeClass("menu-open");
+    $("fieldset.recorddata_menu").hide();
 	});
+}
+
+function PrereqsPopup() {
+  /*eventually move this to users.js.coffee*/
+  $(".prereqs").click(function(e) {
+    e.preventDefault();
+    $(this).toggleClass("menu-open");
+    $(this).next("fieldset.prereqs_menu").toggle();
+  });
+
+  $("fieldset.prereqs_menu").mouseup(function() {
+    return false
+  });
+  $(document).mouseup(function(e) {
+    $(".prereqs").removeClass("menu-open");
+    $("fieldset.prereqs_menu").hide();
+  });
 }
 
 function ModalDialog() {
@@ -92,5 +107,5 @@ function add_fields(link, association, content) {
   $(link).parent().before(content.replace(regexp, new_id));
 }
 
-$(document).ready(function(){ SignInPopup(); RecordDataPopup(); ModalDialog(); });
-$(document).on('page:load', function(){ SignInPopup(); RecordDataPopup(); });
+$(document).ready(function(){ SignInPopup(); RecordDataPopup(); PrereqsPopup(); ModalDialog(); });
+$(document).on('page:load', function(){ SignInPopup(); RecordDataPopup(); PrereqsPopup(); });

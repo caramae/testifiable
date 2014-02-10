@@ -15,10 +15,10 @@ class ExperimentsController < ApplicationController
   def enroll
     if session[:user_id]
       Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, status:Random.rand(1..2), is_active:true, end_time: @experiment.get_ending_time)
-      flash[:modal] = "Successfully enrolled in experiment.\nYour assigned action is: " + (status==1 ? @experiment.action : @experiment.control) + "."
-      if @experiment.outcomes.count {|outcome| outcome.has_init_value && @datapoint.init_value.nil?} > 0
-        flash[:modal] = flash[:modal] + "\nPlease record initial values before performing your action."
-      end
+      #flash[:modal] = "Successfully enrolled in experiment.\nYour assigned action is: " + (status==1 ? @experiment.action : @experiment.control) + "."
+      #if @experiment.outcomes.count {|outcome| outcome.has_init_value && @datapoint.init_value.nil?} > 0
+      #  flash[:modal] = flash[:modal] + "\nPlease record initial values before performing your action."
+      #end
       respond_to do |format|
         format.html { redirect_to current_user }
         format.json { render action: 'index', status: :created, location: current_user }

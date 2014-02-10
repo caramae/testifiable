@@ -17,7 +17,18 @@
             -if experiment.is_public || (experiment.author==@current_user.id) || @current_user.is_admin
               %tr
                 %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment), :class=>'no-back-hover no-click-change'
-                %td= link_to (raw t('helpers.links.enroll')), {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm: experiment.prereqs.empty? ? nil : "Prereqs #{experiment.prereqs}", :class=>"btn btn-mini"
+                -confirm_message = (experiment.outcomes.count {|outcome| outcome.has_init_value} > 0) ? "InitAssignedAction #{experiment.action}" : "AssignedAction #{experiment.action}"
+                -if !(experiment.prereqs.empty?)
+                  %td{:id => "prereqs_cell"}
+                    .prereqs= link_to (raw t('helpers.links.enroll')), '#', :class=>"btn btn-mini"
+                    %fieldset.prereqs_menu
+                      .container
+                        %h4= "You must meet the following conditions to enroll:"
+                        %p= experiment.prereqs
+                        = link_to "Conditions not met", '#', :class=>"btn btn-mini"
+                        = link_to "Conditions met: Enroll me!", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm: confirm_message, :class=>"btn btn-mini btn-primary whiteText"
+                -else
+                  %td= link_to (raw t('helpers.links.enroll')), {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm:confirm_message, :class=>"btn btn-mini"
   -else
     %table.table.table-striped
       %thead
@@ -74,7 +85,7 @@
               = link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
               &nbsp;&nbsp;
               -if @current_user.is_admin || (@experiment.author == @current_user.id && @experiment.datapoints.empty?)
-                = link_to (raw t('helpers.links.edit')), edit_experiment_path, :class=>"btn btn-mini"
+                = link_to (raw t('helpers.links.edit')), edit_experiment_path(experiment), :class=>"btn btn-mini"
             %td
               -if 1==1
                 ="Approved"

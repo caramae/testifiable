@@ -102,7 +102,7 @@
     -if @experiment.is_enrolled(@current_user.id)
       = link_to t('helpers.links.unenroll'), {:action=>'unenroll', :id=>@experiment.id}, :method=>:post, confirm: "Unenroll", :class => 'btn'
     -elsif @experiment.first_enrollment(@current_user.id)
-      = link_to t('helpers.links.enroll'), {:action=>'enroll', :id=>@experiment.id}, method: :post, confirm: @experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", :class=>"btn btn-primary whiteText"
+      = link_to t('helpers.links.enroll'), {:action=>'enroll', :id=>@experiment.id}, method: :post, confirm: @experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", hi: "enroll",  :class=>"btn btn-primary whiteText"
     -elsif @experiment.permits_enrollment(@current_user.id)
       = link_to t('helpers.links.reenroll'), {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, confirm: @experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", :class=>"btn btn-primary whiteText"
 
