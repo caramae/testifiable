@@ -24,6 +24,8 @@ a {
     color: #666;
   }
   &:hover {
+    color: #fff;
+    background-color: #000;
   }
 }
 
@@ -31,11 +33,6 @@ div {
   &.field, &.actions {
     margin-bottom: 10px;
   }
-}
-
-.page-header
-{
-  padding:0;
 }
 
 #notice {

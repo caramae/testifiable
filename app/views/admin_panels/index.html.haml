@@ -1,0 +1,17 @@
+%h1 Listing admin_panels
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @admin_panels.each do |admin_panel|
+    %tr
+      %td= link_to 'Show', admin_panel
+      %td= link_to 'Edit', edit_admin_panel_path(admin_panel)
+      %td= link_to 'Destroy', admin_panel, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Admin panel', new_admin_panel_path
