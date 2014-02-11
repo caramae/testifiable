@@ -42,13 +42,13 @@ ActiveRecord::Schema.define(version: 20140208194020) do
     t.string   "control"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "author"
     t.string   "prereqs"
     t.boolean  "is_public"
-    t.integer  "timeframe",       limit: 255
     t.string   "timeinterval"
     t.string   "timeframe_units"
+    t.integer  "timeframe"
     t.string   "category"
-    t.integer  "author"
     t.boolean  "must_email"
   end
 
@@ -65,9 +65,9 @@ ActiveRecord::Schema.define(version: 20140208194020) do
   create_table "variables", force: true do |t|
     t.string   "name"
     t.string   "type"
-    t.string   "unit"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "unit"
     t.integer  "experiment_id"
     t.boolean  "has_init_value"
   end
