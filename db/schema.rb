@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140208194020) do
+ActiveRecord::Schema.define(version: 20140213022921) do
 
   create_table "datapoints", force: true do |t|
     t.integer  "experiment_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20140208194020) do
     t.string   "category"
     t.integer  "author"
     t.boolean  "must_email"
+    t.boolean  "spanning_action",             default: true
   end
 
   create_table "users", force: true do |t|

@@ -62,6 +62,10 @@
       .field
         = f.check_box :must_email, {}, true, false
         %span='Mandate email notifications for this experiment'
+      -if @current_user.is_admin
+        .field
+          = f.check_box :spanning_action, {}, false, true
+          %span='Check if action and control do not span all possible scenarios'
 
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'

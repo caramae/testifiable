@@ -11,6 +11,12 @@
     %br
     = f.radio_button :compliance, false
     = (@experiment.enrolled_status(@user.id)==1 ? @experiment.control : @experiment.action).humanize
+    %br
+    -if !(@experiment.spanning_action)
+      = radio_button_tag 'action', "Other"
+      = "Other"
+      = text_field_tag "tf"
+      /Link this to something
   .control-group
     - @experiment.outcomes.each do |outcome|
       %strong
