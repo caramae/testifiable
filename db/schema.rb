@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140213022921) do
+ActiveRecord::Schema.define(version: 20140211065922) do
+
+  create_table "admin_panels", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "datapoints", force: true do |t|
     t.integer  "experiment_id"
@@ -42,15 +47,32 @@ ActiveRecord::Schema.define(version: 20140213022921) do
     t.string   "control"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "author"
     t.string   "prereqs"
     t.boolean  "is_public"
-    t.integer  "timeframe",       limit: 255
+
     t.string   "timeinterval"
     t.string   "timeframe_units"
+    t.integer  "timeframe"
     t.string   "category"
-    t.integer  "author"
     t.boolean  "must_email"
-    t.boolean  "spanning_action",             default: true
+    t.integer  "pend_status",     default: 0
+  end
+
+  create_table "pending_experiments", force: true do |t|
+    t.string   "action"
+    t.string   "control"
+    t.integer  "author"
+    t.string   "prereqs"
+    t.boolean  "is_public"
+    t.string   "timeinterval"
+    t.string   "timeframe_units"
+    t.integer  "timeframe"
+    t.string   "category"
+    t.boolean  "must_email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "experiment_id"
   end
 
   create_table "users", force: true do |t|
@@ -66,9 +88,9 @@ ActiveRecord::Schema.define(version: 20140213022921) do
   create_table "variables", force: true do |t|
     t.string   "name"
     t.string   "type"
-    t.string   "unit"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "unit"
     t.integer  "experiment_id"
     t.boolean  "has_init_value"
   end

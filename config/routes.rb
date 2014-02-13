@@ -1,4 +1,6 @@
 Samplesite1::Application.routes.draw do
+  resources :admin_panels
+
   resources :datapoints do
     collection { post :import }
     collection { post :analyze }
