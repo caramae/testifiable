@@ -91,12 +91,14 @@ class DatapointsController < ApplicationController
           enroll.status = -2
           enroll.is_active = false
           enroll.save()
+          #flash[:modal] = "Click here to re-enroll in the experiment"
         else
           enroll.status = -1
           enroll.next_time = @experiment.get_next_time
           enroll.is_active = false
           enroll.save()
         end
+
         format.html { redirect_to @experiment, notice: 'Datapoint was created. Thank you for participating in the experiment.' }
         format.json { render action: 'show', status: :created, location: @datapoint }
       else

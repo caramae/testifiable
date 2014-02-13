@@ -17,8 +17,11 @@
             -if experiment.is_public || (experiment.author==@current_user.id) || @current_user.is_admin
               %tr
                 %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment), :class=>'no-back-hover no-click-change'
+
                 -confirm_message = (experiment.outcomes.count {|outcome| outcome.has_init_value} > 0) ? "InitAssignedAction #{experiment.action}" : "AssignedAction #{experiment.action}"
-                -if !(experiment.prereqs.empty?)
+                -if @experiment.permits_enrollment(@current_user.id)
+                  = link_to t('helpers.links.reenroll'), {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, :class=>"btn btn-primary whiteText"
+                -elsif !(experiment.prereqs.empty?)
                   %td{:id => "prereqs_cell"}
                     .prereqs= link_to (raw t('helpers.links.enroll')), '#', :class=>"btn btn-mini"
                     %fieldset.prereqs_menu
@@ -72,7 +75,10 @@
               -else
                 =experiment.control.humanize
 
-  -unless @managed_experiments.empty?
+  -if @managed_experiments.empty?
+    %table.table
+    =link_to "Create a new experiment", new_experiment_path
+  -else
     %table.table.table-striped
       %thead
         %tr
@@ -93,6 +99,8 @@
                 .btn-mini= "Approve administrator changes"
               -else
                 ="Pending approval"
+    =link_to (raw t('helpers.links.new.experiment')), new_experiment_path, :class => 'btn btn-mini btn-primary whiteText'
+
   -#
     .span4.pull-right
       .headingBlock
@@ -126,5 +134,3 @@
               %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
               %td= "TKTK"
               %td= "TKTK"
-  .form-actions
-    =link_to (raw t('helpers.links.new.experiment')), new_experiment_path, :class => 'btn btn-primary whiteText'

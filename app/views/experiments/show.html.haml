@@ -42,7 +42,7 @@
         %em= "Log in to enroll!"
       -elsif !@experiment.permits_enrollment(@current_user.id)
         -if !@experiment.get_enroll(@current_user.id).next_time.nil? && @experiment.get_enroll(@current_user.id).next_time > DateTime.now
-          %em= "You may re-enroll in"
+          %em= "You may reenroll in"
           -if ((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).floor > 0
             %em= "#{pluralize(((@experiment.get_enroll(@current_user.id).next_time - DateTime.now) / 1.hour).round, "hour")}"
           -else
@@ -104,7 +104,7 @@
     -elsif @experiment.first_enrollment(@current_user.id)
       = link_to t('helpers.links.enroll'), {:action=>'enroll', :id=>@experiment.id}, method: :post, confirm: @experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", hi: "enroll",  :class=>"btn btn-primary whiteText"
     -elsif @experiment.permits_enrollment(@current_user.id)
-      = link_to t('helpers.links.reenroll'), {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, confirm: @experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", :class=>"btn btn-primary whiteText"
+      = link_to t('helpers.links.reenroll'), {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, :class=>"btn btn-primary whiteText"
 
   .form-actions
     = link_to (raw t('helpers.links.back')), :back, :class => 'btn'
