@@ -50,6 +50,11 @@ function RecordDataPopup() {
     $(this).next("fieldset.recorddata_menu").toggle();
 	});
 
+  $("#recorddata_cancelbutton").click(function(e) {
+    e.preventDefault();
+    $(".recorddata").removeClass("menu-open");
+    $("fieldset.recorddata_menu").hide();
+  });
 	$("fieldset.recorddata_menu").mouseup(function() {
     return false
 	});
@@ -67,6 +72,11 @@ function PrereqsPopup() {
     $(this).next("fieldset.prereqs_menu").toggle();
   });
 
+  $("#prereqs_cancelbutton").click(function(e) {
+    e.preventDefault();
+    $(".prereqs").removeClass("menu-open");
+    $("fieldset.prereqs_menu").hide();
+  });
   $("fieldset.prereqs_menu").mouseup(function() {
     return false
   });

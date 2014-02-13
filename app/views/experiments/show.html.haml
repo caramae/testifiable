@@ -101,10 +101,24 @@
   -if @current_user
     -if @experiment.is_enrolled(@current_user.id)
       = link_to t('helpers.links.unenroll'), {:action=>'unenroll', :id=>@experiment.id}, :method=>:post, confirm: "Unenroll", :class => 'btn'
-    -elsif @experiment.first_enrollment(@current_user.id)
-      = link_to t('helpers.links.enroll'), {:action=>'enroll', :id=>@experiment.id}, method: :post, confirm: @experiment.prereqs.empty? ? nil : "Prereqs #{@experiment.prereqs}", hi: "enroll",  :class=>"btn btn-primary whiteText"
+
     -elsif @experiment.permits_enrollment(@current_user.id)
       = link_to t('helpers.links.reenroll'), {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, :class=>"btn btn-primary whiteText"
+
+    -else
+      -confirm_message = (experiment.outcomes.count {|outcome| outcome.has_init_value} > 0) ? "InitAssignedAction #{experiment.action}" : "AssignedAction #{experiment.action}"
+
+      -if !(experiment.prereqs.empty?)
+        %td{:id => "prereqs_cell"}
+          .prereqs= link_to (raw t('helpers.links.enroll')), '#', :class=>"btn btn-mini"
+          %fieldset.prereqs_menu
+            .container
+              %h4= "You must meet the following conditions to enroll:"
+              %p= experiment.prereqs
+              = link_to "Conditions not met", '#', :class=>"btn btn-mini", id: "cancelbutton"
+              = link_to "Conditions met: Enroll me!", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm: confirm_message, :class=>"btn btn-mini btn-primary whiteText"
+      -else
+        %td= link_to (raw t('helpers.links.enroll')), {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm:confirm_message, :class=>"btn btn-mini"
 
   .form-actions
     = link_to (raw t('helpers.links.back')), :back, :class => 'btn'
