@@ -79,8 +79,7 @@ $.rails.allowAction = (element) ->
                      <h4>Successfully enrolled in experiment.</h4>
                    </div>
                    <div class="modal-body">
-                     <p>Your assigned action is: #{message}</p>
-                     <p>You must record initial values before performing your action.</p>
+                     <p>You must record initial values before being assigned an action.</p>
                    </div>
                    <div class="modal-footer">
                      <a data-dismiss="modal" class="btn">Enter initial value later</a>
