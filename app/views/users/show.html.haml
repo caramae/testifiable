@@ -18,8 +18,8 @@
               %tr
                 %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment), :class=>'no-back-hover no-click-change'
 
-                -if @experiment.permits_enrollment(@current_user.id)
-                  = link_to t('helpers.links.reenroll'), {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, :class=>"btn btn-primary whiteText"
+                -if !(experiment.first_enrollment(@current_user.id)) && experiment.permits_enrollment(@current_user.id)
+                  =link_to (raw t('helpers.links.reenroll')), {:action=>'reenroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
                 -else
                   -confirm_message = (experiment.outcomes.count {|outcome| outcome.has_init_value} > 0) ? "InitAssignedAction #{experiment.action}" : "AssignedAction #{experiment.action}"
 

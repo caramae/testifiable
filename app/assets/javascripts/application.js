@@ -50,11 +50,6 @@ function RecordDataPopup() {
     $(this).next("fieldset.recorddata_menu").toggle();
 	});
 
-  $("#recorddata_cancelbutton").click(function(e) {
-    e.preventDefault();
-    $(".recorddata").removeClass("menu-open");
-    $("fieldset.recorddata_menu").hide();
-  });
 	$("fieldset.recorddata_menu").mouseup(function() {
     return false
 	});
