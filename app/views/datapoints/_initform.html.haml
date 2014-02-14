@@ -1,0 +1,26 @@
+= form_for @datapoint, :html => { :class => 'form-vertical' } do |f|
+  %em='What is the impact of ' + @experiment.action + ' on ' + @experiment.outcomes.first.name+'?'
+  %br
+  %br
+  .control-group
+    - @experiment.outcomes.each{|outcome| outcome.has_init_value && @datapoint.init_value.nil?} do |outcome|
+      %strong
+        = 'Record ' + outcome.name.downcase + (!outcome.unit.empty? ? (' in ' + outcome.unit) : '') + ': '
+      .controls
+        = f.text_field :value, :class => 'text_field'
+        /Array of values needed
+        %br
+        = radio_button_tag 'action', 'Unknown'
+        /Link this to something - Should not let someone select this with a filled text field
+        = "Unknown"
+        %i{:class => "fa fa-info-circle", :title => "Click this button if you are unsure of your "+@experiment.outcomes.first.name+"."}
+      %br
+
+  = f.hidden_field :experiment_id
+  = f.hidden_field :user_id
+    
+  /= 'Optional: add a comment, such as other actions you took that may have influenced your outcome.'
+  /.controls
+  /  = f.text_field :comment, :class => 'text_field'
+
+  = f.submit "Submit", :class => 'btn btn-primary'
