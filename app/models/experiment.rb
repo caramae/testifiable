@@ -63,6 +63,14 @@ class Experiment < ActiveRecord::Base
     end
   end
 
+  def has_any_initvalues
+    if outcomes.any.has_init_value
+      return true
+    else
+      return false
+    end
+  end
+
   def get_enroll(user_id)
     enroll = Enroll.where('user_id=? and experiment_id = ?', user_id, self.id)
     return enroll[0]

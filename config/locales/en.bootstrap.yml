@@ -22,6 +22,7 @@ en:
       confirm: "Are you sure?"
       record:
         data: "Record data"
+        initvalue: "Record initial value"
     titles:
       edit: "Edit %{model}"
       save: "Save %{model}"

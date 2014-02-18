@@ -18,6 +18,7 @@
       = text_field_tag "tf"
       /Link this to something
   .control-group
+    %br
     - @experiment.outcomes.each do |outcome|
       %strong
         = 'Record ' + outcome.name.downcase + (!outcome.unit.empty? ? (' in ' + outcome.unit) : '') + ': '

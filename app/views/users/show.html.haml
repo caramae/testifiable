@@ -48,8 +48,7 @@
               = link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
               &nbsp;&nbsp;
               
-              -if experiment.outcomes.count {|outcome| outcome.has_init_value && @datapoint.init_value.nil?} > 0
-                /incomplete condition!
+              -if experiment.enrolled_status(@user.id) == -1
                 %span{:id => "recorddata_cell"}
                   .recorddata= link_to (raw t('helpers.links.record.initvalue')), '#', :class=>"btn btn-mini"
                   %fieldset.recorddata_menu
