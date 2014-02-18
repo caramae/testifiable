@@ -14,7 +14,7 @@ class ExperimentsController < ApplicationController
 
   def enroll
     if session[:user_id]
-      stat = @experiment.has_any_initvalues ? -1 : Random.rand(1..2)
+      stat = @experiment.has_any_init_values ? -1 : Random.rand(1..2)
       Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, status:stat, is_active:true, end_time: @experiment.get_ending_time)
       #flash[:modal] = "Successfully enrolled in experiment.\nYour assigned action is: " + (status==1 ? @experiment.action : @experiment.control) + "."
       #if @experiment.outcomes.count {|outcome| outcome.has_init_value && @datapoint.init_value.nil?} > 0

@@ -63,12 +63,8 @@ class Experiment < ActiveRecord::Base
     end
   end
 
-  def has_any_initvalues
-    if outcomes.any.has_init_value
-      return true
-    else
-      return false
-    end
+  def has_any_init_values
+    return outcomes.any? {|outcome| outcome.has_init_value}
   end
 
   def get_enroll(user_id)

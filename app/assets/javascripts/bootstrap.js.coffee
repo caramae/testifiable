@@ -51,7 +51,7 @@ $.rails.allowAction = (element) ->
                  """
 
   else if message.indexOf("AssignedAction",0) == 0
-    $link = element.clone().removeAttr('class').removeAttr('data-confirm').addClass('btn').html("Ok")
+    $link = element.clone().removeAttr('class').removeAttr('data-confirm').addClass('btn btn-primary whiteText').html("Ok")
     message = message.slice(15)
 
     modal_html = """
