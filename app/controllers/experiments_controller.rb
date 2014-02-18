@@ -11,6 +11,7 @@ class ExperimentsController < ApplicationController
       @current_user = User.find(session[:user_id].to_i)
     end
     @experiments = Experiment.all
+    reset_session
   end
 
   def enroll
