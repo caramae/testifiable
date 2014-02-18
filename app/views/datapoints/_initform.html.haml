@@ -5,7 +5,7 @@
   .control-group
     - @experiment.outcomes.take_while{|outcome| outcome.has_init_value}.each do |outcome|
       %strong
-        = 'Record ' + outcome.name.downcase + (!outcome.unit.empty? ? (' in ' + outcome.unit) : '') + ': '
+        = 'Record initial ' + outcome.name.downcase + (!outcome.unit.empty? ? (' in ' + outcome.unit) : '') + ': '
       .controls
         = f.text_field :value, :class => 'text_field'
         /Array of values needed

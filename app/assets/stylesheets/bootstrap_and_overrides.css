@@ -6,6 +6,23 @@
   =require twitter-bootstrap-static/fontawesome
   */
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.whiteText, .whiteText:visited {
+  color:white;
+}
+
+table a:hover {
+  background-color: white;
+  color: black;
+}
+
+.page-header {
+  margin-bottom: 10px;
+}
+/*
 .popup {
   background-color:white;
   color:black;
@@ -19,17 +36,4 @@
   left: 30%;
   font-size:14px;
   font-weight: bold;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Source Sans Pro', sans-serif;
-}
-
-.whiteText, .whiteText:visited {
-  color:white;
-}
-
-table a:hover {
-  background-color: white;
-  color: black;
-}
+}*/

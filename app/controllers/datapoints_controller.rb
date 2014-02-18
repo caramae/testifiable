@@ -87,11 +87,14 @@ class DatapointsController < ApplicationController
     respond_to do |format|
       if @datapoint.save
         enroll = Enroll.where('experiment_id=? and user_id=?', @datapoint.experiment_id, @datapoint.user_id)[0]
-        if @experiment.timeinterval=='-1' #1 trial/participant
+        if enroll.status == -2
+          enroll.status = Random.rand(1..2)
+          enroll.end_time = @experiment.get_ending_time
+          enroll.save()
+        elsif @experiment.timeinterval=='-1' #1 trial/participant
           enroll.status = -2
           enroll.is_active = false
           enroll.save()
-          #flash[:modal] = "Click here to re-enroll in the experiment"
         else
           enroll.status = -1
           enroll.next_time = @experiment.get_next_time
@@ -99,7 +102,7 @@ class DatapointsController < ApplicationController
           enroll.save()
         end
 
-        format.html { redirect_to @experiment, notice: 'Datapoint was created. Thank you for participating in the experiment.' }
+        format.html { redirect_to @experiment, notice: 'Datapoint was created.' }
         format.json { render action: 'show', status: :created, location: @datapoint }
       else
         format.html { render action: 'new' }
