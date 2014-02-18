@@ -141,6 +141,9 @@ a.no-click-change:visted
     color:black;
     font-size:12px;
 }
+.prereqs_menu.right {
+    right: -325px;
+}
 .prereqs_menu .container {
     width:300px;
 }

@@ -35,13 +35,7 @@ function SignInPopup() {
     }
 	});
 }
-/* Failure notification!
-$(document).ready ->
-  $("#new_post").on("ajax:success", (e, data, status, xhr) ->
-    $("#new_post").append xhr.responseText
-  ).bind "ajax:error", (e, xhr, status, error) ->
-    $("#new_post").append "<p>ERROR</p>"
-*/
+
 function RecordDataPopup() {
 	/*eventually move this to users.js.coffee*/
 	$(".recorddata").click(function(e) {
@@ -67,7 +61,7 @@ function PrereqsPopup() {
     $(this).next("fieldset.prereqs_menu").toggle();
   });
 
-  $("#prereqs_cancelbutton").click(function(e) {
+  $(".cancelbutton").click(function(e) {
     e.preventDefault();
     $(".prereqs").removeClass("menu-open");
     $("fieldset.prereqs_menu").hide();
@@ -81,8 +75,7 @@ function PrereqsPopup() {
   });
 }
 
-function ModalDialog() {
-	/*eventually move this to users.js.coffee*/
+/*function ModalDialog() {
 	if ($('.popup').length > 0 && $('.popup').is(":visible")) {
     var back = document.createElement('div');
 	  back.setAttribute('class', 'modal-backdrop');
@@ -95,7 +88,7 @@ function ModalDialog() {
 		$('.modal-backdrop').hide();
 		$('.popup').hide();
 	});
-}
+}*/
 
 function remove_fields(link) {
   $(link).prev("input[type=hidden]").value = "1";
