@@ -80,7 +80,7 @@
 
   -if @managed_experiments.empty?
     %table.table
-    =link_to "Create a new experiment", new_experiment_path
+    =link_to "Create a new experiment", new_experiment_path, :class=>"btn btn-primary whiteText"
   -else
     %table.table.table-striped
       %thead
