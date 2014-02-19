@@ -95,6 +95,14 @@ class ExperimentsController < ApplicationController
 
     respond_to do |format|
       if @experiment.save
+        @pending_experiment = PendingExperiment.new(pending_experiment_params)
+        @pending_experiment.author = session[:user_id]
+        @pending_experiment.action = @experiment.action.downcase
+        @pending_experiment.control = @experiment.control.downcase
+        @pending_experiment.experiment_id = @experiment.id
+
+        @pending_experiment.save
+
         format.html { redirect_to @experiment, notice: 'Experiment was successfully created.' }
         format.json { render action: 'show', status: :created, location: @experiment }
       else
@@ -102,6 +110,8 @@ class ExperimentsController < ApplicationController
         format.json { render json: @experiment.errors, status: :unprocessable_entity }
       end
     end
+
+
   end
 
   # PATCH/PUT /experiments/1
@@ -137,5 +147,9 @@ class ExperimentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def experiment_params
       params.require(:experiment).permit(:action, :control, :author, :prereqs, :is_public, :timeframe, :timeinterval, :initvalue, :must_email, :timeframe_units, :category, outcomes_attributes: [:id, :name, :unit, :has_init_value, :type])
+    end
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def pending_experiment_params
+      params.require(:experiment).permit(:action, :control, :author, :prereqs, :is_public, :timeframe, :timeinterval, :initvalue, :must_email, :timeframe_units, :category)
     end
 end

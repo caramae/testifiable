@@ -8,6 +8,8 @@
 
   - @admin_panels.each do |admin_panel|
     %tr
+      %td= "What is the impact of " + admin_panel.action + " on <Outcome goes here>"
+
       %td= link_to 'Show', admin_panel
       %td= link_to 'Edit', edit_admin_panel_path(admin_panel)
       %td= link_to 'Destroy', admin_panel, :method => :delete, :data => { :confirm => 'Are you sure?' }
