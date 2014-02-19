@@ -1,5 +1,4 @@
 - model_class = User
-.popup= flash[:modal]
 .container
   .page-header
     %h3= "Dashboard"
@@ -17,18 +16,24 @@
             -if experiment.is_public || (experiment.author==@current_user.id) || @current_user.is_admin
               %tr
                 %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment), :class=>'no-back-hover no-click-change'
-                -confirm_message = (experiment.outcomes.count {|outcome| outcome.has_init_value} > 0) ? "InitAssignedAction #{experiment.action}" : "AssignedAction #{experiment.action}"
-                -if !(experiment.prereqs.empty?)
-                  %td{:id => "prereqs_cell"}
-                    .prereqs= link_to (raw t('helpers.links.enroll')), '#', :class=>"btn btn-mini"
-                    %fieldset.prereqs_menu
-                      .container
-                        %h4= "You must meet the following conditions to enroll:"
-                        %p= experiment.prereqs
-                        = link_to "Conditions not met", '#', :class=>"btn btn-mini"
-                        = link_to "Conditions met: Enroll me!", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm: confirm_message, :class=>"btn btn-mini btn-primary whiteText"
+
+                -if experiment.can_reenroll(@current_user.id)
+                  =link_to (raw t('helpers.links.reenroll')), {:action=>'reenroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
                 -else
-                  %td= link_to (raw t('helpers.links.enroll')), {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm:confirm_message, :class=>"btn btn-mini"
+                  -confirm_message = experiment.has_any_init_values ? "InitAssignedAction" : "AssignedAction #{experiment.action}"
+
+                  -if !(experiment.prereqs.empty?)
+                    %td{:id => "prereqs_cell"}
+                      .prereqs= link_to (raw t('helpers.links.enroll')), '#', :class=>"btn btn-mini"
+                      %fieldset.prereqs_menu
+                        .container
+                          %h4= "You must meet the following conditions to enroll:"
+                          %p= experiment.prereqs
+                          = link_to "Conditions not met", '#', :class=>"btn btn-mini", id: "prereqs_cancelbutton"
+                          = link_to "Conditions met: Enroll me!", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm: confirm_message, :class=>"btn btn-mini btn-primary whiteText"
+                  -else
+                    %td= link_to (raw t('helpers.links.enroll')), {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm:confirm_message, :class=>"btn btn-mini"
+
   -else
     %table.table.table-striped
       %thead
@@ -41,16 +46,17 @@
             %td
               = link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
               &nbsp;&nbsp;
-              -#
-                -if experiment.outcomes.count {|outcome| outcome.has_init_value && @datapoint.init_value.nil?} > 0
-                  %span{:id => "recorddata_cell"}
-                    .recorddata= link_to (raw t('helpers.links.record.data')), '#', :class=>"btn btn-mini"
-                    %fieldset.recorddata_menu
-                      .container
-                        -@datapoint = Datapoint.new(experiment_id:experiment.id, user_id:@current_user.id, iv_value:experiment.enrolled_status(@user.id))
-                        -@experiment = experiment
-                        =render 'datapoints/form'
-              -if ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round <= 0
+              
+              -if experiment.needs_init_value(@user.id)
+                %span{:id => "recorddata_cell"}
+                  .recorddata= link_to (raw t('helpers.links.record.initvalue')), '#', :class=>"btn btn-mini"
+                  %fieldset.recorddata_menu
+                    .container
+                      -@datapoint = Datapoint.new(experiment_id:experiment.id, user_id:@current_user.id)
+                      -@experiment = experiment
+                      =render 'datapoints/initform'
+
+              -elsif ((experiment.get_enroll(@user.id).end_time - DateTime.now) / 1.minute).round <= 0
                 %span{:id => "recorddata_cell"}
                   .recorddata= link_to (raw t('helpers.links.record.data')), '#', :class=>"btn btn-mini"
                   %fieldset.recorddata_menu
@@ -72,7 +78,10 @@
               -else
                 =experiment.control.humanize
 
-  -unless @managed_experiments.empty?
+  -if @managed_experiments.empty?
+    %table.table
+    =link_to "Create a new experiment", new_experiment_path
+  -else
     %table.table.table-striped
       %thead
         %tr
@@ -93,6 +102,8 @@
                 .btn-mini= "Approve administrator changes"
               -else
                 ="Pending approval"
+    =link_to (raw t('helpers.links.new.experiment')), new_experiment_path, :class => 'btn btn-mini btn-primary whiteText'
+
   -#
     .span4.pull-right
       .headingBlock
@@ -126,5 +137,3 @@
               %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment)
               %td= "TKTK"
               %td= "TKTK"
-  .form-actions
-    =link_to (raw t('helpers.links.new.experiment')), new_experiment_path, :class => 'btn btn-primary whiteText'

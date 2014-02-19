@@ -43,6 +43,10 @@ class Experiment < ActiveRecord::Base
     return enroll.empty? || enroll[0].status > 0 || (enroll[0].status == -1 && enroll[0].next_time <= DateTime.now)
   end
 
+  def can_reenroll(user_id)
+    return !first_enrollment(user_id) && permits_enrollment(user_id)
+  end
+
   def count_datapoints(assigned_action, complied)
     return Datapoint.where(experiment_id: self.id, compliance: complied, iv_value: assigned_action).count
   end
@@ -61,6 +65,14 @@ class Experiment < ActiveRecord::Base
       #return datapoints.inject{ |sum, el| sum + el.value } / datapoints.count
       #return mean(datapoints.value)
     end
+  end
+
+  def has_any_init_values
+    return outcomes.any? {|outcome| outcome.has_init_value}
+  end
+
+  def needs_init_value(user_id)
+    return outcomes.take_while{|outcome| outcome.has_init_value}.count > 0 && get_enroll(user_id).status == -2
   end
 
   def get_enroll(user_id)

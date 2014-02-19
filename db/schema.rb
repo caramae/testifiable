@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140211065922) do
+ActiveRecord::Schema.define(version: 20140213022921) do
 
   create_table "admin_panels", force: true do |t|
     t.datetime "created_at"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 20140211065922) do
     t.integer  "author"
     t.string   "prereqs"
     t.boolean  "is_public"
+    t.boolean  "spanning_action", default: true
+
     t.string   "timeinterval"
     t.string   "timeframe_units"
     t.integer  "timeframe"

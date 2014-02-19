@@ -14,11 +14,8 @@ class ExperimentsController < ApplicationController
 
   def enroll
     if session[:user_id]
-      Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, status:Random.rand(1..2), is_active:true, end_time: @experiment.get_ending_time)
-      #flash[:modal] = "Successfully enrolled in experiment.\nYour assigned action is: " + (status==1 ? @experiment.action : @experiment.control) + "."
-      #if @experiment.outcomes.count {|outcome| outcome.has_init_value && @datapoint.init_value.nil?} > 0
-      #  flash[:modal] = flash[:modal] + "\nPlease record initial values before performing your action."
-      #end
+      stat = @experiment.has_any_init_values ? -2 : Random.rand(1..2)
+      Enroll.create(experiment_id:@experiment.id, user_id:session[:user_id].to_i, status:stat, is_active:true, end_time: @experiment.get_ending_time)
       respond_to do |format|
         format.html { redirect_to current_user }
         format.json { render action: 'index', status: :created, location: current_user }
@@ -34,8 +31,12 @@ class ExperimentsController < ApplicationController
   def reenroll
     enroll = Enroll.where('experiment_id=? and user_id=?', @experiment.id, session[:user_id].to_i)[0]
     enroll.is_active = true
-    enroll.status = Random.rand(1..2)
-    enroll.end_time = @experiment.get_ending_time
+    if @experiment.has_any_init_values
+      enroll.status = -2
+    else
+      enroll.status = Random.rand(1..2)
+      enroll.end_time = @experiment.get_ending_time
+    end
     enroll.save()
     respond_to do |format|
       format.html { redirect_to current_user, notice: 'Successfully reenrolled.' }
@@ -146,7 +147,7 @@ class ExperimentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def experiment_params
-      params.require(:experiment).permit(:action, :control, :author, :prereqs, :is_public, :timeframe, :timeinterval, :initvalue, :must_email, :timeframe_units, :category, outcomes_attributes: [:id, :name, :unit, :has_init_value, :type])
+      params.require(:experiment).permit(:action, :control, :author, :prereqs, :is_public, :timeframe, :timeinterval, :initvalue, :must_email, :spanning_action, :timeframe_units, :category, outcomes_attributes: [:id, :name, :unit, :has_init_value, :type])
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def pending_experiment_params

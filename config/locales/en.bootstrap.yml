@@ -9,6 +9,7 @@ en:
         experiment: "<i class=\"fa fa-plus\"></i> New Experiment"
         datapoint: "<i class=\"fa fa-plus\"></i> Add Datapoint"
         outcome: "<i class=\"fa fa-plus\"></i> Add Outcome"
+        notext: "<i class=\"fa fa-plus\"></i>"
       edit: "<i class=\"fa fa-pencil\"></i>"
       delete: "<i class=\"fa fa-trash-o\"></i>"
       remove:
@@ -21,6 +22,7 @@ en:
       confirm: "Are you sure?"
       record:
         data: "Record data"
+        initvalue: "Record initial value"
     titles:
       edit: "Edit %{model}"
       save: "Save %{model}"
