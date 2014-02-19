@@ -81,8 +81,26 @@ $.rails.allowAction = (element) ->
                    <div class="modal-body">
                      <p>You must record initial values before being assigned an action.</p>
                    </div>
+                   <div class="modal-footer"><!--a data-dismiss="modal" class="btn">Enter initial value later</a-->
+                   </div>
+                 </div>
+                 """
+
+  else if message.indexOf("Reenroll?",0) == 0
+    $link = element.clone().removeAttr('class').removeAttr('data-confirm').addClass('btn btn-primary whiteText').html("Yes")
+    message = message.slice(15)
+
+    modal_html = """
+                 <div class="modal" id="prereqModal">
+                   <div class="modal-header">
+                     <a class="close" data-dismiss="modal">×</a>
+                     <h4>Successfully entered datapoint.</h4>
+                   </div>
+                   <div class="modal-body">
+                     <p>Would you like to reenroll in this experiment?</p>
+                   </div>
                    <div class="modal-footer">
-                     <!--a data-dismiss="modal" class="btn">Enter initial value later</a-->
+                     <a data-dismiss="modal" class="btn">No</a>
                    </div>
                  </div>
                  """

@@ -102,7 +102,7 @@ class DatapointsController < ApplicationController
           enroll.save()
         end
 
-        format.html { redirect_to @experiment, notice: 'Datapoint was created.' }
+        format.html { redirect_to @experiment }
         format.json { render action: 'show', status: :created, location: @datapoint }
       else
         format.html { render action: 'new' }

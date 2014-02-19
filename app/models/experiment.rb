@@ -47,6 +47,10 @@ class Experiment < ActiveRecord::Base
     return !first_enrollment(user_id) && permits_enrollment(user_id)
   end
 
+  def allows_reenrolls
+    return :timeinterval != -1
+  end
+
   def count_datapoints(assigned_action, complied)
     return Datapoint.where(experiment_id: self.id, compliance: complied, iv_value: assigned_action).count
   end

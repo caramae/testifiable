@@ -1,4 +1,10 @@
 - model_class = Experiment
+
+.container.inputbox
+  ="Your datapoint has been recorded. Thank you for participating in this experiment. Would you like to enroll again?"
+  =link_to "Yes", {:action=>'reenroll', :id=>@experiment.id}, :class=>"btn btn-primary"
+  =link_to "No", '#', :class=>"btn data-dismiss"
+
 .container
   .page-header
     %h3= "What is the impact of " + @experiment.action + " on " + @experiment.outcomes.first.name + "?"
