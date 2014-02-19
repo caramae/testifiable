@@ -11,6 +11,7 @@ Samplesite1::Application.routes.draw do
   post "experiments/reenroll", :as => :reenroll
   post "experiments/unenroll", :as => :unenroll
   post "experiments/randomize", :as => :randomize
+  post "experiments/accept_changes", :as => :accept_changes
   resources :users
 
   get "static_pages/home"

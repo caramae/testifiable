@@ -115,12 +115,66 @@ class ExperimentsController < ApplicationController
 
   end
 
+
   # PATCH/PUT /experiments/1
   # PATCH/PUT /experiments/1.json
+
+
+#  def update
+#    respond_to do |format|
+#      if @experiment.update(experiment_params)
+#        @pending_experiment = PendingExperiment.new(pending_experiment_params)
+#        @pending_experiment.author = session[:user_id]
+#        @pending_experiment.action = @experiment.action.downcase
+#        @pending_experiment.control = @experiment.control.downcase
+#        @pending_experiment.experiment_id = @experiment.id
+
+#        @pending_experiment.save
+#        format.html { redirect_to @experiment, notice: 'Experiment was successfully updated.' }
+#        format.json { head :no_content }
+#      else
+#        format.html { render action: 'edit' }
+#        format.json { render json: @experiment.errors, status: :unprocessable_entity }
+#      end
+#    end
+#  end
+
   def update
-    respond_to do |format|
+    @curr_experiments = Experiment.new()
+    @curr_experiment = Experiment.new(experiment_params)
+    @curr_experiment.author = session[:user_id]
+    @curr_experiment.action = @curr_experiment.action.downcase
+    @curr_experiment.control = @curr_experiment.control.downcase
+
+    @curr_experiment.id = @experiment.id
+    if @curr_experiment = @experiment
+      @experiment.pend_status = 2
+      if @experiment.save
+        format.html { redirect_to @experiment, notice: 'Experiment has been accepted and is now active!' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @experiment.errors, status: :unprocessable_entity }
+      end
+
+    else
       if @experiment.update(experiment_params)
-        format.html { redirect_to @experiment, notice: 'Experiment was successfully updated.' }
+
+        if @current_user.is_admin
+          @experiment.pend_status = 1
+        else
+          @experiment.pend_status = 0
+        end
+        @experiment.save
+
+        @pending_experiment = PendingExperiment.new(pending_experiment_params)
+        @pending_experiment.author = session[:user_id]
+        @pending_experiment.action = @experiment.action.downcase
+        @pending_experiment.control = @experiment.control.downcase
+        @pending_experiment.experiment_id = @experiment.id
+
+        @pending_experiment.save
+        format.html { redirect_to @experiment, notice: 'Experiment was successfully updated. Approval is pending.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

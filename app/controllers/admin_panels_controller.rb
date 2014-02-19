@@ -4,8 +4,8 @@ class AdminPanelsController < ApplicationController
   # GET /admin_panels
   # GET /admin_panels.json
   def index
-     experiments = Experiment.select(:id).where(pend_status: [0,1])
-     @admin_panels = PendingExperiment.where(experiment_id: experiments)
+    @experiments = Experiment.where(pend_status: [0])
+    @experiments_wait = Experiment.where(pend_status: [1])
   end
 
   # GET /admin_panels/1
