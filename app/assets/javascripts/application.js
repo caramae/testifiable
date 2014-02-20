@@ -18,6 +18,14 @@
 //= require highcharts/highcharts
 //= require highcharts/highcharts-more
 
+function ReenrollBox() {
+  /*eventually move this to users.js.coffee*/
+  $("a.btn.dismiss").click(function(e) {
+    e.preventDefault();
+    $(this).parent().addClass("hidden");
+  });
+}
+
 function SignInPopup() {
 	$("li.signin").click(function(e) {
     e.preventDefault();
@@ -105,5 +113,5 @@ function add_fields(link, association, content) {
   $(link).parent().before(content.replace(regexp, new_id));
 }
 
-$(document).ready(function(){ SignInPopup(); RecordDataPopup(); PrereqsPopup(); ModalDialog(); });
-$(document).on('page:load', function(){ SignInPopup(); RecordDataPopup(); PrereqsPopup(); });
+$(document).ready(function(){ SignInPopup(); RecordDataPopup(); PrereqsPopup(); ModalDialog(); ReenrollBox(); });
+$(document).on('page:load', function(){ SignInPopup(); RecordDataPopup(); PrereqsPopup(); ReenrollBox(); });

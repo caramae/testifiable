@@ -2,7 +2,6 @@ class ExperimentsController < ApplicationController
   before_action :set_experiment, only: [:show, :edit, :update, :destroy, :enroll, :unenroll, :reenroll]
   before_filter :signed_in?, except: [:index, :show]
 
-  
   # GET /experiments
   # GET /experiments.json
   def index

@@ -18,7 +18,7 @@
                 %td= link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name + '?', experiment_path(experiment), :class=>'no-back-hover no-click-change'
 
                 -if experiment.can_reenroll(@current_user.id)
-                  =link_to (raw t('helpers.links.reenroll')), {:action=>'reenroll', :id=>experiment.id}, :method=>:post, :class=>"btn btn-mini"
+                  %td= link_to (raw t('helpers.links.reenroll')), {:action=>'reenroll', :id=>experiment.id, :controller=>"experiments"}, :method=>:post, :class=>"btn btn-mini"
                 -else
                   -confirm_message = experiment.has_any_init_values ? "InitAssignedAction" : "AssignedAction #{experiment.action}"
 
@@ -30,7 +30,7 @@
                           %h4= "You must meet the following conditions to enroll:"
                           %p= experiment.prereqs
                           = link_to "Conditions not met", '#', :class=>"btn btn-mini", id: "prereqs_cancelbutton"
-                          = link_to "Conditions met: Enroll me!", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm: confirm_message, :class=>"btn btn-mini btn-primary whiteText"
+                          = link_to "Conditions met: Enroll me!", {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm: confirm_message, :class=>"btn btn-mini btn-primary"
                   -else
                     %td= link_to (raw t('helpers.links.enroll')), {:controller=>'experiments', :action=>'enroll', :id=>experiment.id}, method: :post, confirm:confirm_message, :class=>"btn btn-mini"
 
@@ -80,7 +80,7 @@
 
   -if @managed_experiments.empty?
     %table.table
-    =link_to "Create a new experiment", new_experiment_path, :class=>"btn btn-primary whiteText"
+    =link_to "Create a new experiment", new_experiment_path, :class=>"btn btn-primary"
   -else
     %table.table.table-striped
       %thead
@@ -102,7 +102,7 @@
                 .btn-mini= "Approve administrator changes"
               -else
                 ="Pending approval"
-    =link_to (raw t('helpers.links.new.experiment')), new_experiment_path, :class => 'btn btn-mini btn-primary whiteText'
+    =link_to (raw t('helpers.links.new.experiment')), new_experiment_path, :class => 'btn btn-mini btn-primary'
 
   -#
     .span4.pull-right

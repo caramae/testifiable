@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20140213022921) do
     t.string   "prereqs"
     t.boolean  "is_public"
     t.boolean  "spanning_action", default: true
-
     t.string   "timeinterval"
     t.string   "timeframe_units"
     t.integer  "timeframe"

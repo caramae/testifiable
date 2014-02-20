@@ -1,9 +1,10 @@
 - model_class = Experiment
-
-.container.inputbox
-  ="Your datapoint has been recorded. Thank you for participating in this experiment. Would you like to enroll again?"
-  =link_to "Yes", {:action=>'reenroll', :id=>@experiment.id}, :class=>"btn btn-primary"
-  =link_to "No", '#', :class=>"btn data-dismiss"
+-enroll = @experiment.get_enroll(@current_user.id)
+-if !enroll.nil? && enroll.status == -1
+  .container.inputbox
+    ="Your datapoint has been recorded. Thank you for participating in this experiment. Would you like to enroll again?"
+    =link_to "Yes", {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, :class=>"btn btn-primary"
+    =link_to "No", '#', :class=>"btn dismiss"
 
 .container
   .page-header
@@ -109,22 +110,22 @@
       = link_to t('helpers.links.unenroll'), {:action=>'unenroll', :id=>@experiment.id}, :method=>:post, confirm: "Unenroll", :class => 'btn'
 
     -elsif @experiment.can_reenroll(@current_user.id)
-      = link_to t('helpers.links.reenroll'), {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, :class=>"btn btn-primary whiteText"
+      = link_to t('helpers.links.reenroll'), {:action=>'reenroll', :id=>@experiment.id}, :method=>:post, :class=>"btn btn-primary"
 
     -else
       -confirm_message = @experiment.has_any_init_values ? "InitAssignedAction" : "AssignedAction #{@experiment.action}"
 
       -if !(@experiment.prereqs.empty?)
         %span{:id => "prereqs_cell"}
-          .prereqs= link_to (raw t('helpers.links.enroll')), '#', :class=>"btn btn-primary whiteText"
+          .prereqs= link_to (raw t('helpers.links.enroll')), '#', :class=>"btn btn-primary"
           %fieldset.prereqs_menu.right
             .container
               %h4= "You must meet the following conditions to enroll:"
               %p= @experiment.prereqs
               = link_to "Conditions not met", '#', :class=>"btn btn-mini cancelbutton"
-              = link_to "Conditions met: Enroll me!", {:controller=>'experiments', :action=>'enroll', :id=>@experiment.id}, method: :post, confirm: confirm_message, :class=>"btn btn-mini btn-primary whiteText"
+              = link_to "Conditions met: Enroll me!", {:controller=>'experiments', :action=>'enroll', :id=>@experiment.id}, method: :post, confirm: confirm_message, :class=>"btn btn-mini btn-primary"
       -else
-        %span= link_to (raw t('helpers.links.enroll')), {:controller=>'experiments', :action=>'enroll', :id=>@experiment.id}, method: :post, confirm:confirm_message, :class=>"btn btn-primary whiteText"
+        %span= link_to (raw t('helpers.links.enroll')), {:controller=>'experiments', :action=>'enroll', :id=>@experiment.id}, method: :post, confirm:confirm_message, :class=>"btn btn-primary"
 
   %br
   .form-actions
