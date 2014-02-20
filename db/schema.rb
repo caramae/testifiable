@@ -50,13 +50,13 @@ ActiveRecord::Schema.define(version: 20140213022921) do
     t.integer  "author"
     t.string   "prereqs"
     t.boolean  "is_public"
-    t.boolean  "spanning_action", default: true
     t.string   "timeinterval"
     t.string   "timeframe_units"
     t.integer  "timeframe"
     t.string   "category"
     t.boolean  "must_email"
     t.integer  "pend_status",     default: 0
+    t.boolean  "spanning_action", default: true
   end
 
   create_table "pending_experiments", force: true do |t|

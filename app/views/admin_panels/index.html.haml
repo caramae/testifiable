@@ -1,17 +1,60 @@
-%h1 Listing admin_panels
+%h1 All Pending Experiments
 
-%table
-  %tr
-    %th
-    %th
-    %th
+.container
+  .page-header
+    %h2="Showing All Experiments Pending My Acceptance"
+  %table.table
 
-  - @admin_panels.each do |admin_panel|
-    %tr
-      %td= link_to 'Show', admin_panel
-      %td= link_to 'Edit', edit_admin_panel_path(admin_panel)
-      %td= link_to 'Destroy', admin_panel, :method => :delete, :data => { :confirm => 'Are you sure?' }
+    %thead
+      %tr
+        %th= 'Experiment'
+        %th= 'Category'
+        %th= 'Date created'
+    %tbody
+      - @experiments.each do |experiment|
+        -if experiment.is_public || (@current_user && ((experiment.author==@current_user.id) || @current_user.is_admin))
+          %tr
+            %td
+              = link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name+'?', edit_experiment_path(experiment), :class=>'no-back-hover'
 
-%br
+            %td= experiment.category
+            %td
+              -if DateTime.yesterday > experiment.created_at
+                = experiment.created_at.strftime("Created %b %-d")
+              -else
+                = "Created"
+                -if (-(experiment.created_at - DateTime.now) / 1.hour).floor > 0
+                  = "#{pluralize((-(experiment.created_at - DateTime.now) / 1.hour).round, "hour")} ago"
+                -elsif (-(experiment.created_at - DateTime.now) / 1.minute).floor > 0
+                  = "#{pluralize((-(experiment.created_at - DateTime.now) / 1.minute).floor, "minute")} ago"
+                -else
+                  = "just now"
 
-= link_to 'New Admin panel', new_admin_panel_path
+.container
+  .page-header
+    %h2="Showing All Experiments Pending User Acceptance"
+  %table.table
+
+    %thead
+      %tr
+        %th= 'Experiment'
+        %th= 'Category'
+        %th= 'Date created'
+    %tbody
+      - @experiments_wait.each do |experiment|
+        -if experiment.is_public || (@current_user && ((experiment.author==@current_user.id) || @current_user.is_admin))
+          %tr
+            %td
+              = link_to 'What is the impact of ' + experiment.action + ' on ' + experiment.outcomes.first.name+'?', experiment_path(experiment), :class=>'no-back-hover'
+            %td= experiment.category
+            %td
+              -if DateTime.yesterday > experiment.created_at
+                = experiment.created_at.strftime("Created %b %-d")
+              -else
+                = "Created"
+                -if (-(experiment.created_at - DateTime.now) / 1.hour).floor > 0
+                  = "#{pluralize((-(experiment.created_at - DateTime.now) / 1.hour).round, "hour")} ago"
+                -elsif (-(experiment.created_at - DateTime.now) / 1.minute).floor > 0
+                  = "#{pluralize((-(experiment.created_at - DateTime.now) / 1.minute).floor, "minute")} ago"
+                -else
+                  = "just now"
