@@ -60,10 +60,11 @@ class ExperimentsController < ApplicationController
 
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.title({ :text=>"Analysis chart"})
-      f.options[:xAxis][:categories] = [@experiment.action.humanize, @experiment.control.humanize]
-      f.labels(:items=>[:html=>"Compliance", :style=>{:left=>"40px", :top=>"8px", :color=>"black"} ])      
-      f.series(:type=> 'column',:name=> "Assigned to " + @experiment.action,:data=> [@experiment.get_avg_val(1, true), @experiment.get_avg_val(1, false)]) #@experiment.datapoints
-      f.series(:type=> 'column',:name=> "Assigned to " + @experiment.control,:data=> [@experiment.get_avg_val(2, false), @experiment.get_avg_val(2, true)])
+      f.options[:xAxis][:label] = @experiment.outcomes.first.name.humanize
+      f.options[:yAxis][:label] = "Frequency"
+      #f.labels(:items=>[:html=>"Compliance", :style=>{:left=>"40px", :top=>"8px", :color=>"black"} ])
+      f.series(:type=> 'areaspline',:name=> "Assigned to " + @experiment.action, :data=> @experiment.datapoints_histogram(1))
+      f.series(:type=> 'areaspline',:name=> "Assigned to " + @experiment.control, :data=> @experiment.datapoints_histogram(2))
       #f.series(:type=> 'spline',:name=> 'Average', :data=> [3, 2.67])
       #f.series(:type=> 'pie',:name=> 'Total consumption', 
       #  :data=> [

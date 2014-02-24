@@ -102,7 +102,7 @@
             %tr
               %td= @experiment.control.humanize
               %td= @experiment.count_datapoints(2, true)
-    /= high_chart("my_id4", @chart)
+    = high_chart("my_id4", @chart)
     %br
 
   -if @current_user

@@ -55,6 +55,10 @@ class Experiment < ActiveRecord::Base
     return Datapoint.where(experiment_id: self.id, compliance: complied, iv_value: assigned_action).count
   end
 
+  def datapoints_histogram(assigned_action)
+    return Datapoint.where(experiment_id: self.id, iv_value: assigned_action).group_by{ |dat| dat.value }.map{ |k, v| [k.to_i, v.size] }.sort
+  end
+
   def get_avg_val(assigned_action, complied)
     datapoints = Datapoint.where(experiment_id: self.id, compliance: complied, iv_value: assigned_action)
     if datapoints.empty?
