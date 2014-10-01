@@ -24,7 +24,10 @@
     %ol{id: "blurb"}
       %h3="How it works:"
       %li
-        =link_to image_tag('step1.png'), new_user_path, :class=>'no-back-hover'
+        -if current_user
+          =link_to image_tag('step1.png'), new_experiment_path, :class=>'no-back-hover'
+        -else
+          =link_to image_tag('step1.png'), new_user_path, :class=>'no-back-hover'
         %br
         =link_to 'Anybody can propose an experiment', new_user_path
       %li
