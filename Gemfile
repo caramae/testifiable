@@ -17,7 +17,6 @@ gem 'lazy_high_charts'
 
 gem 'twitter-bootstrap-rails'
 
-
 group :development do
   gem 'taps' #transfer data to and from databases in an agnostic fashion
   gem 'sqlite3', '1.3.8'

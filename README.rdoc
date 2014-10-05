@@ -1,7 +1,6 @@
-== README
+== Testifiable
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+An online platform that will serve a community of citizen researchers.
 
 Things you may want to cover:
 
