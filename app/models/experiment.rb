@@ -8,7 +8,7 @@ class Experiment < ActiveRecord::Base
   accepts_nested_attributes_for :outcomes, :reject_if => lambda { |a| a[:name].blank? }, :allow_destroy => true
   
   validates_numericality_of :timeframe, :only_integer =>true, :greater_than_or_equal_to =>0, :message => "Invalid duration"
-  validates_presence_of :action, :control, :category
+  validates_presence_of :action, :control, :category, :outcome_type
   validates_uniqueness_of :action
   validate :validate_outcomes
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140213022921) do
+ActiveRecord::Schema.define(version: 20141009130110) do
 
   create_table "admin_panels", force: true do |t|
     t.datetime "created_at"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20140213022921) do
     t.boolean  "must_email"
     t.integer  "pend_status",     default: 0
     t.boolean  "spanning_action", default: true
+    t.string   "outcome_type"
   end
 
   create_table "pending_experiments", force: true do |t|
@@ -73,6 +74,7 @@ ActiveRecord::Schema.define(version: 20140213022921) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "experiment_id"
+    t.string   "outcome_type"
   end
 
   create_table "users", force: true do |t|
