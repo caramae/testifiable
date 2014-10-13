@@ -12,7 +12,7 @@
           -if current_user
             %li=link_to raw("<i class=\"fa fa-user fa-lg\"></i> ")+current_user.name, user_path(current_user)
             %li=link_to raw("<i class=\"fa fa-wrench fa-lg\"></i>"), edit_user_path(current_user)
-            %li=link_to raw("<i class=\"fa fa-info-circle fa-lg\"></i>"), static_pages_help_path
+            %li=link_to raw("<i class=\"fa fa-info-circle fa-lg\"></i>"), help_path
             %li=link_to raw("<i class=\"fa fa-sign-out fa-lg\"></i>"), session_path(:current), method: :delete
           -else
             %li=link_to raw("<i class=\"fa fa-user fa-lg\"></i> ")+"Sign up", new_user_path
