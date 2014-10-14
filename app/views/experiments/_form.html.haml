@@ -39,6 +39,14 @@
           %br
           = f.radio_button :outcome_type, "1"
           quantitative
+      .field
+        Are you gathering data from:
+        %br
+          = f.radio_button :data_sources, "0" 
+          one person 
+          %br
+          = f.radio_button :data_sources, "1"
+          multiple people
     .span3
       %br
       %strong= 'Advanced options'
