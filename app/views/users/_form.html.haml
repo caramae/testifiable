@@ -18,6 +18,8 @@
     = f.label :password, :class => 'control-label'
     .controls
       = f.password_field :password, :class => 'text_field'
+      %div{:id=>"password-strength"}
+        %div{:id=>"strength-desc"}
   .control-group
     = f.label :password_confirmation, "Confirm password", :class => 'control-label'
     .controls

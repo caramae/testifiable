@@ -1,3 +1,21 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#password-strength {
+    display:inline-block;
+    margin-left: 25px;
+}
+
+#strength-desc {
+    font-size:10pt;
+}
+
+.pw-invalid {
+    color: #F58484;
+}
+
+
+.pw-valid {
+    color: #78F03C;
+}
