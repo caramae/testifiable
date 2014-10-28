@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141014005604) do
+ActiveRecord::Schema.define(version: 20141028222053) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "admin_panels", force: true do |t|
     t.datetime "created_at"
@@ -87,6 +90,7 @@ ActiveRecord::Schema.define(version: 20141014005604) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_digest"
+    t.string   "phone_number"
   end
 
   create_table "variables", force: true do |t|

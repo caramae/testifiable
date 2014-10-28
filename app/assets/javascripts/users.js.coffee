@@ -61,11 +61,27 @@ check_strength = (password) ->
       score++
     
     if score < 2
-      $("#strength-desc").html("<i class='fa fa-check'></i> Password could be stronger").removeClass().addClass("pw-valid")
+      $("#strength-desc").html("<i class='fa fa-times'></i> Password could be stronger").removeClass().addClass("pw-valid")
     else 
       $("#strength-desc").html("<i class='fa fa-check'></i> Good password").removeClass().addClass("pw-valid")  
+
+check_similarity = (password) ->
+  if password == $('#user_password').val() 
+    $("#similarity-desc").html("<i class='fa fa-check'></i>They match.").removeClass().addClass("pw-valid")  
+  else 
+    $("#similarity-desc").html("<i class='fa fa-times'></i> They don’t match. Try again?").removeClass().addClass("pw-invalid")
+
+check_phone = (phone) ->
+  if (phone.replace(/[^0-9]/g,"").length) < 10
+    $("#phone-desc").html("<i class='fa fa-times'></i> Please enter a number in the form 123-456-7891.").removeClass().addClass("pw-invalid")  
+  else 
+    $("#phone-desc").html("<i class='fa fa-check'></i> All set.").removeClass().addClass("pw-valid")
 
 
 jQuery ->
   $('#user_password').keyup ->
     check_strength($('#user_password').val())
+  $('#user_password_confirmation').keyup ->
+    check_similarity($('#user_password_confirmation').val())
+  $('#user_phone_number').keyup ->
+    check_phone($('#user_phone_number').val())

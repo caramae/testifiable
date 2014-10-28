@@ -13,10 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require turbolinks
 //= require_tree .
 //= require highcharts/highcharts
 //= require highcharts/highcharts-more
+//= require jquery.inputmask
+//= require jquery.inputmask.extensions
+//= require jquery.inputmask.numeric.extensions
+//= require jquery.inputmask.date.extensions
 
 function ReenrollBox() {
   /*eventually move this to users.js.coffee*/
@@ -25,6 +28,10 @@ function ReenrollBox() {
     $(this).parent().addClass("hidden");
   });
 }
+
+$(document).ready(function(){
+    $("#user_phone_number").inputmask("999-999-9999");
+});
 
 function SignInPopup() {
 	$("li.signin").click(function(e) {
@@ -83,20 +90,20 @@ function PrereqsPopup() {
   });
 }
 
-/*function ModalDialog() {
-	if ($('.popup').length > 0 && $('.popup').is(":visible")) {
+function ModalDialog() {
+  if ($('.popup').length > 0 && $('.popup').is(":visible")) {
     var back = document.createElement('div');
-	  back.setAttribute('class', 'modal-backdrop');
-	  document.body.appendChild(back);
-	  var elem = document.getElementsByClassName('popup')[0];
-	  back.appendChild(elem);
-	}
+    back.setAttribute('class', 'modal-backdrop');
+    document.body.appendChild(back);
+    var elem = document.getElementsByClassName('popup')[0];
+    back.appendChild(elem);
+  }
 
-	$('.modal-backdrop').click(function() {
-		$('.modal-backdrop').hide();
-		$('.popup').hide();
-	});
-}*/
+  $('.modal-backdrop').click(function() {
+    $('.modal-backdrop').hide();
+    $('.popup').hide();
+  });
+}
 
 function remove_fields(link) {
   $(link).prev("input[type=hidden]").value = "1";

@@ -15,6 +15,12 @@
     .controls
       = f.text_field :email, :class => 'text_field'
   .control-group
+    = f.label :phone_number, "Phone number", :class => 'control-label'
+    .controls
+      = f.text_field :phone_number, :class => 'text_field', placeholder: "Optional"
+      %div{:id=>"password-strength"}
+        %div{:id=>"phone-desc"}
+  .control-group
     = f.label :password, :class => 'control-label'
     .controls
       = f.password_field :password, :class => 'text_field'
@@ -24,6 +30,8 @@
     = f.label :password_confirmation, "Confirm password", :class => 'control-label'
     .controls
       = f.password_field :password_confirmation, :class => 'text_field'
+      %div{:id=>"password-strength"}
+        %div{:id=>"similarity-desc"}
 
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
