@@ -19,34 +19,39 @@
         =render "outcome_fields", :f => builder
       .btn.btn-mini= link_to_add_fields (raw t("helpers.links.new.outcome")), f, :outcomes
       %br
-      .field
-        Minimum time between enrolling and entering data (to prevent cheating)
-        %i{:class => "fa fa-info-circle", :title => "Participants will not be able to record data until this time has elapsed since enrollment."}
+      = link_to "Advanced options", "#", id: 'hidden-advanced', class: "btn btn success advanced-options-space", onclick: "showAdvanced()"
+      %br
+      = link_to "Hide Advanced options", "#", id: "visible-advanced", class: "btn btn success advanced-options-space hide", onclick: "hideAdvanced()"
+      .advanced-options.hide
         %br
-        = f.text_field :timeframe, :class => 'text_field span_tiny', :autocomplete => :off
-        = f.select :timeframe_units, ['minutes', 'hours', 'days']
-      .field
-        Category
-        = f.select :category, ['','Education', 'Health', 'Lifestyle', 'Politics', 'Work', 'Other']
-      .field
-        = f.check_box :timeinterval, {}, "-1", "0"
-        Restrict to one trial per person
-      .field
-        Is the outcome of the experiment:
-        %br
-          = f.radio_button :outcome_type, "0" 
-          qualitative 
+        .field
+          Minimum time between enrolling and entering data (to prevent cheating)
+          %i{:class => "fa fa-info-circle", :title => "Participants will not be able to record data until this time has elapsed since enrollment."}
           %br
-          = f.radio_button :outcome_type, "1"
-          quantitative
-      .field
-        Are you gathering data from:
-        %br
-          = f.radio_button :data_sources, "0" 
-          one person 
+          = f.text_field :timeframe, :class => 'text_field span_tiny', :autocomplete => :off
+          = f.select :timeframe_units, ['minutes', 'hours', 'days']
+        .field
+          Category
+          = f.select :category, ['','Education', 'Health', 'Lifestyle', 'Politics', 'Work', 'Other']
+        .field
+          = f.check_box :timeinterval, {}, "-1", "0"
+          Restrict to one trial per person
+        .field
+          Is the outcome of the experiment:
           %br
-          = f.radio_button :data_sources, "1"
-          multiple people
+            = f.radio_button :outcome_type, "0" 
+            qualitative 
+            %br
+            = f.radio_button :outcome_type, "1"
+            quantitative
+        .field
+          Are you gathering data from:
+          %br
+            = f.radio_button :data_sources, "0" 
+            one person 
+            %br
+            = f.radio_button :data_sources, "1"
+            multiple people
     .span3
       %br
       %strong= 'Advanced options'
@@ -85,3 +90,14 @@
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), experiments_path, :class => 'btn'
+:javascript
+  function showAdvanced () {
+    $('.advanced-options').show();
+    $('#hidden-advanced').hide()
+    $('#visible-advanced').show()
+  }
+  function hideAdvanced () {
+    $('.advanced-options').hide();
+    $('#visible-advanced').hide()
+    $('#hidden-advanced').show()
+  }
