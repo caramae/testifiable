@@ -78,6 +78,7 @@ check_phone = (phone) ->
     $("#phone-desc").html("<i class='fa fa-check'></i> All set.").removeClass().addClass("pw-valid")
 
 
+
 jQuery ->
   $('#user_password').keyup ->
     check_strength($('#user_password').val())

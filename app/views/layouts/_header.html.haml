@@ -19,21 +19,28 @@
             %li{:class => "signin"}=link_to raw("<i class=\"fa fa-sign-in fa-lg\"></i>") + " Log in", '#'
             %fieldset{:id => "signin_menu"}
               .container
-                =form_tag sessions_path do
-                  .field
-                    =label_tag :email
-                    =text_field_tag :email, params[:email], class: 'text_field'
-                  .field
-                    =label_tag :password
-                    =password_field_tag :password, params[:password], class: 'text_field'
-                  =submit_tag 'Log in', class: 'submitbutton btn btn-primary whiteText'
-                  &nbsp&nbsp
-                  /%span{:class => "remember"}
-                  /  %input{:id => "remember", :name => "remember_me", :value => "1", :tabindex => "7", :type => "checkbox"}
-                  /  = "Remember me"
-                  %br
-                  %span{:class => "forgot"}
-                    %a{:href => "#", :id => "resend_password_link"}= "Forgot your password?"
-                  &nbsp&nbsp
-                  /%span{:class => "forgot-username"}
-                  /  %a{:href => "#", :id => "forgot_username_link", :title => "If you remember your password, try logging in with your email"}= "Forgot your username?"
+                #login-modal
+                  = form_tag sessions_path do
+                    .field
+                      =label_tag :email
+                      =text_field_tag :email, params[:email], class: 'text_field'
+                    .field
+                      =label_tag :password
+                      =password_field_tag :password, params[:password], class: 'text_field'
+                    =submit_tag 'Log in', class: 'submitbutton btn btn-primary whiteText'
+                    &nbsp&nbsp
+                    %br
+                    %span{:class => "forgot"}
+                      %a{:href => "#", :id => "resend_password_link", onclick: "SwapModal()"}= "Forgot your password?"
+                #hidden-reset{ style: "display: none;"}
+                  = form_tag reset_password_users_path do
+                    .field
+                      = label_tag :email
+                      = text_field_tag :email, params[:email], class: 'text_field'
+                    = submit_tag 'Reset', class: "cubmitbutton btn btn-primary whiteText"
+:javascript
+  function SwapModal () {
+    $('#hidden-reset').show()
+    $('#login-modal').hide()
+  }
+                

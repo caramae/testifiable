@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_filter :authorized?, except: [:new, :create, :show, :edit]
+  before_filter :authorized?, except: [:new, :create, :show, :edit, :reset_password]
   
   # GET /users
   # GET /users.json
@@ -75,6 +75,18 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to users_url }
       format.json { head :no_content }
+    end
+  end
+  
+  def reset_password
+    @user = User.find_by(email: params[:email])
+    if @user
+      pw = SecureRandom.hex(8)
+      @user.update_attributes(password: pw, password_confirmation: pw)
+      UserMailer.reset_password(@user, pw).deliver
+      redirect_to :back, notice: "Please check your email address #{@user.email}"
+    else
+      redirect_to :back, notice: "No user found with email"
     end
   end
 

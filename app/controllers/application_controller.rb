@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
   end
 
   def authorized?
+    redirect_to root_path, notice: "Not authorized!" unless current_user
+  end
+  
+  def admin_authorized?
     redirect_to root_path, notice: "Not authorized!" unless current_user && current_user.is_admin?
   end
 

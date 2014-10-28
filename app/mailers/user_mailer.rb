@@ -6,6 +6,12 @@ class UserMailer < ActionMailer::Base
   	@url = 'http://testifiable.com/sessions/new'
   	mail(to: @user.email, subject: 'Welcome to testifiable')
   end
+  
+  def reset_password(user, password)
+    @user = user
+    @password = password
+    mail(to: @user.email, subject: "Testifiable: temporary password")
+  end
 
   def reminder_email(user,experiment)
   	@user = user

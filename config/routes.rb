@@ -13,7 +13,11 @@ Samplesite1::Application.routes.draw do
   post "experiments/randomize",       :as => :randomize
   post "experiments/accept_changes",  :as => :accept_changes
 
-  resources :users
+  resources :users do
+    collection do 
+      post :reset_password
+    end
+  end
 
   resources :sessions
   get "sessions/new", :as => :login
