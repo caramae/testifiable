@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028222053) do
+ActiveRecord::Schema.define(version: 20141029001215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,10 +58,12 @@ ActiveRecord::Schema.define(version: 20141028222053) do
     t.integer  "timeframe"
     t.string   "category"
     t.boolean  "must_email"
-    t.integer  "pend_status",     default: 0
-    t.boolean  "spanning_action", default: true
+    t.integer  "pend_status",        default: 0
+    t.boolean  "spanning_action",    default: true
     t.string   "outcome_type"
     t.string   "data_sources"
+    t.string   "exp_increment"
+    t.integer  "exp_increment_time"
   end
 
   create_table "pending_experiments", force: true do |t|

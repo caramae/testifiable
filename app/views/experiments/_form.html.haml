@@ -19,6 +19,17 @@
         =render "outcome_fields", :f => builder
       .btn.btn-mini= link_to_add_fields (raw t("helpers.links.new.outcome")), f, :outcomes
       %br
+      = link_to "Next", "#", class: "btn btn-primary advanced-options-space", id: "next-button", onclick: "showNext()"
+      #next-form-inputs.hide
+        %p
+          You'll be texted at
+          = current_user.phone_number
+          to be randomized to actions and prompted to report data.
+        %h5='Randomly assign me to'
+        =f.text_field :action, :class => 'text_field span2', disabled: true, id: "action-duplicate"
+        OR
+        = f.text_field :control, :class => 'text_field span2', disabled: true
+      %br
       = link_to "Advanced options", "#", id: 'hidden-advanced', class: "btn btn success advanced-options-space", onclick: "showAdvanced()"
       %br
       = link_to "Hide Advanced options", "#", id: "visible-advanced", class: "btn btn success advanced-options-space hide", onclick: "hideAdvanced()"
@@ -91,6 +102,10 @@
     = f.submit nil, :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), experiments_path, :class => 'btn'
 :javascript
+  function showNext() {
+    $('#next-form-inputs').show();
+    $('#next-button').hide();
+  }
   function showAdvanced () {
     $('.advanced-options').show();
     $('#hidden-advanced').hide()
