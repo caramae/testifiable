@@ -60,7 +60,10 @@ Samplesite1::Application.configure do
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
   # config.assets.precompile += %w( search.js )
-
+  config.action_mailer.default_url_options = { :host => 'heroku.com' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
   config.action_mailer.smtp_settings = {
     address: "smtp.sendgrid.net",
     port: 587,
