@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141029001215) do
+ActiveRecord::Schema.define(version: 20141030181133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20141029001215) do
     t.string   "data_sources"
     t.string   "exp_increment"
     t.integer  "exp_increment_time"
+    t.string   "day_of_week"
   end
 
   create_table "pending_experiments", force: true do |t|

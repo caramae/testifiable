@@ -26,10 +26,19 @@
           = current_user.phone_number
           to be randomized to actions and prompted to report data.
         %h5='Randomly assign me to'
-        =f.text_field :action, :class => 'text_field span2', disabled: true, id: "action-duplicate"
+        =f.text_field :action, :class => 'text_field span4', disabled: true, id: "action-duplicate"
         OR
-        = f.text_field :control, :class => 'text_field span2', disabled: true
+        = f.text_field :control, :class => 'text_field span4', disabled: true
+        %p
+          every
+          = f.select :exp_increment, ['day', 'week','every other week']
+          at
+          = f.select :exp_increment_time, ['00:00','01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
+          .hide#day-of-week
+            on 
+            = f.select :day_of_week, ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
       %br
+
       = link_to "Advanced options", "#", id: 'hidden-advanced', class: "btn btn success advanced-options-space", onclick: "showAdvanced()"
       %br
       = link_to "Hide Advanced options", "#", id: "visible-advanced", class: "btn btn success advanced-options-space hide", onclick: "hideAdvanced()"
@@ -104,6 +113,8 @@
 :javascript
   function showNext() {
     $('#next-form-inputs').show();
+    $('#action-duplicate')[0].value = $('#expAction')[0].value
+    $('#experiment_control')[0].value = $('#expControl')[0].value
     $('#next-button').hide();
   }
   function showAdvanced () {
@@ -116,3 +127,11 @@
     $('#visible-advanced').hide()
     $('#hidden-advanced').show()
   }
+  
+  $('form select[id=experiment_exp_increment]').change(function(){
+    if ($('form select option:selected').val() == 'week'){
+      $('#day-of-week').show();
+    }else{
+      $('#day-of-week').hide();
+    }
+  });
