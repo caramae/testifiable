@@ -21,13 +21,13 @@
       %div{:id=>"password-strength"}
         %div{:id=>"phone-desc"}
   .control-group
-    = f.label :password, :class => 'control-label'
+    = f.label :password, action_name == "edit" ? "New password" : "Password", :class => 'control-label'
     .controls
       = f.password_field :password, :class => 'text_field'
       %div{:id=>"password-strength"}
         %div{:id=>"strength-desc"}
   .control-group
-    = f.label :password_confirmation, "Confirm password", :class => 'control-label'
+    = f.label :password_confirmation, action_name == "edit" ? "Confirm new password" : "Confirm password", :class => 'control-label'
     .controls
       = f.password_field :password_confirmation, :class => 'text_field'
       %div{:id=>"password-strength"}
