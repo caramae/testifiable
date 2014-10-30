@@ -37,6 +37,9 @@
           .hide#day-of-week
             on 
             = f.select :day_of_week, ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        %p
+          End experiment on
+          = f.text_field :end_time, class: "datepicker"
       %br
 
       = link_to "Advanced options", "#", id: 'hidden-advanced', class: "btn btn success advanced-options-space", onclick: "showAdvanced()"

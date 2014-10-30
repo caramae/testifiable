@@ -5,6 +5,7 @@
  *= require_self
  *= require_tree .
  *= require font-awesome
+ *= require bootstrap-datetimepicker
  */
 html, body 
 { 

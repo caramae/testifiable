@@ -16,6 +16,7 @@ gem 'lazy_high_charts'
 gem 'pg'
 gem 'twitter-bootstrap-rails'
 gem 'jquery-inputmask-rails', '~> 2.5.5'
+gem 'smalot-bootstrap-datetimepicker-rails'
 
 group :production do
   gem 'rails_12factor'

@@ -20,6 +20,7 @@
 //= require jquery.inputmask.extensions
 //= require jquery.inputmask.numeric.extensions
 //= require jquery.inputmask.date.extensions
+//= require bootstrap-datetimepicker
 
 function ReenrollBox() {
   /*eventually move this to users.js.coffee*/
@@ -119,6 +120,10 @@ function add_fields(link, association, content) {
   var regexp = new RegExp("new_" + association, "g")
   $(link).parent().before(content.replace(regexp, new_id));
 }
+
+$(document).ready(function(){
+  $('.datepicker').datetimepicker();
+});
 
 $(document).ready(function(){ SignInPopup(); RecordDataPopup(); PrereqsPopup(); ModalDialog(); ReenrollBox(); });
 $(document).on('page:load', function(){ SignInPopup(); RecordDataPopup(); PrereqsPopup(); ReenrollBox(); });
